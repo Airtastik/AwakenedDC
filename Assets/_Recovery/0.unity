@@ -431,7 +431,7 @@ MonoBehaviour:
   roomPrefabs:
   - {fileID: 4079907039239010633, guid: bb2f994f9404cc14789675753967d6eb, type: 3}
   roomCount: 5
-  linearThreadLength: 5
+  linearThreadLength: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
