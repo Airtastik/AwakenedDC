@@ -250,7 +250,7 @@ Transform:
   m_GameObject: {fileID: 113658128}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 150, z: 0}
+  m_LocalPosition: {x: 0, y: 64.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -427,24 +427,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd3b30a7f5232d549a20388e7e36f537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSpawner
-  startRoomPrefab: {fileID: 2244040062701960396, guid: bb2f994f9404cc14789675753967d6eb, type: 3}
+  startRoomPrefab: {fileID: 4079907039239010633, guid: bb2f994f9404cc14789675753967d6eb, type: 3}
   roomPrefabs:
-  - {fileID: 2244040062701960396, guid: bb2f994f9404cc14789675753967d6eb, type: 3}
-  - {fileID: 2244040062701960396, guid: 3e5acfa93598d70448b08067ccef1429, type: 3}
-  - {fileID: 2244040062701960396, guid: d4262fdcdbcaf5b4084285c8b2afe511, type: 3}
-  - {fileID: 2244040062701960396, guid: 15c2ee334b683af499852d709e3156cc, type: 3}
-  - {fileID: 2244040062701960396, guid: 6efa1c4b8fa89664683014a0a0953cf3, type: 3}
-  - {fileID: 2244040062701960396, guid: 19bd1d5ef8bda4048b8eec15342935a0, type: 3}
-  - {fileID: 2244040062701960396, guid: c816a00c4e322d54d898c2f55a18704a, type: 3}
-  - {fileID: 2244040062701960396, guid: ce565488c9636c14ab5a3da63c2a7cef, type: 3}
-  - {fileID: 2244040062701960396, guid: 3fcbf2487e28d404bb63aa6d2fec3d06, type: 3}
-  - {fileID: 2244040062701960396, guid: c15b0c9548ff7814692981848e76f519, type: 3}
-  - {fileID: 2244040062701960396, guid: e7552f951a328a54188aa129737c3897, type: 3}
-  - {fileID: 2244040062701960396, guid: 53ce1b2c7a5a23f4eab81e04d95a40bd, type: 3}
-  - {fileID: 2244040062701960396, guid: 474b7cc354b179c47a9fef745cc2818f, type: 3}
-  - {fileID: 2244040062701960396, guid: 0f0a872fa8b448942bf378750b5f255f, type: 3}
-  - {fileID: 2244040062701960396, guid: 7dc5613d058173048b115bc28c321597, type: 3}
+  - {fileID: 4079907039239010633, guid: bb2f994f9404cc14789675753967d6eb, type: 3}
   roomCount: 5
+  linearThreadLength: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

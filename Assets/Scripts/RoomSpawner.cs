@@ -1,14 +1,19 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
-public enum ConnectionOrientation
+// named as from->to, so like north exit to south entrance for NorthSouth
+public enum orientation
 {
     NorthSouth,
     SouthNorth,
     EastWest,
-    WestEast
+    WestEast,
+    NULL
 }
 
+// potential artifact of design, I'm not quite sure if this
+// is ever going to get implemented, but the interface is cool
 public enum RoomType
 {
     Start,
@@ -19,110 +24,526 @@ public enum RoomType
 
 public class RoomSpawner : MonoBehaviour
 {
-
+    // chosen room to start
     public Room startRoomPrefab;
+
+    // list of all chosen rooms to choose from
+    // should have at least 1 for each door structure
+    // (so 24 rooms -1 for no doors)
     public List<Room> roomPrefabs;
-    public int roomCount;
+
+    // amount of rooms on the floor (does not count starting room)
+    // may go over if too many paths are initially generated. Think of it as a soft cap
+    // roomCount = alpha <= beta | beta exists in the range (alpha, infinity)
+    // beta would be spawnedRooms.Count
+    public int roomCount; 
+
+    private Dictionary<Vector2, Room> roomLookup = new Dictionary<Vector2, Room>();
 
     private List<Room> spawnedRooms = new List<Room>();
-    
 
-    void Start()
-    {
-        GenerateRooms();
+    // maintains sets for rooms to safely select border room instances
+    private HashSet<Room> noNorth = new HashSet<Room>();
+    private HashSet<Room> noSouth = new HashSet<Room>();
+    private HashSet<Room> noEast = new HashSet<Room>();
+    private HashSet<Room> noWest = new HashSet<Room>();
+
+    private HashSet<Room> hasNorth = new HashSet<Room>();
+    private HashSet<Room> hasSouth = new HashSet<Room>();
+    private HashSet<Room> hasEast = new HashSet<Room>();
+    private HashSet<Room> hasWest = new HashSet<Room>();
+
+    private HashSet<Room> noDeadEnds = new HashSet<Room>();
+    private HashSet<Room> yesDeadEnds = new HashSet<Room>();
+
+    // don't really know how rooms are going to scale with vectors, so there needs to be a scalar multiple
+    private float ROOM_SIZE_SCALAR;
+
+    void Start() {
+        ROOM_SIZE_SCALAR = ((startRoomPrefab.east.position - startRoomPrefab.west.position)).magnitude;
+        populateRoomBorderLists(); 
+        //GenerateRooms();
+        buildEnviornment(populateRoomMatrix());
     }
 
-    void GenerateRooms()
-    {
-        Room currentRoom = Instantiate(startRoomPrefab, Vector3.zero, Quaternion.identity);
-        spawnedRooms.Add(currentRoom);
-
-        for (int i = 0; i < roomCount; i++)
-        {
-            // develops a single linear thread of length roomCount
-            // unfortunately priorities vertical orientation.
-
-            Room nextRoomPrefab;
-            while (true) {
-
-                nextRoomPrefab = roomPrefabs[Random.Range(0, roomPrefabs.Count)];
-                Room nextRoomInstance = Instantiate(nextRoomPrefab);
-
-                List<ConnectionOrientation> orientations = new List<ConnectionOrientation>();
-                Vector3 nextPosition;
-
-                if (currentRoom.north != null && nextRoomPrefab.south != null) {
-                    orientations.Add(ConnectionOrientation.NorthSouth);
-                }
-                if (currentRoom.south != null && nextRoomPrefab.north != null) {
-                    orientations.Add(ConnectionOrientation.SouthNorth);
-                }
-                if (currentRoom.east != null && nextRoomPrefab.west != null) {
-                    orientations.Add(ConnectionOrientation.EastWest);
-                }
-                if (currentRoom.west != null && nextRoomPrefab.east != null) {
-                    orientations.Add(ConnectionOrientation.WestEast);
-                }
-                if (orientations.Count == 0) {
-                    Destroy(nextRoomInstance);
-                    continue;
-                }
-
-                ConnectionOrientation orientation = orientations[Random.Range(0, orientations.Count)];
-
-                nextPosition = GetNextRoomPosition(currentRoom, nextRoomInstance, orientation);
-
-                if (IsRoomObstructed(nextPosition))
-                {
-                    Destroy(nextRoomInstance);
-                    continue; 
-                }
-
-                ConnectRooms(currentRoom, nextRoomInstance, orientation);
-
-                currentRoom = nextRoomInstance;
-                spawnedRooms.Add(currentRoom);
-                break;
+    // realistically should be done at compile time, but I don't know how to do that
+    void populateRoomBorderLists() {
+        for (int i = 0; i < roomPrefabs.Count; i++) {
+            if (roomPrefabs[i].north == null) {
+                noNorth.Add(roomPrefabs[i]);
+            } else 
+                hasNorth.Add(roomPrefabs[i]);
+            if (roomPrefabs[i].south == null) {
+                noSouth.Add(roomPrefabs[i]);
+            } else 
+                hasSouth.Add(roomPrefabs[i]);
+            if (roomPrefabs[i].east == null) {
+                noEast.Add(roomPrefabs[i]);
+            } else 
+                hasEast.Add(roomPrefabs[i]);
+            if (roomPrefabs[i].west == null) {
+                noWest.Add(roomPrefabs[i]);
+            } else 
+                hasWest.Add(roomPrefabs[i]);
+            if (roomPrefabs[i].DoorCount >= 2) {
+                noDeadEnds.Add(roomPrefabs[i]);
+            } else {
+                yesDeadEnds.Add(roomPrefabs[i]);
             }
-            
         }
     }
 
+
+    void buildEnviornment(Room[,] populatedMatrix) {
+        for (int x = 0; x < 25; x++) {
+            for (int y = 0; y < 25; y++) {
+                if (populatedMatrix[x, y] != null) {
+                    Instantiate(populatedMatrix[x, y], new Vector3((ROOM_SIZE_SCALAR * x) - 12 * ROOM_SIZE_SCALAR, 0, (ROOM_SIZE_SCALAR * y) - 12 * ROOM_SIZE_SCALAR), Quaternion.identity);
+
+                }
+
+            }
+
+        }
+
+    }
+
+    Room[,] populateRoomMatrix() {
+        Queue<int> xQueue = new Queue<int>();
+        Queue<int> yQueue = new Queue<int>();
+
+        Room[,] roomGrid = new Room[25, 25];
+        addRoomToGrid(startRoomPrefab, 12, 12, xQueue, yQueue, roomGrid);
+
+        int spawnedRoomsCount = 0;
+        while (xQueue.Count > 0) {
+            int x = xQueue.Dequeue();
+            int y = yQueue.Dequeue();
+
+            if (roomGrid[x, y] != null)
+                continue;
+
+            HashSet<Room> validRooms = new HashSet<Room>();
+            
+            // if (spawnedRoomsCount >= roomCount || x == 24 || x == 0 || y == 24 || y == 0) {
+            //     // start exlusively generating dead ends UNLESS there would be a connecting room
+            //     // validRooms.UnionWith(yesDeadEnds);
+
+            //     validRooms.UnionWith(roomPrefabs);
+            //     HashSet<Room> mustHaveDoor = new HashSet<Room>();
+            //     HashSet<Room> mustNotHaveDoor = new HashSet<Room>();
+
+
+            //     if (y + 1 <= 24 && roomGrid[x, y + 1] != null && roomGrid[x, y + 1].south != null)
+            //         mustHaveDoor.UnionWith(noNorth);
+            //     else
+            //         mustNotHaveDoor.UnionWith(noNorth);
+            //     if (y - 1 >= 0 && roomGrid[x, y - 1] != null && roomGrid[x, y - 1].north != null)
+            //         mustHaveDoor.UnionWith(noSouth);
+            //     else
+            //         mustNotHaveDoor.UnionWith(noSouth);
+
+            //     if (x + 1 <= 24 && roomGrid[x + 1, y] != null && roomGrid[x + 1, y].west != null)
+            //         mustHaveDoor.UnionWith(noEast);
+            //     else
+            //         mustNotHaveDoor.UnionWith(noEast);
+
+            //     if (x - 1 >= 0 && roomGrid[x - 1, y] != null && roomGrid[x - 1, y].east != null)
+            //         mustHaveDoor.UnionWith(noWest);
+            //     else
+            //         mustNotHaveDoor.UnionWith(noWest);
+
+            //     validRooms.ExceptWith(mustHaveDoor);
+            //     validRooms.IntersectWith(mustNotHaveDoor.Count > 0 ? mustNotHaveDoor : validRooms);
+
+            // } else {
+            //     // require two or more doors for all generated rooms
+            //     validRooms.UnionWith(noDeadEnds);
+
+            //     if (y + 1 > 24 || (roomGrid[x, y + 1] != null && roomGrid[x, y + 1].south == null)) {
+            //         validRooms.IntersectWith(noNorth);
+            //     }
+            //     if (y - 1 < 0 || (roomGrid[x, y - 1] != null && roomGrid[x, y - 1].north == null)) {
+            //         validRooms.IntersectWith(noSouth);
+            //     }
+            //     if (x + 1 > 24 || (roomGrid[x + 1, y] != null && roomGrid[x + 1, y].west == null)) {
+            //         validRooms.IntersectWith(noEast);
+            //     }
+            //     if (x - 1 < 0 || (roomGrid[x - 1, y] != null && roomGrid[x - 1, y].east == null)) {
+            //         validRooms.IntersectWith(noWest);
+            //     }
+
+            // }
+
+            bool onBorder = (x == 0 || x == 24 || y == 0 || y == 24);
+            bool useDeadEnd = (spawnedRoomsCount >= roomCount || onBorder);
+
+            validRooms.UnionWith(roomPrefabs);
+
+            if (y + 1 <= 24 && roomGrid[x, y + 1] != null) {
+                if (roomGrid[x, y + 1].south != null)
+                    validRooms.IntersectWith(hasNorth);
+                else
+                    validRooms.IntersectWith(noNorth);
+            } else if (useDeadEnd) validRooms.IntersectWith(noNorth);
+            if (y - 1 >= 0 && roomGrid[x, y - 1] != null) {
+                if (roomGrid[x, y - 1].north != null)
+                    validRooms.IntersectWith(hasSouth);
+                else
+                    validRooms.IntersectWith(noSouth);
+            } else if (useDeadEnd) validRooms.IntersectWith(noSouth);
+            if (x + 1 <= 24 && roomGrid[x + 1, y] != null) {
+                if (roomGrid[x + 1, y].west != null)
+                    validRooms.IntersectWith(hasEast);
+                else
+                    validRooms.IntersectWith(noEast);
+            } else if (useDeadEnd) validRooms.IntersectWith(noEast);
+            if (x - 1 >= 0 && roomGrid[x - 1, y] != null) {
+                if (roomGrid[x - 1, y].east != null)
+                    validRooms.IntersectWith(hasWest);
+                else
+                    validRooms.IntersectWith(noWest);
+            } else if (useDeadEnd) validRooms.IntersectWith(noWest);
+
+            if (validRooms.Count == 0) {
+                Debug.LogError($"No valid rooms at {x},{y}");
+                continue;
+            }
+
+            Room randomRoom = validRooms.ElementAt(Random.Range(0, validRooms.Count));
+            addRoomToGrid(randomRoom, x, y, xQueue, yQueue, roomGrid);
+            spawnedRoomsCount++;
+            
+        }
+
+        return roomGrid;
+    }
+
+    private void addRoomToGrid(Room room, int x, int y, Queue<int> xQueue, Queue<int> yQueue, Room[,] roomGrid) {
+
+        // my code is inefficient so this kind of fixes that
+        if (roomGrid[x, y] != null)
+            return;
+
+
+        roomGrid[x, y] = room;
+
+        if (room.north != null && y + 1 <= 24 && roomGrid[x, y + 1] == null) {
+            xQueue.Enqueue(x);
+            yQueue.Enqueue(y + 1);
+        }
+        if (room.south != null && y - 1 >= 0 && roomGrid[x, y - 1] == null) {
+            xQueue.Enqueue(x);
+            yQueue.Enqueue(y - 1);
+        }
+        if (room.east != null && x + 1 <= 24 && roomGrid[x + 1, y] == null) {
+            xQueue.Enqueue(x + 1);
+            yQueue.Enqueue(y);
+        }
+        if (room.west != null && x - 1 >= 0 && roomGrid[x - 1, y] == null) {
+            xQueue.Enqueue(x - 1);
+            yQueue.Enqueue(y);
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    void GenerateRooms() {
+        // parallel queues to maintain where rooms need to be added
+        // check length of queue compared to length of spawned rooms and roomCount
+        Queue<Vector3> positionsToAdd = new Queue<Vector3>();
+        Queue<orientation> orientationsToAdd = new Queue<orientation>();
+
+        Vector3 worldPosition = new Vector3(0, 0, 0);
+        Room firstRoom = Instantiate(startRoomPrefab, worldPosition, Quaternion.identity);
+        RegisterRoom(firstRoom);
+        populateQueues(firstRoom, positionsToAdd, orientationsToAdd, orientation.NULL);
+
+        // when choosing rooms to add make sure there would be no obstruction a step in advance
+        // the actual queue management of roomms to add
+        // int deadEndCount = 0;
+        while (positionsToAdd.Count > 0) {
+            // decides what rooms to add based on presence in queue and amount of rooms to add
+            // 1. cannot obstruct another room, but that shouldn't be possible
+            // 2. if the generated room has border rooms. the borders need to align with the border rooms
+            // 3. if we are nearing room "capacity," start adding rooms that don't add any new doorways
+            // 4. one thread ends with a staircase to another floor, another ends with a treasure room
+
+            Vector3 positionToAdd = positionsToAdd.Dequeue();
+            orientation orientationToAdd = orientationsToAdd.Dequeue();
+
+            HashSet<Room> validRooms = new HashSet<Room>();
+            if (spawnedRooms.Count >= roomCount) {
+                // start exlusively generating dead ends UNLESS there would be a connecting room
+                validRooms.UnionWith(yesDeadEnds);
+            } else {
+                // require two or more doors for all generated rooms
+                validRooms.UnionWith(noDeadEnds);
+            }
+
+            Vector2 prospectivePosition = getProspectivePivotPosition(positionToAdd, orientationToAdd);
+            if (isWallNorth(prospectivePosition)) 
+                validRooms.IntersectWith(noNorth);
+            if (isWallSouth(prospectivePosition)) 
+                validRooms.IntersectWith(noSouth);
+            if (isWallEast(prospectivePosition)) 
+                validRooms.IntersectWith(noEast);
+            if (isWallWest(prospectivePosition)) 
+                validRooms.IntersectWith(noWest);
+            
+
+            Room randomRoom = validRooms.ElementAt(Random.Range(0, validRooms.Count));
+            Vector2 center = PivotToCenter(positionToAdd, orientationToAdd);
+
+            // just an extra layer I guess
+            if (roomLookup.ContainsKey(center))
+                continue;
+
+            Vector3 worldPos = CenterToWorld(center);
+            Room newRoom = Instantiate(randomRoom, worldPos, Quaternion.identity);
+            RegisterRoom(newRoom);
+            populateQueues(newRoom, positionsToAdd, orientationsToAdd, orientationToAdd);
+        }
+            
+
+
+
+    }
+
+    Vector2 getProspectivePivotPosition(Vector3 entranceDoorVector, orientation orientation) {
+        Vector2 pivotGrid = new Vector2(
+            Mathf.RoundToInt(entranceDoorVector.x),
+            Mathf.RoundToInt(entranceDoorVector.z)
+        );
+
+        Vector2 prospectiveGrid;
+
+        switch (orientation) {
+            case orientation.NorthSouth:
+                prospectiveGrid = pivotGrid + Vector2.up * ROOM_SIZE_SCALAR;
+                break;
+
+            case orientation.SouthNorth:
+                prospectiveGrid = pivotGrid + Vector2.down * ROOM_SIZE_SCALAR;
+                break;
+
+            case orientation.EastWest:
+                prospectiveGrid = pivotGrid + Vector2.right * ROOM_SIZE_SCALAR;
+                break;
+
+            case orientation.WestEast:
+                prospectiveGrid = pivotGrid + Vector2.left * ROOM_SIZE_SCALAR;
+                break;
+
+            default:
+                prospectiveGrid = pivotGrid;
+                break;
+        }
+
+        return prospectiveGrid;
+    }
+
+    bool isWallNorth(Vector3 pivot, orientation orientation) {
+        return isWallNorth(PivotToCenter(pivot, orientation));
+    }
+
+    bool isWallSouth(Vector3 pivot, orientation orientation) {
+        return isWallSouth(PivotToCenter(pivot, orientation));
+    }
+
+    bool isWallEast(Vector3 pivot, orientation orientation) {
+        return isWallEast(PivotToCenter(pivot, orientation));
+    }
+
+    bool isWallWest(Vector3 pivot, orientation orientation) {
+        return isWallWest(PivotToCenter(pivot, orientation));
+    }
+
+
+    bool isWallNorth(Vector2 center) {
+        Vector2 neighbor = center + Vector2.up * ROOM_SIZE_SCALAR;
+
+        if (roomLookup.TryGetValue(neighbor, out Room room))
+            return room.south == null;
+
+        return false;
+    }
+
+    bool isWallSouth(Vector2 center) {
+        Vector2 neighbor = center + Vector2.down * ROOM_SIZE_SCALAR;
+
+        if (roomLookup.TryGetValue(neighbor, out Room room))
+            return room.north == null;
+
+        return false;
+    }
+
+    bool isWallEast(Vector2 center) {
+        Vector2 neighbor = center + Vector2.right * ROOM_SIZE_SCALAR;
+
+        if (roomLookup.TryGetValue(neighbor, out Room room))
+            return room.west == null;
+
+        return false;
+    }
+
+    bool isWallWest(Vector2 center) {
+        Vector2 neighbor = center + Vector2.left * ROOM_SIZE_SCALAR;
+
+        if (roomLookup.TryGetValue(neighbor, out Room room))
+            return room.east == null;
+
+        return false;
+    }
+
+    void populateQueues(Room currentRoom, Queue<Vector3> positionsToAdd, Queue<orientation> orientationsToAdd, orientation omissionOrientation) {
+        if (currentRoom.north != null && omissionOrientation != orientation.NorthSouth) {
+            positionsToAdd.Enqueue(currentRoom.north.position);
+            orientationsToAdd.Enqueue(orientation.NorthSouth);
+        }
+        if (currentRoom.south != null && omissionOrientation != orientation.SouthNorth) {
+            positionsToAdd.Enqueue(currentRoom.south.position);
+            orientationsToAdd.Enqueue(orientation.SouthNorth);
+        }
+        if (currentRoom.east != null && omissionOrientation != orientation.EastWest) {
+            positionsToAdd.Enqueue(currentRoom.east.position);
+            orientationsToAdd.Enqueue(orientation.EastWest);
+        }
+        if (currentRoom.west != null && omissionOrientation != orientation.WestEast) {
+            positionsToAdd.Enqueue(currentRoom.west.position);
+            orientationsToAdd.Enqueue(orientation.WestEast);
+        }
+    }
+
+    // takes a vector and checks all spawned rooms for an obstruction at the vector
     bool IsRoomObstructed(Vector3 position) {
-        foreach (Room r in spawnedRooms)
-        {
+        foreach (Room r in spawnedRooms) {
             if (Vector3.Distance(r.transform.position, position) < 0.1f)
                 return true;
         }
         return false;
     }
 
-    void ConnectRooms(Room fromRoom, Room toRoom, ConnectionOrientation orientation) {
+    // orients the rooms where they need to be
+    void ConnectRooms(Room fromRoom, Room toRoom, orientation orientation) {
         Vector3 offset;
         
-        if (orientation == ConnectionOrientation.NorthSouth) {
+        if (orientation == orientation.NorthSouth) {
             offset = fromRoom.north.position - toRoom.south.position;
-        } else if (orientation == ConnectionOrientation.SouthNorth) {
+        } else if (orientation == orientation.SouthNorth) {
             offset = fromRoom.south.position - toRoom.north.position;
-        } else if (orientation == ConnectionOrientation.EastWest) {
+        } else if (orientation == orientation.EastWest) {
             offset = fromRoom.east.position - toRoom.west.position;
         } else {
             offset = fromRoom.west.position - toRoom.east.position;
         }
 
         toRoom.transform.position += offset;
-
     }
-
-    Vector3 GetNextRoomPosition(Room fromRoom, Room toRoom, ConnectionOrientation orientation) {
-        if (orientation == ConnectionOrientation.NorthSouth) {
+    
+    // returns the connection point of where the toRoom is going to go
+    Vector3 GetNextRoomPosition(Room fromRoom, Room toRoom, orientation orientation) {
+        if (orientation == orientation.NorthSouth) {
             return fromRoom.north.position - (toRoom.south.position - toRoom.transform.position);
-        } else if (orientation == ConnectionOrientation.SouthNorth) {
+        } else if (orientation == orientation.SouthNorth) {
             return fromRoom.south.position - (toRoom.north.position - toRoom.transform.position);
-        } else if (orientation == ConnectionOrientation.EastWest) {
+        } else if (orientation == orientation.EastWest) {
             return fromRoom.east.position - (toRoom.west.position - toRoom.transform.position);
         } else {
             return fromRoom.west.position - (toRoom.east.position - toRoom.transform.position);
         }
     }
+
+    // world pivot to grid pivot
+    Vector2 PivotToGrid(Vector3 pivot) {
+        return new Vector2(
+            Mathf.RoundToInt(pivot.x),
+            Mathf.RoundToInt(pivot.z)
+        );
+    }
+
+    // pivot + orientation to CENTER grid position
+    Vector2 PivotToCenter(Vector3 pivot, orientation orientation) {
+        Vector2 pivotGrid = PivotToGrid(pivot);
+
+        switch (orientation) {
+            case orientation.NorthSouth:
+                return pivotGrid + Vector2.up * ROOM_SIZE_SCALAR;
+
+            case orientation.SouthNorth:
+                return pivotGrid + Vector2.down * ROOM_SIZE_SCALAR;
+
+            case orientation.EastWest:
+                return pivotGrid + Vector2.right * ROOM_SIZE_SCALAR;
+
+            case orientation.WestEast:
+                return pivotGrid + Vector2.left * ROOM_SIZE_SCALAR;
+        }
+
+        return pivotGrid;
+    }
+
+    // center grid to world position
+    Vector3 CenterToWorld(Vector2 center) {
+        return new Vector3(center.x, 0, center.y);
+    }
+
+    void RegisterRoom(Room room) {
+        Vector2 center = PivotToGrid(room.transform.position);
+
+        roomLookup[center] = room;
+        spawnedRooms.Add(room);
+    }
+
+
 }
