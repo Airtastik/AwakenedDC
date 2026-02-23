@@ -1,0 +1,25 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/RPGins.uss?fileID=7433441132597879392&amp;guid=7034b6aad50bd164daa60706857fee6f&amp;type=3#RPGins"/>
+    <ui:VisualElement name="RPGpanel" class="RPGpanel" style="flex-grow: 1; opacity: 1; visibility: hidden;">
+        <ui:VisualElement name="EnemyPanel" class="enemyPanel" style="flex-grow: 1; visibility: visible; background-color: rgb(255, 255, 255); opacity: 0.92; left: 15%; right: 5%; top: 1%; bottom: 89%; position: absolute;"/>
+        <ui:VisualElement name="PlayerSlot1" class="PlayerPanel" style="flex-grow: 1; background-color: rgb(19, 19, 19); flex-direction: row; display: flex; opacity: 1; visibility: visible; overflow: visible; position: absolute; right: 5%; left: 15%; top: 83%; bottom: 1%; align-self: flex-start; justify-content: flex-start; align-items: flex-start; align-content: flex-start; flex-wrap: nowrap; margin-top: 1%; margin-bottom: 1%;">
+            <ui:VisualElement name="PartyCharUI" class="charRPGUI" style="flex-grow: 1; background-color: rgb(219, 112, 147); flex-direction: column; position: relative; flex-basis: 0%; height: 100%; width: auto; min-width: 25%; align-items: flex-start;">
+                <ui:IntegerField label="Health Points" value="42" name="HP" class="PlayerHP" style="flex-direction: row;"/>
+                <ui:IntegerField label="Special Points" value="42" name="SP" class="PlayerSP" style="flex-direction: row; font-size: 15px;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="PartyCharUI" class="charRPGUI" style="flex-grow: 1; background-color: rgb(112, 128, 144); flex-direction: row; position: relative; flex-basis: 0%; height: 100%; width: auto; min-width: 25px;"/>
+            <ui:VisualElement name="PartyCharUI" class="charRPGUI" style="flex-grow: 1; background-color: rgb(60, 179, 113); flex-direction: row; position: relative; flex-basis: 0%; height: 100%; width: auto; min-width: 25px;"/>
+            <ui:VisualElement name="PartyCharUI" class="charRPGUI" style="flex-grow: 1; background-color: rgb(148, 0, 211); flex-direction: row; position: relative; flex-basis: 0%; height: 100%; width: auto; min-width: 25px; top: auto;"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="gameInfo" class="gameInfo" style="flex-grow: 1; background-color: rgb(19, 19, 19); flex-direction: column; display: flex; opacity: 0; visibility: visible; overflow: visible; position: absolute; right: 86%; left: 1%; top: 5%; bottom: 5%;">
+            <ui:ListView/>
+        </ui:VisualElement>
+        <ui:VisualElement name="playerActions" class="PlayerActions" style="flex-grow: 1; background-color: rgb(19, 19, 19); flex-direction: column; display: flex; opacity: 1; visibility: visible; overflow: visible; position: absolute; right: 1%; left: 75%; top: 45%; bottom: 20%;">
+            <ui:DropdownField label="Dropdown" name="Moves" class="moves" style="-unity-text-auto-size: none;"/>
+            <ui:DropdownField label="Dropdown" name="Special_Moves" class="Special" style="-unity-text-auto-size: none;"/>
+            <ui:DropdownField label="Dropdown" name="Sync" class="Sync" style="-unity-text-auto-size: none;"/>
+            <ui:Button text="Button" name="ultimate" class="ultimate"/>
+            <ui:DropdownField label="Dropdown" name="Items" class="Items" style="-unity-text-auto-size: none;"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
