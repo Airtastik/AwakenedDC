@@ -136,7 +136,7 @@ GameObject:
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!114 &113658129
 MonoBehaviour:
@@ -445,6 +445,7 @@ MonoBehaviour:
   - {fileID: 2244040062701960396, guid: 0f0a872fa8b448942bf378750b5f255f, type: 3}
   - {fileID: 2244040062701960396, guid: 7dc5613d058173048b115bc28c321597, type: 3}
   roomCount: 12
+  hallwayWeighting: 0.75
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

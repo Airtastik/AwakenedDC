@@ -24,25 +24,26 @@ public enum RoomType
 
 public class RoomSpawner : MonoBehaviour
 {
-    // chosen room to start
+    /// chosen room to start
     public Room startRoomPrefab;
 
-    // list of all chosen rooms to choose from
-    // should have at least 1 for each door structure
-    // (so 24 rooms -1 for no doors)
+    /// list of all chosen rooms to choose from
+    /// should have at least 1 for each door structure
+    /// (so 24 rooms -1 for no doors)
     public List<Room> roomPrefabs;
 
-    // amount of rooms on the floor (does not count starting room)
-    // may go over if too many paths are initially generated. Think of it as a soft cap
-    // roomCount = alpha <= beta | beta exists in the range (alpha, infinity)
-    // beta would be spawnedRooms.Count
+    /// amount of rooms on the floor (does not count starting room)
+    /// may go over if too many paths are initially generated. Think of it as a soft cap
+    /// roomCount = alpha <= beta | beta exists in the range (alpha, infinity)
+    /// beta would be spawnedRooms.Count
     public int roomCount; 
+    public double hallwayWeighting;
 
     private Dictionary<Vector2, Room> roomLookup = new Dictionary<Vector2, Room>();
 
     private List<Room> spawnedRooms = new List<Room>();
 
-    // maintains sets for rooms to safely select border room instances
+    /// maintains sets for rooms to safely select border room instances
     private HashSet<Room> noNorth = new HashSet<Room>();
     private HashSet<Room> noSouth = new HashSet<Room>();
     private HashSet<Room> noEast = new HashSet<Room>();
@@ -54,20 +55,19 @@ public class RoomSpawner : MonoBehaviour
     private HashSet<Room> hasWest = new HashSet<Room>();
 
     private HashSet<Room> noDeadEnds = new HashSet<Room>();
-    // private HashSet<Room> hallways = new HashSet<Room>();
-    // private HashSet<Room> yesDeadEnds = new HashSet<Room>();
+    private HashSet<Room> hallways = new HashSet<Room>();
 
-    // don't really know how rooms are going to scale with vectors, so there needs to be a scalar multiple
-    private float ROOM_SIZE_SCALAR;
+    /// the width/height of each of the rooms for placement purposes
+    private float ROOM_SIZE_SCALAR = 10;
 
     void Start() {
-        ROOM_SIZE_SCALAR = 10;
         populateRoomBorderLists(); 
-        //GenerateRooms();
         buildEnviornment(populateRoomMatrix());
     }
 
-    // realistically should be done at compile time, but I don't know how to do that
+    /// realistically should be done at compile time, but I don't know how to do that
+    /// just fills all of the various sets we have with rooms that match so we can 
+    /// use set algebra on them during the generation process
     void populateRoomBorderLists() {
         for (int i = 0; i < roomPrefabs.Count; i++) {
             if (roomPrefabs[i].north == false) {
@@ -88,16 +88,17 @@ public class RoomSpawner : MonoBehaviour
                 hasWest.Add(roomPrefabs[i]);
             if (roomPrefabs[i].DoorCount >= 2) {
                 noDeadEnds.Add(roomPrefabs[i]);
+                if (roomPrefabs[i].DoorCount == 2) {
+                    if ((roomPrefabs[i].north && roomPrefabs[i].south) || roomPrefabs[i].east && roomPrefabs[i].west)
+                        hallways.Add(roomPrefabs[i]);
+                }
             } 
-            // if (roomPrefabs[i].DoorCount == 2) {
-            //     hallways.Add(roomPrefabs[i]);
-            // } 
-            // yesDeadEnds.Add(roomPrefabs[i]);
 
         }
     }
 
 
+    /// uses the room matrix to place all the rooms down in the enviornment
     void buildEnviornment(Room[,] populatedMatrix) {
         for (int x = 0; x < 25; x++) {
             for (int y = 0; y < 25; y++) {
@@ -112,6 +113,9 @@ public class RoomSpawner : MonoBehaviour
 
     }
 
+    /// the main algorithm for producing the randomly generated room layout
+    /// all this handles is the actual room generation itself---not the enemies 
+    /// or the items inside of the rooms
     Room[,] populateRoomMatrix() {
         Queue<int> xQueue = new Queue<int>();
         Queue<int> yQueue = new Queue<int>();
@@ -167,6 +171,14 @@ public class RoomSpawner : MonoBehaviour
                     validRooms.IntersectWith(noWest);
             } else if (useDeadEnd) validRooms.IntersectWith(noWest);
 
+            HashSet<Room> validHallways = new HashSet<Room>();
+            validHallways.UnionWith(hallways);
+            validHallways.IntersectWith(validRooms);
+            if (validHallways.Count > 0) {
+                if (Random.Range(0, 100) < 100 * hallwayWeighting)
+                    validRooms = validHallways;
+            }
+
             if (validRooms.Count == 0) {
                 Debug.LogError($"No valid rooms at {x},{y}");
                 continue;
@@ -183,40 +195,30 @@ public class RoomSpawner : MonoBehaviour
         
     }
 
+    /// private helper method for adding a room to the grid and then queuing all the new positions into it
     private void addRoomToGrid(Room room, int x, int y, Queue<int> xQueue, Queue<int> yQueue, Room[,] roomGrid) {
-
-        // my code is inefficient so this kind of fixes that
         if (roomGrid[x, y] != null)
             return;
 
-
         roomGrid[x, y] = room;
-        //Debug.LogError($"{roomGrid[x, y].name} generated at {x},{y}");
 
         if (room.north && y + 1 <= 24 && roomGrid[x, y + 1] == null) {
             xQueue.Enqueue(x);
             yQueue.Enqueue(y + 1);
-           // Debug.LogError($"{x},{y + 1} added to queue");
         }
         if (room.south && y - 1 >= 0 && roomGrid[x, y - 1] == null) {
             xQueue.Enqueue(x);
             yQueue.Enqueue(y - 1);
-            //Debug.LogError($"{x},{y - 1} added to queue");
         }
         if (room.east && x + 1 <= 24 && roomGrid[x + 1, y] == null) {
             xQueue.Enqueue(x + 1);
             yQueue.Enqueue(y);
-            //Debug.LogError($"{x + 1},{y} added to queue");
         }
         if (room.west && x - 1 >= 0 && roomGrid[x - 1, y] == null) {
             xQueue.Enqueue(x - 1);
             yQueue.Enqueue(y);
-            //Debug.LogError($"{x - 1},{y} added to queue");
         }
 
     }
-
-
-
 
 }
