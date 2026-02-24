@@ -40,6 +40,18 @@ public class RoomSpawner : MonoBehaviour
     /// (so 24 rooms -1 for no doors)
     public List<Room> roomPrefabs;
 
+    /// list of all enemies willing to spawn
+    public List<DungeonEnemyAI> enemies;
+
+    /// list of all pickups willing to spawn
+    public List<Item> pickups;
+
+    /// the treasure prefab being instantiated
+    public GameObject treasurePrefab;
+
+    /// the staircase prefab being instantiated
+    public GameObject staircasePrefab;
+
     /// amount of rooms on the floor (does not count starting room)
     /// may go over if too many paths are initially generated. Think of it as a soft cap
     /// roomCount = alpha <= beta | beta exists in the range (alpha, infinity)
@@ -97,7 +109,7 @@ public class RoomSpawner : MonoBehaviour
     /// the width/height of each of the rooms for placement purposes
     private const int ROOM_SIZE_SCALAR = 10;
     private const int CENTRAL_ROOM_POSITION = 12 * ROOM_SIZE_SCALAR;
-    private const int ROOM_OFFSET_RANGE = ROOM_SIZE_SCALAR / 2;
+    private const int ROOM_OFFSET_RANGE = ROOM_SIZE_SCALAR / 2 - 1;
 
     void Start() {
         populateRoomBorderLists(); 
@@ -138,8 +150,9 @@ public class RoomSpawner : MonoBehaviour
         }
     }
 
+    /// relevant to the !!! header above, just recalculates the given probability, omega, into one that 
+    /// allows for multiple possibilities without being aggressive
     private double effectiveProbability(double cumulativeProbability) {
-        
         return (double) (2 * Mathf.Pow((float) cumulativeProbability, 2) * (1 - (float) cumulativeProbability));
             
     }
@@ -158,27 +171,27 @@ public class RoomSpawner : MonoBehaviour
                         (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION), Quaternion.identity);
                     // ROOM_OFFSET_RANGE
                     if (roomDecision.isStaircase) {
-                        Debug.LogError($"staircase chosen at {x}, {y}");
+                        // Debug.LogError($"staircase chosen at {x}, {y}");
                         // spawn staircase
-                        // Instantiate( "staircase prefab",, new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION, 0, 
-                        //     (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION), Quaternion.identity);
+                        Instantiate( staircasePrefab , new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION, 0, 
+                            (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION), Quaternion.identity);
                     } else if (roomDecision.isTreasure) {
-                        Debug.LogError($"treasure chosen at {x}, {y}");
+                        // Debug.LogError($"treasure chosen at {x}, {y}");
                         // spawn treasure
-                        // Instantiate( "treasure prefab",, new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION, 0, 
-                        //     (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION), Quaternion.identity);
+                        Instantiate( treasurePrefab, new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION, 0, 
+                            (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION), Quaternion.identity);
                     } else {
-                        // for (int i = 0; i < roomDecisions.enemyCount; i++) {
-                        //     Instantiate( "enemy to spawn" , new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION + Random.Range(-ROOM_SIZE_SCALAR, ROOM_SIZE_SCALAR), 
-                        //         0, (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION) + Random.Range(-ROOM_SIZE_SCALAR, ROOM_SIZE_SCALAR), Quaternion.identity);
-                        // }
-                        Debug.LogError($"{decisionMatrix[x, y].enemyCount} enemies chosen at {x}, {y}");
+                        for (int i = 0; i < decisionMatrix[x, y].enemyCount; i++) {
+                            // Instantiate( enemies[Random.Range(0, enemies.Count)] , new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION + Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE), 
+                            //     0, (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION + Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE)), Quaternion.identity);
+                        }
+                        // Debug.LogError($"{decisionMatrix[x, y].enemyCount} enemies chosen at {x}, {y}");
 
-                        // for (int i = 0; i < roomDecisions.pickupCount; i++) {
-                        //     Instantiate( "pickup to spawn" , new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION + Random.Range(-ROOM_SIZE_SCALAR, ROOM_SIZE_SCALAR), 
-                        //         0, (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION) + Random.Range(-ROOM_SIZE_SCALAR, ROOM_SIZE_SCALAR), Quaternion.identity);
-                        // }
-                        Debug.LogError($"{decisionMatrix[x, y].pickupCount} pickups chosen at {x}, {y}");
+                        for (int i = 0; i < decisionMatrix[x, y].pickupCount; i++) {
+                            Instantiate( pickups[Random.Range(0, pickups.Count)] , new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION + Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE), 
+                                0, (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION + Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE)), Quaternion.identity);
+                        }
+                        // Debug.LogError($"{decisionMatrix[x, y].pickupCount} pickups chosen at {x}, {y}");
                     }
                     
 
