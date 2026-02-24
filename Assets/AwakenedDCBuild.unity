@@ -395,6 +395,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoomGenerator
       objectReference: {fileID: 0}
+    - target: {fileID: 7395429547303579258, guid: 5932261808d1a1349ae53533bf053605, type: 3}
+      propertyPath: 'roomPrefabs.Array.data[14]'
+      value: 
+      objectReference: {fileID: 2244040062701960396, guid: 91a164b531acdb44898fba4e98262990, type: 3}
     - target: {fileID: 8768753124680777096, guid: 5932261808d1a1349ae53533bf053605, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
