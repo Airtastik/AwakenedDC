@@ -3,43 +3,93 @@ using System.Collections.Generic;
 
 public class Unit : MonoBehaviour
 {
+    [Header("Identity")]
     public string unitName;
-    public string elementalType;
-    public int health;
+    public ElementalType elementalType;
+
+    [Header("Stats")]
+    public int maxHealth;
+    public int currentHealth;
     public int attackP;
     public int defence;
     public int speed;
-    public float CriticalDMG;    // This is a percentage increase in damage when a critical hit occurs
-    public float Criticalrate;   // This is the percentage chance that an attack will be a critical hit
-    public float effectRes;      // This is the percentage chance to resist negative status effects
+    public float criticalDMG;       // Damage multiplier on a crit e.g. 1.5 = 150%
+    public float criticalRate;      // 0.0 - 1.0 chance to land a crit
+    public float effectRes;         // 0.0 - 1.0 chance to resist a status effect
 
-    public Move[] moveList;                      // Fixed array of moves this unit can use
-    public List<StatusEffect> currentEffects;    // Dynamic list of active status effects on this unit
+    [Header("Moves & Effects")]
+    public Move[] moveList;
+    public List<StatusEffect> currentEffects = new List<StatusEffect>();
 
-    void Awake()
+    public bool IsAlive => currentHealth > 0;
+
+    protected virtual void Awake()
     {
+        currentHealth = maxHealth;
         currentEffects = new List<StatusEffect>();
     }
-}
 
-[System.Serializable]
-public class Move
-{
-    public string moveName;
-    public string moveType;       // e.g. "Attack", "Heal", "Buff", "Debuff"
-    public string elementalType;
-    public int baseDamage;
-    public float accuracy;        // Percentage chance the move will land
-    public string effectToApply;  // Name of a status effect this move may inflict
-    public float effectChance;    // Percentage chance of applying the effect
-}
+    // ── Status Effect Helpers ────────────────────────────────────────────────
 
-[System.Serializable]
-public class StatusEffect
-{
-    public string effectName;     // e.g. "Burn", "Poison", "Stun"
-    public int duration;          // Turns remaining
-    public int damagePerTurn;     // Damage dealt at the start of each turn (0 if none)
-    public float statModifier;    // Multiplier applied to a stat (1.0 = no change)
-    public string affectedStat;   // Which stat the modifier applies to e.g. "attackP", "speed"
+    public void AddEffect(StatusEffect effect)
+    {
+        float roll = Random.value;
+        if (roll < effectRes)
+        {
+            Debug.Log($"{unitName} resisted {effect.effectName}!");
+            return;
+        }
+        currentEffects.Add(effect);
+        Debug.Log($"{unitName} is now afflicted with {effect.effectName}!");
+    }
+
+    public void TickEffects()
+    {
+        for (int i = currentEffects.Count - 1; i >= 0; i--)
+        {
+            StatusEffect e = currentEffects[i];
+
+            if (e.damagePerTurn > 0)
+            {
+                TakeDamage(e.damagePerTurn);
+                Debug.Log($"{unitName} took {e.damagePerTurn} damage from {e.effectName}.");
+            }
+
+            e.duration--;
+            if (e.duration <= 0)
+            {
+                Debug.Log($"{e.effectName} wore off on {unitName}.");
+                currentEffects.RemoveAt(i);
+            }
+        }
+    }
+
+    // ── Combat Helpers ───────────────────────────────────────────────────────
+
+    public virtual void TakeDamage(int amount)
+    {
+        currentHealth = Mathf.Max(currentHealth - amount, 0);
+        Debug.Log($"{unitName} took {amount} damage. HP: {currentHealth}/{maxHealth}");
+    }
+
+    public virtual void Heal(int amount)
+    {
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+        Debug.Log($"{unitName} healed {amount} HP. HP: {currentHealth}/{maxHealth}");
+    }
+
+    public int CalculateDamage(Move move, Unit target)
+    {
+        float elementalMult = ElementalChart.GetMultiplier(move.elementalType, target.elementalType);
+        bool isCrit = Random.value < criticalRate;
+        float critMult = isCrit ? criticalDMG : 1.0f;
+        float def = Mathf.Max(target.defence, 1);
+
+        int damage = Mathf.RoundToInt((attackP + move.baseDamage) * elementalMult * critMult / def);
+
+        if (isCrit) Debug.Log("Critical hit!");
+        Debug.Log($"Elemental multiplier: x{elementalMult}");
+
+        return Mathf.Max(damage, 1);
+    }
 }
