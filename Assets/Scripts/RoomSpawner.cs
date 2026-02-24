@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-// named as from->to, so like north exit to south entrance for NorthSouth
+/// named as from->to, so like north exit to south entrance for NorthSouth
 public enum orientation
 {
     NorthSouth,
@@ -12,14 +12,22 @@ public enum orientation
     NULL
 }
 
-// potential artifact of design, I'm not quite sure if this
-// is ever going to get implemented, but the interface is cool
+/// potential artifact of design, I'm not quite sure if this
+/// is ever going to get implemented, but the interface is cool
 public enum RoomType
 {
     Start,
     Normal,
     Treasure,
     Final
+}
+
+public struct RoomDecision
+{
+    public bool isStaircase;
+    public bool isTreasure;
+    public int enemyCount;
+    public int pickupCount;
 }
 
 public class RoomSpawner : MonoBehaviour
@@ -37,11 +45,40 @@ public class RoomSpawner : MonoBehaviour
     /// roomCount = alpha <= beta | beta exists in the range (alpha, infinity)
     /// beta would be spawnedRooms.Count
     public int roomCount; 
+
+    /// double representation of the weight we want the linear hallway room type to have
+    /// should be between 0 and 1, and is really just an aesthetical decision, except it will 
+    /// affect gamma (number of dead end rooms) by some summative polynomial.
     public double hallwayWeighting;
 
-    private Dictionary<Vector2, Room> roomLookup = new Dictionary<Vector2, Room>();
 
-    private List<Room> spawnedRooms = new List<Room>();
+    /// !!!
+    /// all randomization code is based on a repeated chance for multiple occurences replicating
+    /// a binomial expansion. So the inputted value is the chance one instance will spawn in that 
+    /// room, but the standardization of that probability for multiple possibilities occurs within
+    /// the code itself
+    /// !!!
+
+
+    /// a hardcap on the maximum amount of enemies spawned, awaiting should be significantly
+    /// greater than wandering
+    public int totalEnemyMax;
+
+    /// chance an enemy will spawn in a non dead-end room
+    public double wanderingEnemySpawnChance;
+
+    /// chance an enemy will spawn in a dead-end room
+    public double awaitingEnemySpawnChance;
+
+    /// a hardcap on the maximum amount of pickups spawned, awaiting should be significantly
+    /// greater than wandering
+    public int totalPickupMax;
+
+    /// chance a pickup will spawn in a non dead-end room
+    public double wanderingPickupSpawnChance;
+
+    /// chance a pickup will spawn in a dead-end room
+    public double awaitingPickupSpawnChance;
 
     /// maintains sets for rooms to safely select border room instances
     private HashSet<Room> noNorth = new HashSet<Room>();
@@ -58,17 +95,21 @@ public class RoomSpawner : MonoBehaviour
     private HashSet<Room> hallways = new HashSet<Room>();
 
     /// the width/height of each of the rooms for placement purposes
-    private float ROOM_SIZE_SCALAR = 10;
+    private const int ROOM_SIZE_SCALAR = 10;
+    private const int CENTRAL_ROOM_POSITION = 12 * ROOM_SIZE_SCALAR;
+    private const int ROOM_OFFSET_RANGE = ROOM_SIZE_SCALAR / 2;
 
     void Start() {
         populateRoomBorderLists(); 
-        buildEnviornment(populateRoomMatrix());
+        Room[,] rooms = populateRoomMatrix();
+        RoomDecision[,] decisions = makeRoomDecisions(rooms);
+        buildEnviornment(rooms, decisions);
     }
 
     /// realistically should be done at compile time, but I don't know how to do that
     /// just fills all of the various sets we have with rooms that match so we can 
     /// use set algebra on them during the generation process
-    void populateRoomBorderLists() {
+    private void populateRoomBorderLists() {
         for (int i = 0; i < roomPrefabs.Count; i++) {
             if (roomPrefabs[i].north == false) {
                 noNorth.Add(roomPrefabs[i]);
@@ -92,19 +133,55 @@ public class RoomSpawner : MonoBehaviour
                     if ((roomPrefabs[i].north && roomPrefabs[i].south) || roomPrefabs[i].east && roomPrefabs[i].west)
                         hallways.Add(roomPrefabs[i]);
                 }
-            } 
+            }
 
         }
     }
 
+    private double effectiveProbability(double cumulativeProbability) {
+        
+        return (double) (2 * Mathf.Pow((float) cumulativeProbability, 2) * (1 - (float) cumulativeProbability));
+            
+    }
 
-    /// uses the room matrix to place all the rooms down in the enviornment
-    void buildEnviornment(Room[,] populatedMatrix) {
+
+    /// uses the room matrix to place all the rooms and their contents down in the enviornment
+    private void buildEnviornment(Room[,] populatedMatrix, RoomDecision[,] decisionMatrix) {
         for (int x = 0; x < 25; x++) {
             for (int y = 0; y < 25; y++) {
                 if (populatedMatrix[x, y] != null) {
-                    Instantiate(populatedMatrix[x, y], new Vector3((ROOM_SIZE_SCALAR * x) - 12 * ROOM_SIZE_SCALAR, 0, (ROOM_SIZE_SCALAR * y) - 12 * ROOM_SIZE_SCALAR), Quaternion.identity);
+                    // should spawn the center of the prefab room so offsets will be abs() <= ROOM_SIZE_SCALAR / 2
+                    Room room = populatedMatrix[x, y];
+                    RoomDecision roomDecision = decisionMatrix[x, y];
+
+                    Instantiate(room, new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION, 0, 
+                        (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION), Quaternion.identity);
+                    // ROOM_OFFSET_RANGE
+                    if (roomDecision.isStaircase) {
+                        Debug.LogError($"staircase chosen at {x}, {y}");
+                        // spawn staircase
+                        // Instantiate( "staircase prefab",, new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION, 0, 
+                        //     (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION), Quaternion.identity);
+                    } else if (roomDecision.isTreasure) {
+                        Debug.LogError($"treasure chosen at {x}, {y}");
+                        // spawn treasure
+                        // Instantiate( "treasure prefab",, new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION, 0, 
+                        //     (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION), Quaternion.identity);
+                    } else {
+                        // for (int i = 0; i < roomDecisions.enemyCount; i++) {
+                        //     Instantiate( "enemy to spawn" , new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION + Random.Range(-ROOM_SIZE_SCALAR, ROOM_SIZE_SCALAR), 
+                        //         0, (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION) + Random.Range(-ROOM_SIZE_SCALAR, ROOM_SIZE_SCALAR), Quaternion.identity);
+                        // }
+                        Debug.LogError($"{decisionMatrix[x, y].enemyCount} enemies chosen at {x}, {y}");
+
+                        // for (int i = 0; i < roomDecisions.pickupCount; i++) {
+                        //     Instantiate( "pickup to spawn" , new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION + Random.Range(-ROOM_SIZE_SCALAR, ROOM_SIZE_SCALAR), 
+                        //         0, (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION) + Random.Range(-ROOM_SIZE_SCALAR, ROOM_SIZE_SCALAR), Quaternion.identity);
+                        // }
+                        Debug.LogError($"{decisionMatrix[x, y].pickupCount} pickups chosen at {x}, {y}");
+                    }
                     
+
                 }
 
             }
@@ -113,10 +190,100 @@ public class RoomSpawner : MonoBehaviour
 
     }
 
+    /// just a generic shuffle method to effectively randomize and weight
+    /// dead ends with more precedence over non-dead ends
+    private void randomizeList(List<Vector2Int> list) {
+        int n = list.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = Random.Range(0, n + 1); 
+            Vector2Int value = list[k];
+            list[k] = list[n];
+            list[n] = value;
+        }
+    }
+
+    /// further populates the room matrix by deciding on conditions and modifiers to the rooms
+    /// such as enemies, pickups, and fianl room type
+    private RoomDecision[,] makeRoomDecisions(Room[,] populatedMatrix) {
+        int width = populatedMatrix.GetLength(0);
+        int height = populatedMatrix.GetLength(1);
+
+        RoomDecision[,] decisionMatrix = new RoomDecision[width, height];
+
+        List<Vector2Int> allDeadEnds = new List<Vector2Int>();
+        List<Vector2Int> allElse = new List<Vector2Int>();
+        int spawnedEnemies = 0;
+        int spawnedPickups = 0;
+
+        for (int x = 0; x < 25; x++) {
+            for (int y = 0; y < 25; y++) {
+                if (x == 12 && y == 12)
+                    continue;
+                if (populatedMatrix[x, y] != null) {
+                    if (populatedMatrix[x, y].DoorCount == 1) {
+                        allDeadEnds.Add(new Vector2Int(x, y));
+                    }
+                    else
+                        allElse.Add(new Vector2Int(x, y));
+                } 
+
+            }
+
+        }
+
+        randomizeList(allDeadEnds);
+        randomizeList(allElse);
+
+        Vector2Int pos = allDeadEnds[0];
+        decisionMatrix[pos.x, pos.y].isStaircase = true;
+
+        pos = allDeadEnds[1];
+        decisionMatrix[pos.x, pos.y].isTreasure = true;
+
+        while (spawnedEnemies < (totalEnemyMax / 2) || spawnedPickups < (totalPickupMax / 2)) {
+
+            for (int i = 2; i < allDeadEnds.Count; i++) {
+                pos = allDeadEnds[i];
+
+                // generate possible enemy and treasure based on dead end
+                while (spawnedEnemies <= totalEnemyMax && Random.Range(0, 100) < 100 * effectiveProbability(awaitingEnemySpawnChance)) {
+                    decisionMatrix[pos.x, pos.y].enemyCount++;
+                    spawnedEnemies++;
+                }
+                    
+                while (spawnedPickups <= totalPickupMax && Random.Range(0, 100) < 100 * effectiveProbability(awaitingPickupSpawnChance)) {
+                    decisionMatrix[pos.x, pos.y].pickupCount++;
+                    spawnedPickups++;
+                }
+                
+            }
+
+            for (int i = 0; i < allElse.Count; i++) {
+                pos = allElse[i];
+
+                // generate possible enemy and treasure based on non dead-end
+                while (spawnedEnemies <= totalEnemyMax && Random.Range(0, 100) < 100 * effectiveProbability(wanderingEnemySpawnChance)) {
+                    decisionMatrix[pos.x, pos.y].enemyCount++;
+                    spawnedEnemies++;
+                }
+                    
+                while (spawnedPickups <= totalPickupMax && Random.Range(0, 100) < 100 * effectiveProbability(wanderingPickupSpawnChance)) {
+                    decisionMatrix[pos.x, pos.y].pickupCount++;
+                    spawnedPickups++;
+                }
+            }
+        }
+
+        return decisionMatrix;
+
+    }
+
     /// the main algorithm for producing the randomly generated room layout
     /// all this handles is the actual room generation itself---not the enemies 
     /// or the items inside of the rooms
-    Room[,] populateRoomMatrix() {
+    private Room[,] populateRoomMatrix() {
         Queue<int> xQueue = new Queue<int>();
         Queue<int> yQueue = new Queue<int>();
 
@@ -185,6 +352,7 @@ public class RoomSpawner : MonoBehaviour
             }
 
             Room randomRoom = validRooms.ElementAt(Random.Range(0, validRooms.Count));
+
             addRoomToGrid(randomRoom, x, y, xQueue, yQueue, roomGrid);
             spawnedRoomsCount++;
             

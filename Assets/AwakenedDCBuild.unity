@@ -446,6 +446,12 @@ MonoBehaviour:
   - {fileID: 2244040062701960396, guid: 7dc5613d058173048b115bc28c321597, type: 3}
   roomCount: 12
   hallwayWeighting: 0.75
+  totalEnemyMax: 4
+  wanderingEnemySpawnChance: 0.1
+  awaitingEnemySpawnChance: 0.4
+  totalPickupMax: 10
+  wanderingPickupSpawnChance: 0.2
+  awaitingPickupSpawnChance: 0.8
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
