@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8768753124680777096}
   - component: {fileID: 7395429547303579258}
+  - component: {fileID: 1466247865375986204}
   m_Layer: 0
   m_Name: RoomGenerator
   m_TagString: Untagged
@@ -60,7 +61,7 @@ MonoBehaviour:
   - {fileID: 2244040062701960396, guid: 53ce1b2c7a5a23f4eab81e04d95a40bd, type: 3}
   - {fileID: 2244040062701960396, guid: 474b7cc354b179c47a9fef745cc2818f, type: 3}
   - {fileID: 2244040062701960396, guid: 0f0a872fa8b448942bf378750b5f255f, type: 3}
-  - {fileID: 2244040062701960396, guid: 7dc5613d058173048b115bc28c321597, type: 3}
+  - {fileID: 2244040062701960396, guid: 91a164b531acdb44898fba4e98262990, type: 3}
   enemies:
   - {fileID: 3743211790169896993, guid: 31798d83a7270324681657339af3dcdd, type: 3}
   pickups:
@@ -75,3 +76,35 @@ MonoBehaviour:
   totalPickupMax: 10
   wanderingPickupSpawnChance: 0.2
   awaitingPickupSpawnChance: 0.8
+--- !u!114 &1466247865375986204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409153089993883532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0

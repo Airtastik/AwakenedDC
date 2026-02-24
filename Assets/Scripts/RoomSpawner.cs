@@ -1,6 +1,9 @@
-using UnityEngine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.AI.Navigation;
+using UnityEngine;
+using UnityEngine.AI;
 
 /// named as from->to, so like north exit to south entrance for NorthSouth
 public enum orientation
@@ -159,48 +162,87 @@ public class RoomSpawner : MonoBehaviour
 
 
     /// uses the room matrix to place all the rooms and their contents down in the enviornment
-    private void buildEnviornment(Room[,] populatedMatrix, RoomDecision[,] decisionMatrix) {
-        for (int x = 0; x < 25; x++) {
-            for (int y = 0; y < 25; y++) {
-                if (populatedMatrix[x, y] != null) {
+    private void buildEnviornment(Room[,] populatedMatrix, RoomDecision[,] decisionMatrix)
+    {
+        for (int x = 0; x < 25; x++)
+        {
+            for (int y = 0; y < 25; y++)
+            {
+                if (populatedMatrix[x, y] != null)
+                {
                     // should spawn the center of the prefab room so offsets will be abs() <= ROOM_SIZE_SCALAR / 2
                     Room room = populatedMatrix[x, y];
                     RoomDecision roomDecision = decisionMatrix[x, y];
 
-                    Instantiate(room, new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION, 0, 
+                    Instantiate(room, new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION, 0,
                         (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION), Quaternion.identity);
                     // ROOM_OFFSET_RANGE
-                    if (roomDecision.isStaircase) {
+                    if (roomDecision.isStaircase)
+                    {
                         // Debug.LogError($"staircase chosen at {x}, {y}");
                         // spawn staircase
-                        Instantiate( staircasePrefab , new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION, 0, 
+                        Instantiate(staircasePrefab, new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION, 0,
                             (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION), Quaternion.identity);
-                    } else if (roomDecision.isTreasure) {
+                    }
+                    else if (roomDecision.isTreasure)
+                    {
                         // Debug.LogError($"treasure chosen at {x}, {y}");
                         // spawn treasure
-                        Instantiate( treasurePrefab, new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION, 0, 
+                        Instantiate(treasurePrefab, new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION, 0,
                             (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION), Quaternion.identity);
-                    } else {
-                        for (int i = 0; i < decisionMatrix[x, y].enemyCount; i++) {
-                            // Instantiate( enemies[Random.Range(0, enemies.Count)] , new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION + Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE), 
-                            //     0, (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION + Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE)), Quaternion.identity);
-                        }
-                        // Debug.LogError($"{decisionMatrix[x, y].enemyCount} enemies chosen at {x}, {y}");
-
-                        for (int i = 0; i < decisionMatrix[x, y].pickupCount; i++) {
-                            Instantiate( pickups[Random.Range(0, pickups.Count)] , new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION + Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE), 
-                                0, (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION + Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE)), Quaternion.identity);
-                        }
-                        // Debug.LogError($"{decisionMatrix[x, y].pickupCount} pickups chosen at {x}, {y}");
                     }
-                    
-
                 }
 
             }
 
         }
 
+        NavMeshSurface surface = GetComponent<NavMeshSurface>();
+        if (surface != null)
+        {
+            surface.BuildNavMesh();
+        }
+        else
+        {
+            Debug.LogWarning("No NavMeshSurface found on RoomSpawner.");
+        }
+
+        for (int x = 0; x < 25; x++)
+        {
+            for (int y = 0; y < 25; y++)
+            {
+                if (populatedMatrix[x, y] != null)
+                {
+                    RoomDecision roomDecision = decisionMatrix[x, y];
+                    if (!roomDecision.isStaircase && !roomDecision.isTreasure)
+                    {
+                        for (int i = 0; i < decisionMatrix[x, y].enemyCount; i++)
+                        {
+                            float spawnX = (ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION + UnityEngine.Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE);
+                            float spawnZ = (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION + UnityEngine.Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE);
+                            Vector3 spawnPos = new Vector3(spawnX, 5.0f, spawnZ);
+                            DungeonEnemyAI newEnemy = Instantiate(enemies[UnityEngine.Random.Range(0, enemies.Count)], spawnPos, Quaternion.identity);
+                            NavMeshAgent agent = newEnemy.GetComponent<NavMeshAgent>();
+                            if (agent != null)
+                            {
+                                if (NavMesh.SamplePosition(spawnPos, out NavMeshHit hit, 3.0f, NavMesh.AllAreas))
+                                {
+                                    agent.Warp(hit.position);
+                                }
+                            }
+                        }
+                        // Debug.LogError($"{decisionMatrix[x, y].enemyCount} enemies chosen at {x}, {y}");
+
+                        for (int i = 0; i < decisionMatrix[x, y].pickupCount; i++)
+                        {
+                            Instantiate(pickups[UnityEngine.Random.Range(0, pickups.Count)], new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION + UnityEngine.Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE),
+                                0, (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION + UnityEngine.Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE)), Quaternion.identity);
+                        }
+                        // Debug.LogError($"{decisionMatrix[x, y].pickupCount} pickups chosen at {x}, {y}");
+                    }
+                }
+            }
+        }
     }
 
     /// just a generic shuffle method to effectively randomize and weight
@@ -210,7 +252,7 @@ public class RoomSpawner : MonoBehaviour
         while (n > 1)
         {
             n--;
-            int k = Random.Range(0, n + 1); 
+            int k = UnityEngine.Random.Range(0, n + 1); 
             Vector2Int value = list[k];
             list[k] = list[n];
             list[n] = value;
@@ -261,12 +303,12 @@ public class RoomSpawner : MonoBehaviour
                 pos = allDeadEnds[i];
 
                 // generate possible enemy and treasure based on dead end
-                while (spawnedEnemies <= totalEnemyMax && Random.Range(0, 100) < 100 * effectiveProbability(awaitingEnemySpawnChance)) {
+                while (spawnedEnemies <= totalEnemyMax && UnityEngine.Random.Range(0, 100) < 100 * effectiveProbability(awaitingEnemySpawnChance)) {
                     decisionMatrix[pos.x, pos.y].enemyCount++;
                     spawnedEnemies++;
                 }
                     
-                while (spawnedPickups <= totalPickupMax && Random.Range(0, 100) < 100 * effectiveProbability(awaitingPickupSpawnChance)) {
+                while (spawnedPickups <= totalPickupMax && UnityEngine.Random.Range(0, 100) < 100 * effectiveProbability(awaitingPickupSpawnChance)) {
                     decisionMatrix[pos.x, pos.y].pickupCount++;
                     spawnedPickups++;
                 }
@@ -277,12 +319,12 @@ public class RoomSpawner : MonoBehaviour
                 pos = allElse[i];
 
                 // generate possible enemy and treasure based on non dead-end
-                while (spawnedEnemies <= totalEnemyMax && Random.Range(0, 100) < 100 * effectiveProbability(wanderingEnemySpawnChance)) {
+                while (spawnedEnemies <= totalEnemyMax && UnityEngine.Random.Range(0, 100) < 100 * effectiveProbability(wanderingEnemySpawnChance)) {
                     decisionMatrix[pos.x, pos.y].enemyCount++;
                     spawnedEnemies++;
                 }
                     
-                while (spawnedPickups <= totalPickupMax && Random.Range(0, 100) < 100 * effectiveProbability(wanderingPickupSpawnChance)) {
+                while (spawnedPickups <= totalPickupMax && UnityEngine.Random.Range(0, 100) < 100 * effectiveProbability(wanderingPickupSpawnChance)) {
                     decisionMatrix[pos.x, pos.y].pickupCount++;
                     spawnedPickups++;
                 }
@@ -355,7 +397,7 @@ public class RoomSpawner : MonoBehaviour
             validHallways.UnionWith(hallways);
             validHallways.IntersectWith(validRooms);
             if (validHallways.Count > 0) {
-                if (Random.Range(0, 100) < 100 * hallwayWeighting)
+                if (UnityEngine.Random.Range(0, 100) < 100 * hallwayWeighting)
                     validRooms = validHallways;
             }
 
@@ -364,7 +406,7 @@ public class RoomSpawner : MonoBehaviour
                 continue;
             }
 
-            Room randomRoom = validRooms.ElementAt(Random.Range(0, validRooms.Count));
+            Room randomRoom = validRooms.ElementAt(UnityEngine.Random.Range(0, validRooms.Count));
 
             addRoomToGrid(randomRoom, x, y, xQueue, yQueue, roomGrid);
             spawnedRoomsCount++;
