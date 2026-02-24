@@ -32,6 +32,8 @@ public class DungeonEnemyAI : MonoBehaviour
 
     private NavMeshAgent agent;
 
+    private float patrolTimer = 0f;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -98,13 +100,19 @@ public class DungeonEnemyAI : MonoBehaviour
 
     void HandlePatrol()
     {
+        patrolTimer -= Time.deltaTime;
+        if (patrolTimer > 0) return;
         // If we don't have a destination, find a random spot nearby
         if (!agent.hasPath || agent.remainingDistance < 0.5f)
         {
-            Vector3 randomDirection = Random.insideUnitSphere * 5f; // Search within 5 meters
+            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * 1f; //Walk distance
             randomDirection += transform.position;
-            NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, 5f, 1);
-            agent.SetDestination(hit.position);
+
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomDirection, out hit, 5f, NavMesh.AllAreas))
+            {
+                agent.SetDestination(hit.position);
+            }
         }
     }
 

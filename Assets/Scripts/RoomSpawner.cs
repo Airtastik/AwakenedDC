@@ -220,14 +220,21 @@ public class RoomSpawner : MonoBehaviour
                         {
                             float spawnX = (ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION + UnityEngine.Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE);
                             float spawnZ = (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION + UnityEngine.Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE);
+
                             Vector3 spawnPos = new Vector3(spawnX, 5.0f, spawnZ);
                             DungeonEnemyAI newEnemy = Instantiate(enemies[UnityEngine.Random.Range(0, enemies.Count)], spawnPos, Quaternion.identity);
+
                             NavMeshAgent agent = newEnemy.GetComponent<NavMeshAgent>();
+
                             if (agent != null)
                             {
-                                if (NavMesh.SamplePosition(spawnPos, out NavMeshHit hit, 3.0f, NavMesh.AllAreas))
+                                NavMeshHit hit;
+                                if (NavMesh.SamplePosition(spawnPos, out hit, 10.0f, NavMesh.AllAreas))
                                 {
+                                    newEnemy.transform.position = hit.position;
+                                    agent.enabled = true;
                                     agent.Warp(hit.position);
+                                    newEnemy.currentState = DungeonEnemyAI.EnemyState.Patrol;
                                 }
                             }
                         }
