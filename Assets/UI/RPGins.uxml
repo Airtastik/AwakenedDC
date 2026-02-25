@@ -1,25 +1,46 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/RPGins.uss?fileID=7433441132597879392&amp;guid=7034b6aad50bd164daa60706857fee6f&amp;type=3#RPGins"/>
-    <ui:VisualElement name="RPGpanel" class="RPGpanel" style="flex-grow: 1; opacity: 1; visibility: hidden;">
-        <ui:VisualElement name="EnemyPanel" class="enemyPanel" style="flex-grow: 1; visibility: visible; background-color: rgb(255, 255, 255); opacity: 0.92; left: 15%; right: 5%; top: 1%; bottom: 89%; position: absolute;"/>
-        <ui:VisualElement name="PlayerSlot1" class="PlayerPanel" style="flex-grow: 1; background-color: rgb(19, 19, 19); flex-direction: row; display: flex; opacity: 1; visibility: visible; overflow: visible; position: absolute; right: 5%; left: 15%; top: 83%; bottom: 1%; align-self: flex-start; justify-content: flex-start; align-items: flex-start; align-content: flex-start; flex-wrap: nowrap; margin-top: 1%; margin-bottom: 1%;">
-            <ui:VisualElement name="PartyCharUI" class="charRPGUI" style="flex-grow: 1; background-color: rgb(219, 112, 147); flex-direction: column; position: relative; flex-basis: 0%; height: 100%; width: auto; min-width: 25%; align-items: flex-start;">
-                <ui:IntegerField label="Health Points" value="42" name="HP" class="PlayerHP" style="flex-direction: row;"/>
-                <ui:IntegerField label="Special Points" value="42" name="SP" class="PlayerSP" style="flex-direction: row; font-size: 15px;"/>
+    <ui:VisualElement name="RPGpanel" class="RPGpanel" style="visibility: visible; opacity: 1; background-color: rgba(99, 148, 221, 0);">
+        <ui:VisualElement name="EnemyPanel" class="enemyPanel">
+            <ui:Label name="enemy-panel-label" text="ENEMIES" class="panel-label enemy-label"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="gameInfo" class="gameInfo">
+            <ui:Label text="BATTLE LOG" class="panel-label log-label"/>
+            <ui:ScrollView name="log-scroll" class="log-scroll">
+                <ui:VisualElement name="log-content" class="log-content"/>
+            </ui:ScrollView>
+        </ui:VisualElement>
+        <ui:VisualElement name="PlayerSlot1" class="PlayerPanel">
+            <ui:Label text="PARTY" class="panel-label party-label"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="playerActions" class="PlayerActions">
+            <ui:Foldout text="MOVES" name="moves" class="moves action-foldout">
+                <ui:Button name="move-btn-0" text="—" class="action-btn move-btn"/>
+                <ui:Button name="move-btn-1" text="—" class="action-btn move-btn"/>
+                <ui:Button name="move-btn-2" text="—" class="action-btn move-btn"/>
+                <ui:Button name="move-btn-3" text="—" class="action-btn move-btn"/>
+            </ui:Foldout>
+            <ui:Foldout text="SWITCH" name="special" class="special action-foldout"/>
+            <ui:Foldout text="ITEMS" name="items" class="items action-foldout">
+                <ui:Label text="No items." class="empty-label"/>
+            </ui:Foldout>
+            <ui:VisualElement class="bottom-actions">
+                <ui:Button text="GUARD" name="guard" class="action-btn guard-btn"/>
             </ui:VisualElement>
-            <ui:VisualElement name="PartyCharUI" class="charRPGUI" style="flex-grow: 1; background-color: rgb(112, 128, 144); flex-direction: row; position: relative; flex-basis: 0%; height: 100%; width: auto; min-width: 25px;"/>
-            <ui:VisualElement name="PartyCharUI" class="charRPGUI" style="flex-grow: 1; background-color: rgb(60, 179, 113); flex-direction: row; position: relative; flex-basis: 0%; height: 100%; width: auto; min-width: 25px;"/>
-            <ui:VisualElement name="PartyCharUI" class="charRPGUI" style="flex-grow: 1; background-color: rgb(148, 0, 211); flex-direction: row; position: relative; flex-basis: 0%; height: 100%; width: auto; min-width: 25px; top: auto;"/>
         </ui:VisualElement>
-        <ui:VisualElement name="gameInfo" class="gameInfo" style="flex-grow: 1; background-color: rgb(19, 19, 19); flex-direction: column; display: flex; opacity: 0; visibility: visible; overflow: visible; position: absolute; right: 86%; left: 1%; top: 5%; bottom: 5%;">
-            <ui:ListView/>
+        <ui:VisualElement name="target-overlay" class="overlay hidden">
+            <ui:VisualElement class="overlay-popup">
+                <ui:Label text="SELECT TARGET" class="overlay-title"/>
+                <ui:VisualElement name="target-list" class="target-list"/>
+                <ui:Button name="target-cancel" text="CANCEL" class="action-btn cancel-btn"/>
+            </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="playerActions" class="PlayerActions" style="flex-grow: 1; background-color: rgb(19, 19, 19); flex-direction: column; display: flex; opacity: 1; visibility: visible; overflow: visible; position: absolute; right: 1%; left: 75%; top: 45%; bottom: 20%;">
-            <ui:DropdownField label="Dropdown" name="Moves" class="moves" style="-unity-text-auto-size: none;"/>
-            <ui:DropdownField label="Dropdown" name="Special_Moves" class="Special" style="-unity-text-auto-size: none;"/>
-            <ui:DropdownField label="Dropdown" name="Sync" class="Sync" style="-unity-text-auto-size: none;"/>
-            <ui:Button text="Button" name="ultimate" class="ultimate"/>
-            <ui:DropdownField label="Dropdown" name="Items" class="Items" style="-unity-text-auto-size: none;"/>
+        <ui:VisualElement name="result-overlay" class="overlay hidden">
+            <ui:VisualElement class="overlay-popup result-popup">
+                <ui:Label name="result-title" text="VICTORY" class="result-title"/>
+                <ui:Label name="result-subtitle" text="" class="result-subtitle"/>
+                <ui:Button name="result-btn" text="CONTINUE" class="action-btn continue-btn"/>
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

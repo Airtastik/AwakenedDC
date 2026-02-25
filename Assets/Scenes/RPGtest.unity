@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 106037312}
   - component: {fileID: 106037313}
+  - component: {fileID: 106037314}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -164,6 +165,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f68641bf9ddfdba479931f3735d329e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestPlayerUnit
+--- !u!114 &106037314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106037310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a2c4de96ab405d41a07adb4071862a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerUnit
+  unitName: 
+  elementalType: 0
+  maxHealth: 0
+  currentHealth: 0
+  attackP: 0
+  defence: 0
+  speed: 0
+  criticalDMG: 0
+  criticalRate: 0
+  effectRes: 0
+  moveList: []
+  currentEffects: []
+  level: 0
+  experience: 0
+  experienceToNextLevel: 0
+  statPointsAvailable: 0
 --- !u!1 &150221135
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,6 +224,75 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &166999115
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 166999117}
+  - component: {fileID: 166999116}
+  - component: {fileID: 166999118}
+  m_Layer: 5
+  m_Name: RPGHUD
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &166999116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166999115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: 030cd18e3cf75c24a985841b8049095c, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 786ee10125c002944a6758670b0fd1b6, type: 3}
+  m_SortingOrder: 0
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
+--- !u!4 &166999117
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166999115}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.52}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &166999118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166999115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f22d603edc917e409c6f2dac1544b63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
+  battleSystem: {fileID: 1709333139}
 --- !u!1 &461133247
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,6 +545,22 @@ PrefabInstance:
       propertyPath: m_AABB.m_Extent.z
       value: 0.06345813
       objectReference: {fileID: 0}
+    - target: {fileID: 7959232760003070991, guid: 695719168c11a0c4e80dc18ec69cc58e, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: ac116ff9a01aacc4ab9850177dbe77b4, type: 2}
+    - target: {fileID: 7959232760003070991, guid: 695719168c11a0c4e80dc18ec69cc58e, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4e15a1602e764084c8b907eccd5651ea, type: 2}
+    - target: {fileID: 7959232760003070991, guid: 695719168c11a0c4e80dc18ec69cc58e, type: 3}
+      propertyPath: m_AnimatePhysics
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7959232760003070991, guid: 695719168c11a0c4e80dc18ec69cc58e, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -454,6 +568,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2415839780713594493, guid: 695719168c11a0c4e80dc18ec69cc58e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 624456241}
+    - targetCorrespondingSourceObject: {fileID: 2415839780713594493, guid: 695719168c11a0c4e80dc18ec69cc58e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 624456249}
   m_SourcePrefab: {fileID: 100100000, guid: 695719168c11a0c4e80dc18ec69cc58e, type: 3}
 --- !u!4 &624456239 stripped
 Transform:
@@ -477,6 +594,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f68641bf9ddfdba479931f3735d329e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestPlayerUnit
+--- !u!114 &624456249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624456240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a2c4de96ab405d41a07adb4071862a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerUnit
+  unitName: 
+  elementalType: 0
+  maxHealth: 0
+  currentHealth: 0
+  attackP: 0
+  defence: 0
+  speed: 0
+  criticalDMG: 0
+  criticalRate: 0
+  effectRes: 0
+  moveList: []
+  currentEffects: []
+  level: 0
+  experience: 0
+  experienceToNextLevel: 0
+  statPointsAvailable: 0
 --- !u!1 &665428861
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,7 +1009,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventSystem
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1709333138}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &1214051743
@@ -1057,6 +1202,10 @@ PrefabInstance:
       propertyPath: m_AABB.m_Extent.z
       value: 0.16400829
       objectReference: {fileID: 0}
+    - target: {fileID: 6471565159581351813, guid: c5f2a0696923a37438cb7e19c78dd20c, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4e15a1602e764084c8b907eccd5651ea, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1076,8 +1225,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1663145182}
-  - component: {fileID: 1663145181}
   - component: {fileID: 1663145183}
+  - component: {fileID: 1663145184}
   m_Layer: 0
   m_Name: Enemy1
   m_TagString: Untagged
@@ -1085,30 +1234,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1663145181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1663145180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32838c9a11df56045a2cb90f4c475a87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  unitName: 
-  elementalType: 0
-  maxHealth: 0
-  currentHealth: 0
-  attackP: 0
-  defence: 0
-  speed: 0
-  criticalDMG: 0
-  criticalRate: 0
-  effectRes: 0
-  moveList: []
-  currentEffects: []
 --- !u!4 &1663145182
 Transform:
   m_ObjectHideFlags: 0
@@ -1137,6 +1262,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce4a729f3b8d1a49b8fda98037c2990, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestEnemyUnit
+--- !u!114 &1663145184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663145180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed0dd3fcc82717f4c8058146dc444acc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyUnit
+  unitName: 
+  elementalType: 0
+  maxHealth: 10
+  currentHealth: 10
+  attackP: 0
+  defence: 0
+  speed: 0
+  criticalDMG: 0
+  criticalRate: 0
+  effectRes: 0
+  moveList: []
+  currentEffects: []
+  tier: 0
+  behaviour: 0
+  experienceReward: 0
+  goldReward: 0
 --- !u!1 &1708140689
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,7 +1354,6 @@ MonoBehaviour:
   - {fileID: 106037310}
   enemyPartyObjects:
   - {fileID: 1663145180}
-  fleeSuccessChance: 0.5
   actionDelay: 1.2
 --- !u!4 &1709333140
 Transform:
@@ -1266,3 +1418,4 @@ SceneRoots:
   - {fileID: 150221136}
   - {fileID: 691062569}
   - {fileID: 1709333140}
+  - {fileID: 166999117}

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +9,7 @@ public enum BattleState
     PlayerTurn,
     EnemyTurn,
     Won,
-    Lost,
-    Fled
+    Lost
 }
 
 public class BattleSystem : MonoBehaviour
@@ -18,21 +17,24 @@ public class BattleSystem : MonoBehaviour
     // ── Party References ──────────────────────────────────────────────────────
     [Header("Parties")]
     public List<GameObject> playerPartyObjects = new List<GameObject>();
-    public List<GameObject> enemyPartyObjects = new List<GameObject>();
+    public List<GameObject> enemyPartyObjects  = new List<GameObject>();
 
     private List<PlayerUnit> playerParty = new List<PlayerUnit>();
-    private List<EnemyUnit> enemyParty = new List<EnemyUnit>();
+    private List<EnemyUnit>  enemyParty  = new List<EnemyUnit>();
 
     // ── Active Units ──────────────────────────────────────────────────────────
     private PlayerUnit activePlayer;
-    private EnemyUnit activeEnemy;
+    private EnemyUnit  activeEnemy;
 
     // ── State ─────────────────────────────────────────────────────────────────
     public BattleState state { get; private set; }
 
+    /// <summary>True once parties are populated and InitHealth has been called.
+    /// The UI polls this before trying to build cards.</summary>
+    public bool IsReady { get; private set; }
+
     // ── Settings ──────────────────────────────────────────────────────────────
     [Header("Settings")]
-    [Range(0f, 1f)] public float fleeSuccessChance = 0.50f;
     public float actionDelay = 1.2f;
 
     // ── Turn Order ────────────────────────────────────────────────────────────
@@ -62,6 +64,16 @@ public class BattleSystem : MonoBehaviour
 
     void Start()
     {
+        // Wait one frame so that any TestPlayerUnit / TestEnemyUnit Awake()
+        // scripts have had a chance to AddComponent and assign stats before
+        // we read them and call InitHealth().
+        StartCoroutine(LateStart());
+    }
+
+    private IEnumerator LateStart()
+    {
+        yield return null; // skip one frame
+
         foreach (GameObject obj in playerPartyObjects)
         {
             PlayerUnit pu = obj.GetComponent<PlayerUnit>();
@@ -76,9 +88,14 @@ public class BattleSystem : MonoBehaviour
             else Debug.LogWarning($"{obj.name} has no EnemyUnit and was skipped.");
         }
 
-        if (playerParty.Count == 0) { Debug.LogError("Player party is empty!"); return; }
-        if (enemyParty.Count == 0) { Debug.LogError("Enemy party is empty!"); return; }
+        if (playerParty.Count == 0) { Debug.LogError("Player party is empty!"); yield break; }
+        if (enemyParty.Count  == 0) { Debug.LogError("Enemy party is empty!");  yield break; }
 
+        // Initialise HP now that all stats are guaranteed to be set
+        foreach (var u in playerParty) u.InitHealth();
+        foreach (var u in enemyParty)  u.InitHealth();
+
+        IsReady = true;
         StartCoroutine(SetupBattle());
     }
 
@@ -87,7 +104,7 @@ public class BattleSystem : MonoBehaviour
         SetState(BattleState.Start);
 
         activePlayer = playerParty[0];
-        activeEnemy = enemyParty[0];
+        activeEnemy  = enemyParty[0];
 
         Log("A battle has begun!");
         Log($"Player party: {string.Join(", ", playerParty.Select(u => u.unitName))}");
@@ -96,6 +113,7 @@ public class BattleSystem : MonoBehaviour
 
         BuildTurnOrder();
         NotifyActiveUnitsChanged();
+        NotifyStatsChanged();
 
         yield return new WaitForSeconds(actionDelay);
         yield return StartCoroutine(ProcessNextTurn());
@@ -153,7 +171,7 @@ public class BattleSystem : MonoBehaviour
             NotifyActiveUnitsChanged();
             SetState(BattleState.PlayerTurn);
             Log($"--- {pu.unitName}'s Turn ---");
-            // Coroutine pauses here — UI calls PlayerUseMove / PlayerSwitch / PlayerFlee to continue
+            // Coroutine pauses here — UI calls PlayerUseMove / PlayerSwitch to continue
         }
         else if (current is EnemyUnit eu)
         {
@@ -208,17 +226,10 @@ public class BattleSystem : MonoBehaviour
 
         PlayerUnit switchTarget = playerParty[partyIndex];
         if (switchTarget == activePlayer) { Log($"{switchTarget.unitName} is already active!"); return; }
-        if (!switchTarget.IsAlive) { Log($"{switchTarget.unitName} can't battle!"); return; }
+        if (!switchTarget.IsAlive)        { Log($"{switchTarget.unitName} can't battle!"); return; }
 
         StartCoroutine(SwitchPlayerUnit(switchTarget));
     }
-
-    /// <summary>Attempt to flee. Uses average party speed vs average enemy speed.</summary>
-   /* public void PlayerFlee()
-    {
-        if (state != BattleState.PlayerTurn) { Log("It's not your turn!"); return; }
-        StartCoroutine(AttemptFlee());
-    }*/
 
     #endregion
 
@@ -258,28 +269,6 @@ public class BattleSystem : MonoBehaviour
 
         yield return StartCoroutine(EndCurrentTurn());
     }
-
-  /*  private IEnumerator AttemptFlee()
-    {
-        Log("The party attempts to flee...");
-        yield return new WaitForSeconds(actionDelay);
-
-        float avgPlayerSpeed = playerParty.Where(u => u.IsAlive).Average(u => u.speed);
-        float avgEnemySpeed = enemyParty.Where(u => u.IsAlive).Average(u => u.speed);
-        float fleeChance = fleeSuccessChance * (avgPlayerSpeed / Mathf.Max(avgEnemySpeed, 1));
-
-        if (Random.value < fleeChance)
-        {
-            Log("The party got away safely!");
-            SetState(BattleState.Fled);
-        }
-        else
-        {
-            Log("The party couldn't escape!");
-            yield return new WaitForSeconds(actionDelay);
-            yield return StartCoroutine(EndCurrentTurn());
-        }
-    }*/
 
     #endregion
 
@@ -359,7 +348,7 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(actionDelay * 0.5f);
 
         float mult = ElementalChart.GetMultiplier(move.elementalType, defender.elementalType);
-        if (mult >= 2.0f) Log("It's super effective!");
+        if      (mult >= 2.0f) Log("It's super effective!");
         else if (mult <= 0.5f) Log("It's not very effective...");
 
         defender.TakeDamage(damage);
@@ -452,10 +441,10 @@ public class BattleSystem : MonoBehaviour
     {
         switch (effectName)
         {
-            case "Burn": return new StatusEffect { effectName = "Burn", sourceElement = ElementalType.Fire, duration = 3, damagePerTurn = 5, affectedStat = StatType.AttackP, statModifier = 0.9f };
-            case "Soggy": return new StatusEffect { effectName = "Soggy", sourceElement = ElementalType.Water, duration = 2, damagePerTurn = 0, affectedStat = StatType.Speed, statModifier = 0.75f };
-            case "Poison": return new StatusEffect { effectName = "Poison", sourceElement = ElementalType.Nature, duration = 4, damagePerTurn = 8, affectedStat = StatType.Defence, statModifier = 0.85f };
-            case "Confusion": return new StatusEffect { effectName = "Confusion", sourceElement = ElementalType.Absurd, duration = 2, damagePerTurn = 3, affectedStat = StatType.CriticalRate, statModifier = 0.5f };
+            case "Burn":      return new StatusEffect { effectName = "Burn",      sourceElement = ElementalType.Fire,   duration = 3, damagePerTurn = 5, affectedStat = StatType.AttackP,      statModifier = 0.9f  };
+            case "Soggy":     return new StatusEffect { effectName = "Soggy",     sourceElement = ElementalType.Water,  duration = 2, damagePerTurn = 0, affectedStat = StatType.Speed,        statModifier = 0.75f };
+            case "Poison":    return new StatusEffect { effectName = "Poison",    sourceElement = ElementalType.Nature, duration = 4, damagePerTurn = 8, affectedStat = StatType.Defence,      statModifier = 0.85f };
+            case "Confusion": return new StatusEffect { effectName = "Confusion", sourceElement = ElementalType.Absurd, duration = 2, damagePerTurn = 3, affectedStat = StatType.CriticalRate, statModifier = 0.5f  };
             default:
                 Debug.LogWarning($"Unknown effect: {effectName}");
                 return null;
@@ -469,7 +458,7 @@ public class BattleSystem : MonoBehaviour
     // ─────────────────────────────────────────────────────────────────────────
 
     public List<PlayerUnit> GetLivingPlayers() => playerParty.Where(u => u.IsAlive).ToList();
-    public List<EnemyUnit> GetLivingEnemies() => enemyParty.Where(u => u.IsAlive).ToList();
+    public List<EnemyUnit>  GetLivingEnemies()  => enemyParty.Where(u => u.IsAlive).ToList();
 
     private PlayerUnit GetRandomLivingPlayer()
     {
@@ -521,10 +510,10 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(actionDelay);
 
         // Split XP evenly among surviving members
-        int totalXP = enemyParty.Sum(e => e.experienceReward);
+        int totalXP   = enemyParty.Sum(e => e.experienceReward);
         int totalGold = enemyParty.Sum(e => e.goldReward);
         var survivors = GetLivingPlayers();
-        int xpShare = survivors.Count > 0 ? totalXP / survivors.Count : 0;
+        int xpShare   = survivors.Count > 0 ? totalXP / survivors.Count : 0;
 
         foreach (PlayerUnit pu in survivors)
         {
@@ -556,24 +545,24 @@ public class BattleSystem : MonoBehaviour
     {
         switch (stat)
         {
-            case StatType.AttackP: target.attackP = Mathf.RoundToInt(target.attackP * modifier); break;
-            case StatType.Defence: target.defence = Mathf.RoundToInt(target.defence * modifier); break;
-            case StatType.Speed: target.speed = Mathf.RoundToInt(target.speed * modifier); break;
-            case StatType.CriticalDMG: target.criticalDMG *= modifier; break;
-            case StatType.CriticalRate: target.criticalRate *= modifier; break;
-            case StatType.EffectRes: target.effectRes *= modifier; break;
+            case StatType.AttackP:      target.attackP      = Mathf.RoundToInt(target.attackP * modifier);      break;
+            case StatType.Defence:      target.defence      = Mathf.RoundToInt(target.defence * modifier);      break;
+            case StatType.Speed:        target.speed        = Mathf.RoundToInt(target.speed   * modifier);      break;
+            case StatType.CriticalDMG:  target.criticalDMG  *= modifier;                                        break;
+            case StatType.CriticalRate: target.criticalRate *= modifier;                                         break;
+            case StatType.EffectRes:    target.effectRes    *= modifier;                                         break;
             case StatType.Health:
                 int amount = Mathf.RoundToInt(target.maxHealth * (modifier - 1f));
                 if (amount > 0) target.Heal(amount);
-                else target.TakeDamage(Mathf.Abs(amount));
+                else            target.TakeDamage(Mathf.Abs(amount));
                 break;
         }
     }
 
-    private void SetState(BattleState newState) { state = newState; OnStateChanged?.Invoke(newState); }
-    private void Log(string message) { Debug.Log($"[Battle] {message}"); OnBattleMessage?.Invoke(message); }
-    private void NotifyStatsChanged() => OnStatsChanged?.Invoke(playerParty, enemyParty);
-    private void NotifyActiveUnitsChanged() => OnActiveUnitsChanged?.Invoke(activePlayer, activeEnemy);
+    private void SetState(BattleState newState)      { state = newState; OnStateChanged?.Invoke(newState); }
+    private void Log(string message)                 { Debug.Log($"[Battle] {message}"); OnBattleMessage?.Invoke(message); }
+    private void NotifyStatsChanged()                => OnStatsChanged?.Invoke(playerParty, enemyParty);
+    private void NotifyActiveUnitsChanged()          => OnActiveUnitsChanged?.Invoke(activePlayer, activeEnemy);
 
     #endregion
 }

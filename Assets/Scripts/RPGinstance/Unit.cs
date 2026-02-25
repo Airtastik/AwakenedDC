@@ -25,8 +25,21 @@ public class Unit : MonoBehaviour
 
     protected virtual void Awake()
     {
-        currentHealth = maxHealth;
         currentEffects = new List<StatusEffect>();
+        // currentHealth is NOT set here. Stats may be assigned by a Test script
+        // or the Inspector after Awake runs. Call InitHealth() once stats are ready.
+    }
+
+    /// <summary>
+    /// Called by BattleSystem after all party members are confirmed to have
+    /// their stats set. Sets currentHealth = maxHealth safely.
+    /// </summary>
+    public void InitHealth()
+    {
+        if (maxHealth > 0)
+            currentHealth = maxHealth;
+        else
+            Debug.LogWarning($"[Unit] {unitName} has maxHealth of 0! Did you forget to set stats?");
     }
 
     // ── Status Effect Helpers ────────────────────────────────────────────────

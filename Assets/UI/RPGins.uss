@@ -1,31 +1,270 @@
-:root {
-}
+/* ═══════════════════════════════════════════════════
+   RPGins.uss  —  Battle UI stylesheet
+   Dark RPG theme: near-black bg, gold accents
+   ═══════════════════════════════════════════════════ */
 
+/* ── Root ──────────────────────────────────────────── */
 .RPGpanel {
-    opacity: 0;
-    background-color: rgb(180, 180, 180);
+    flex-grow: 1;
+    background-color: rgb(13, 17, 23);
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    visibility: visible;
+    opacity: 1;
 }
 
-.PlayerPanel {
-    left: auto;
-    top: auto;
-    right: auto;
-    bottom: auto;
-    background-color: rgb(188, 77, 77);
-    opacity: 0.48;
-    background-image: none;
+/* ── Panel Labels ──────────────────────────────────── */
+.panel-label {
+    font-size: 10px;
+    -unity-font-style: bold;
+    letter-spacing: 3px;
+    padding: 4px 8px 2px 8px;
 }
+.enemy-label { color: rgb(224, 92, 92); }
+.party-label { color: rgb(78, 205, 196); }
+.log-label   { color: rgb(139, 148, 158); }
 
+/* ── Enemy Panel ───────────────────────────────────── */
 .enemyPanel {
+    position: absolute;
+    left: 15%; right: 5%; top: 1%; bottom: 89%;
+    background-color: rgba(26, 15, 15, 0.95);
+    border-color: rgb(122, 28, 28);
+    border-width: 1px;
+    border-radius: 6px;
+    flex-direction: row;
+    align-items: center;
+    padding: 4px 8px;
 }
 
-.charRPGUI {
+/* ── Player Party Panel ────────────────────────────── */
+.PlayerPanel {
+    position: absolute;
+    left: 15%; right: 5%; top: 83%; bottom: 1%;
+    background-color: rgba(15, 26, 26, 0.95);
+    border-color: rgb(28, 92, 92);
+    border-width: 1px;
+    border-radius: 6px;
+    flex-direction: row;
+    align-items: center;
+    padding: 4px 8px;
 }
 
-
-
-.PlayerHP {
+/* ── Game Info / Battle Log ────────────────────────── */
+.gameInfo {
+    position: absolute;
+    left: 1%; right: 86%; top: 5%; bottom: 5%;
+    background-color: rgba(22, 27, 34, 0.97);
+    border-color: rgb(48, 54, 61);
+    border-width: 1px;
+    border-radius: 6px;
+    flex-direction: column;
+    padding: 4px;
 }
 
-.PlayerSP {
+.log-scroll  { flex-grow: 1; }
+.log-content { flex-direction: column; padding: 4px; }
+
+.log-entry            { font-size: 11px; color: rgb(201, 209, 217); padding: 2px 0; white-space: normal; }
+.log-entry.log-system { color: rgb(139, 148, 158); -unity-font-style: italic; }
+.log-entry.log-super  { color: rgb(240, 192, 64);  -unity-font-style: bold; }
+.log-entry.log-resist { color: rgb(110, 118, 129); }
+.log-entry.log-effect { color: rgb(240, 136, 62); }
+
+/* ── Action Panel ──────────────────────────────────── */
+.PlayerActions {
+    position: absolute;
+    left: 75%; right: 1%; top: 12%; bottom: 12%;
+    background-color: rgba(22, 27, 34, 0.97);
+    border-color: rgb(48, 54, 61);
+    border-width: 1px;
+    border-radius: 6px;
+    flex-direction: column;
+    padding: 6px;
 }
+
+.action-foldout {
+    color: rgb(201, 209, 217);
+    font-size: 11px;
+    margin-bottom: 2px;
+    border-bottom-width: 1px;
+    border-color: rgb(48, 54, 61);
+    padding-bottom: 4px;
+}
+
+.empty-label {
+    font-size: 10px;
+    color: rgb(110, 118, 129);
+    -unity-font-style: italic;
+    padding: 2px 8px;
+}
+
+/* ── Buttons ───────────────────────────────────────── */
+.action-btn {
+    height: 28px;
+    margin: 2px 0;
+    border-radius: 4px;
+    border-width: 1px;
+    font-size: 10px;
+    -unity-font-style: bold;
+    transition-duration: 0.1s;
+    transition-property: background-color;
+}
+
+.move-btn {
+    border-color: rgb(56, 139, 253);
+    background-color: rgb(13, 30, 53);
+    color: rgb(165, 200, 255);
+}
+.move-btn:hover    { background-color: rgb(26, 58, 92); color: white; }
+.move-btn:disabled { opacity: 0.3; }
+
+.move-type-fire   { border-color: rgb(122, 32, 32);  color: rgb(255, 170, 136); background-color: rgb(32, 10, 10);  }
+.move-type-water  { border-color: rgb(26, 74, 106);  color: rgb(136, 221, 255); background-color: rgb(10, 16, 32);  }
+.move-type-nature { border-color: rgb(26, 74, 26);   color: rgb(136, 255, 136); background-color: rgb(10, 32, 10);  }
+.move-type-normal { border-color: rgb(58, 58, 58);   color: rgb(204, 204, 204); background-color: rgb(18, 18, 18);  }
+.move-type-absurd { border-color: rgb(74, 26, 106);  color: rgb(221, 170, 255); background-color: rgb(24, 10, 32);  }
+
+.guard-btn {
+    border-color: rgb(78, 205, 196);
+    background-color: rgb(14, 30, 30);
+    color: rgb(78, 205, 196);
+}
+.guard-btn:hover { background-color: rgb(26, 53, 53); color: white; }
+
+/*.flee-btn {
+    border-color: rgb(110, 118, 129);
+    background-color: transparent;
+    color: rgb(110, 118, 129);
+}
+.flee-btn:hover { border-color: rgb(248, 81, 73); color: rgb(248, 81, 73); }*/
+
+.bottom-actions {
+    flex-direction: row;
+    margin-top: auto;
+    justify-content: space-between;
+}
+.bottom-actions .action-btn { flex-grow: 1; margin: 2px; }
+
+/* ── Unit Cards ────────────────────────────────────── */
+.unit-card {
+    flex-direction: column;
+    background-color: rgb(22, 27, 34);
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: rgb(48, 54, 61);
+    padding: 5px 8px;
+    margin: 3px;
+    min-width: 120px;
+    flex-grow: 1;
+    transition-duration: 0.15s;
+    transition-property: border-color, background-color;
+}
+.unit-card.active-card.player-card { border-color: rgb(78, 205, 196);  background-color: rgb(14, 30, 30); }
+.unit-card.active-card.enemy-card  { border-color: rgb(224, 92, 92);   background-color: rgb(30, 14, 14); }
+.unit-card.fainted-card            { opacity: 0.3; }
+
+.unit-name {
+    font-size: 12px;
+    color: rgb(230, 237, 243);
+    -unity-font-style: bold;
+    margin-bottom: 3px;
+}
+
+.type-badge {
+    font-size: 8px;
+    border-radius: 3px;
+    padding: 1px 4px;
+    margin-bottom: 4px;
+    align-self: flex-start;
+}
+.type-fire   { background-color: rgb(122, 32, 32);  color: rgb(255, 170, 136); }
+.type-water  { background-color: rgb(26, 74, 106);  color: rgb(136, 221, 255); }
+.type-nature { background-color: rgb(26, 74, 26);   color: rgb(136, 255, 136); }
+.type-normal { background-color: rgb(58, 58, 58);   color: rgb(204, 204, 204); }
+.type-absurd { background-color: rgb(74, 26, 106);  color: rgb(221, 170, 255); }
+
+/* HP Bar */
+.hp-row { flex-direction: row; align-items: center; margin-bottom: 2px; }
+.hp-lbl { font-size: 8px; color: rgb(139, 148, 158); width: 18px; margin-right: 3px; }
+.hp-bar-bg {
+    flex-grow: 1; height: 5px;
+    background-color: rgb(33, 38, 45);
+    border-radius: 3px; overflow: hidden;
+}
+.hp-bar-fill {
+    height: 100%; border-radius: 3px;
+    background-color: rgb(63, 185, 80);
+    transition-duration: 0.3s; transition-property: width, background-color;
+}
+.hp-bar-fill.hp-mid { background-color: rgb(210, 153, 34); }
+.hp-bar-fill.hp-low { background-color: rgb(248, 81, 73);  }
+.hp-txt { font-size: 8px; color: rgb(139, 148, 158); width: 48px; -unity-text-align: upper-right; margin-left: 3px; }
+
+/* SP Bar */
+.sp-row { flex-direction: row; align-items: center; }
+.sp-lbl { font-size: 8px; color: rgb(139, 148, 158); width: 18px; margin-right: 3px; }
+.sp-bar-bg  { flex-grow: 1; height: 4px; background-color: rgb(33, 38, 45); border-radius: 3px; overflow: hidden; }
+.sp-bar-fill { height: 100%; border-radius: 3px; background-color: rgb(88, 166, 255); transition-duration: 0.3s; transition-property: width; }
+.sp-txt { font-size: 8px; color: rgb(139, 148, 158); width: 48px; -unity-text-align: upper-right; margin-left: 3px; }
+
+/* Effect badges */
+.effects-row  { flex-direction: row; flex-wrap: wrap; margin-top: 2px; }
+.effect-badge { font-size: 7px; border-radius: 2px; padding: 1px 3px; margin: 1px; background-color: rgb(48, 54, 61); color: rgb(240, 136, 62); border-width: 1px; border-color: rgb(240, 136, 62); }
+
+/* Switch buttons inside foldout */
+.switch-btn {
+    height: 26px; margin: 2px 0;
+    border-radius: 4px; border-width: 1px;
+    border-color: rgb(78, 205, 196);
+    background-color: rgb(14, 30, 30);
+    color: rgb(78, 205, 196);
+    font-size: 10px;
+}
+.switch-btn:hover    { background-color: rgb(26, 53, 53); color: white; }
+.switch-btn:disabled { opacity: 0.3; }
+
+/* ── Overlays ──────────────────────────────────────── */
+.overlay {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.72);
+    align-items: center;
+    justify-content: center;
+}
+.hidden { display: none; }
+
+.overlay-popup {
+    background-color: rgb(22, 27, 34);
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: rgb(240, 192, 64);
+    padding: 18px 24px;
+    min-width: 200px;
+    align-items: center;
+}
+
+.overlay-title {
+    font-size: 11px; letter-spacing: 3px;
+    color: rgb(240, 192, 64);
+    -unity-font-style: bold;
+    margin-bottom: 12px;
+}
+
+.target-list  { flex-direction: column; width: 100%; margin-bottom: 8px; }
+.target-btn   { height: 30px; margin: 2px 0; border-radius: 4px; border-width: 1px; border-color: rgb(224, 92, 92); background-color: rgb(26, 10, 10); color: rgb(224, 92, 92); font-size: 10px; }
+.target-btn:hover { background-color: rgb(42, 16, 16); color: white; }
+
+.cancel-btn   { height: 26px; min-width: 80px; border-radius: 4px; border-width: 1px; border-color: rgb(110, 118, 129); background-color: transparent; color: rgb(110, 118, 129); font-size: 10px; margin-top: 4px; }
+.cancel-btn:hover { border-color: rgb(201, 209, 217); color: rgb(201, 209, 217); }
+
+.result-popup   { border-color: rgb(240, 192, 64); padding: 28px 36px; min-width: 240px; }
+.result-title   { font-size: 28px; -unity-font-style: bold; color: rgb(240, 192, 64); letter-spacing: 5px; margin-bottom: 6px; }
+.result-subtitle { font-size: 12px; color: rgb(139, 148, 158); margin-bottom: 20px; -unity-text-align: upper-center; }
+.continue-btn   { height: 36px; min-width: 120px; border-radius: 5px; border-width: 1px; border-color: rgb(240, 192, 64); background-color: rgb(30, 26, 14); color: rgb(240, 192, 64); font-size: 11px; letter-spacing: 2px; }
+.continue-btn:hover { background-color: rgb(46, 40, 20); color: white; }
+
+/* ── Legacy classes kept for compatibility ─────────── */
+.charRPGUI  { }
+.PlayerHP   { }
+.PlayerSP   { }
