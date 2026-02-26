@@ -542,7 +542,7 @@ GameObject:
   - component: {fileID: 1377823977}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -639,6 +639,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoomGenerator
       objectReference: {fileID: 0}
+    - target: {fileID: 1466247865375986204, guid: 5932261808d1a1349ae53533bf053605, type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: 156c808c60e4dd547b545d2df3d15cf5, type: 2}
     - target: {fileID: 7395429547303579258, guid: 5932261808d1a1349ae53533bf053605, type: 3}
       propertyPath: 'roomPrefabs.Array.data[14]'
       value: 
