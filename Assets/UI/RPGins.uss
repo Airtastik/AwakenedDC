@@ -74,12 +74,12 @@
 /* ── Action Panel ──────────────────────────────────── */
 .PlayerActions {
     position: absolute;
-    left: 75%; right: 1%; top: 12%; bottom: 12%;
+    left: 75%; right: 1%; bottom: 12%;
     background-color: rgba(22, 27, 34, 0.97);
     border-color: rgb(48, 54, 61);
     border-width: 1px;
     border-radius: 6px;
-    flex-direction: column;
+    flex-direction: column-reverse;
     padding: 6px;
 }
 
