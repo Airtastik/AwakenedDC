@@ -21,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController characterController;
 
     private bool canMove = true;
+    
+    private PlayerInventory inventory;
 
     void Start()
     {
@@ -29,6 +31,15 @@ public class PlayerMovement : MonoBehaviour
         Cursor.visible = false;
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        Item item = other.GetComponent<Item>();
+        if (item != null)
+        {
+            inventory.PickUp(item);
+        }
+    }
+    
     void Update()
     {
         Vector3 forward = transform.TransformDirection(Vector3.forward);

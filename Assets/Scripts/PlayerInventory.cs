@@ -81,7 +81,7 @@ public class PlayerInventory : MonoBehaviour
 
     // --- INVENTORY LOGIC ---
 
-    void PickUp(Item item)
+    public void PickUp(Item item)
     {
         Debug.Log("Successfully picked up: " + item.itemName);
 
