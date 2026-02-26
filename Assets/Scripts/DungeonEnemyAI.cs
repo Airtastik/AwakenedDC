@@ -105,7 +105,7 @@ public class DungeonEnemyAI : MonoBehaviour
         // If we don't have a destination, find a random spot nearby
         if (!agent.hasPath || agent.remainingDistance < 0.5f)
         {
-            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * 1f; //Walk distance
+            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * 5f; //Walk distance
             randomDirection += transform.position;
 
             NavMeshHit hit;
@@ -138,7 +138,7 @@ public class DungeonEnemyAI : MonoBehaviour
 
             // If moving toward player (dot is negative), show front. 
             // If moving away (dot is positive), show back.
-            spriteRenderer.sprite = (dot < 0) ? frontSprite : backSprite;
+            spriteRenderer.sprite = (dot < 0) ? backSprite : frontSprite;
         }
     }
 
