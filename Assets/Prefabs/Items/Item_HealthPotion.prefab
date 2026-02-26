@@ -123,9 +123,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6974556360461991746}
   - component: {fileID: 2780621678714489233}
+  - component: {fileID: -3523525125427468954}
   m_Layer: 0
   m_Name: Item_HealthPotion
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -160,3 +161,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   itemName: Health Potion
   healthAmount: 20
+--- !u!65 &-3523525125427468954
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6353637914116672544}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.5657983, y: 1.5156327, z: 2.8971615}
+  m_Center: {x: -0.30584693, y: 0.2578165, z: -0.033955574}

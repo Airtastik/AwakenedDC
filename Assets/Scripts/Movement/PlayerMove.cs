@@ -31,14 +31,14 @@ public class PlayerMovement : MonoBehaviour
         Cursor.visible = false;
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        Item item = other.GetComponent<Item>();
-        if (item != null)
-        {
-            inventory.PickUp(item);
-        }
-    }
+    // void OnTriggerEnter(Collider other)
+    // {
+    //     Item item = other.GetComponent<Item>();
+    //     if (item != null)
+    //     {
+    //         inventory.PickUp(item);
+    //     }
+    // }
     
     void Update()
     {
