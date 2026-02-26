@@ -1,32 +1,31 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/RPGins.uss?fileID=7433441132597879392&amp;guid=7034b6aad50bd164daa60706857fee6f&amp;type=3#RPGins"/>
-    <ui:VisualElement name="RPGpanel" class="RPGpanel" style="visibility: visible; opacity: 1; background-color: rgba(99, 148, 221, 0);">
+    <ui:VisualElement name="RPGpanel" class="RPGpanel" style="visibility: visible; opacity: 1; background-color: rgba(13, 17, 23, 0);">
         <ui:VisualElement name="EnemyPanel" class="enemyPanel">
             <ui:Label name="enemy-panel-label" text="ENEMIES" class="panel-label enemy-label"/>
         </ui:VisualElement>
-        <ui:VisualElement name="gameInfo" class="gameInfo">
-            <ui:Label text="BATTLE LOG" class="panel-label log-label"/>
-            <ui:ScrollView name="log-scroll" class="log-scroll">
-                <ui:VisualElement name="log-content" class="log-content"/>
-            </ui:ScrollView>
+        <ui:VisualElement name="gameInfo" class="gameInfo" style="border-left-color: rgb(255, 140, 0); border-right-color: rgb(255, 140, 0); border-top-color: rgb(255, 140, 0); border-bottom-color: rgb(255, 140, 0); background-color: rgba(36, 25, 18, 0.97);">
+            <ui:Label text="TURN ORDER" class="panel-label queue-label" style="color: rgb(255, 140, 0);"/>
+            <ui:VisualElement name="queue-list" class="queue-list" style="color: rgb(255, 255, 255);"/>
         </ui:VisualElement>
         <ui:VisualElement name="PlayerSlot1" class="PlayerPanel">
             <ui:Label text="PARTY" class="panel-label party-label"/>
         </ui:VisualElement>
         <ui:VisualElement name="playerActions" class="PlayerActions">
+            <ui:VisualElement class="bottom-actions">
+                <ui:Button text="GUARD" name="guard" class="action-btn guard-btn"/>
+            </ui:VisualElement>
+            <ui:Foldout text="ITEMS" name="items" class="items action-foldout">
+                <ui:Label text="No items." class="empty-label"/>
+            </ui:Foldout>
+            <ui:Foldout text="SWITCH" name="special" class="special action-foldout"/>
             <ui:Foldout text="MOVES" name="moves" class="moves action-foldout">
                 <ui:Button name="move-btn-0" text="—" class="action-btn move-btn"/>
                 <ui:Button name="move-btn-1" text="—" class="action-btn move-btn"/>
                 <ui:Button name="move-btn-2" text="—" class="action-btn move-btn"/>
                 <ui:Button name="move-btn-3" text="—" class="action-btn move-btn"/>
             </ui:Foldout>
-            <ui:Foldout text="SWITCH" name="special" class="special action-foldout"/>
-            <ui:Foldout text="ITEMS" name="items" class="items action-foldout">
-                <ui:Label text="No items." class="empty-label"/>
-            </ui:Foldout>
-            <ui:VisualElement class="bottom-actions">
-                <ui:Button text="GUARD" name="guard" class="action-btn guard-btn"/>
-            </ui:VisualElement>
+            <ui:Label name="battle-message" text="" class="battle-message"/>
         </ui:VisualElement>
         <ui:VisualElement name="target-overlay" class="overlay hidden">
             <ui:VisualElement class="overlay-popup">
