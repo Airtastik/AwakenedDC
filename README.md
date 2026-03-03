@@ -13,3 +13,5 @@ https://opengameart.org/content/female-cultist
 
 Source for health potion sprite:
 https://karsiori.itch.io/pixel-art-potion-pack-animated/download/eyJleHBpcmVzIjoxNzcxNzk0ODI2LCJpZCI6MjM3MzQ0N30%3d.AbKpFdQ%2b0gwSdkchFGt%2f6rlj8rg%3d
+
+To play Beta test build, download betabuild zip file, then extract it, and run the exe file. to test the other part you will need to close the game (alt+F4) and then run the exe again.
