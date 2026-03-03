@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/MainMenu.uss"/>
+    <ui:VisualElement name="root" class="root">
+        <ui:VisualElement class="scanlines"/>
+        <ui:VisualElement class="content">
+            <ui:Label text="AWAKENED" class="title-top"/>
+            <ui:Label text="CHRONICLES" class="title-bottom"/>
+            <ui:VisualElement class="divider"/>
+            <ui:Button name="btn-awaken" text="AWAKENED DC" class="menu-btn btn-primary"/>
+            <ui:Button name="btn-rpg"    text="RPG TEST"    class="menu-btn btn-secondary"/>
+        </ui:VisualElement>
+        <ui:Label text="© 2025 YOUR STUDIO" class="footer"/>
+    </ui:VisualElement>
+</ui:UXML>

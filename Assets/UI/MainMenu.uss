@@ -1,0 +1,101 @@
+/* ── Root ───────────────────────────────────────────── */
+.root {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    background-color: rgb(6, 6, 10);
+    align-items: center;
+    justify-content: center;
+}
+
+/* CRT scanline overlay */
+.scanlines {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    background-image: repeating-linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.0) 0px,
+        rgba(0,0,0,0.0) 2px,
+        rgba(0,0,0,0.18) 2px,
+        rgba(0,0,0,0.18) 4px
+    );
+}
+
+/* ── Content block ──────────────────────────────────── */
+.content {
+    align-items: center;
+    flex-direction: column;
+    width: 420px;
+}
+
+/* ── Title ──────────────────────────────────────────── */
+.title-top {
+    font-size: 52px;
+    -unity-font-style: bold;
+    color: rgb(240, 192, 64);
+    letter-spacing: 10px;
+    -unity-text-align: upper-center;
+    text-shadow: 0 0 24px rgba(240,192,64,0.6);
+}
+
+.title-bottom {
+    font-size: 22px;
+    color: rgb(180, 140, 40);
+    letter-spacing: 8px;
+    -unity-text-align: upper-center;
+    margin-top: -6px;
+    margin-bottom: 4px;
+}
+
+.divider {
+    width: 260px;
+    height: 1px;
+    background-color: rgb(240, 192, 64);
+    margin-top: 8px;
+    margin-bottom: 32px;
+    opacity: 0.4;
+}
+
+/* ── Buttons ────────────────────────────────────────── */
+.menu-btn {
+    width: 320px;
+    height: 52px;
+    margin: 8px 0;
+    border-radius: 2px;
+    border-width: 1px;
+    font-size: 14px;
+    -unity-font-style: bold;
+    letter-spacing: 4px;
+    transition-duration: 0.12s;
+    transition-property: background-color, border-color, color;
+}
+
+.btn-primary {
+    background-color: rgb(240, 192, 64);
+    border-color: rgb(240, 192, 64);
+    color: rgb(6, 6, 10);
+}
+.btn-primary:hover {
+    background-color: rgb(255, 215, 100);
+    border-color: rgb(255, 215, 100);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border-color: rgb(240, 192, 64);
+    color: rgb(240, 192, 64);
+}
+.btn-secondary:hover {
+    background-color: rgba(240, 192, 64, 0.12);
+    color: rgb(255, 215, 100);
+    border-color: rgb(255, 215, 100);
+}
+
+/* ── Footer ─────────────────────────────────────────── */
+.footer {
+    position: absolute;
+    bottom: 16px;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: rgba(240, 192, 64, 0.25);
+    -unity-text-align: upper-center;
+}
