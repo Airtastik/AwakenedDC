@@ -6,37 +6,58 @@
 //Players will see an icon, the item name, the description, and have the option to use the item. 
 //The game should pause when the inventory is opened and resume when it restarts.
 
+// Prompt 2 (3/3/26): Update all the scripts to incorperate stacking.
+
 using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    public List<ItemData> items; // Drag your Item assets here in the Inspector
+    public List<ItemData> items = new List<ItemData>();
     public GameObject itemSlotPrefab;
     public Transform contentParent;
     public GameObject inventoryUI;
 
-    void Start()
-    {
-        PopulateInventory();
-        inventoryUI.SetActive(false);
-    }
-
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I)) // Toggle inventory
+        if (Input.GetKeyDown(KeyCode.I))
         {
             ToggleInventory();
         }
     }
 
-    void PopulateInventory()
+    public void AddItem(ItemData newData)
     {
+        // Check if we already have this item in our list
+        ItemData existingItem = items.Find(i => i.itemName == newData.itemName);
+
+        if (existingItem != null)
+        {
+            existingItem.quantity += newData.quantity;
+        }
+        else
+        {
+            // Add a copy so we don't edit the actual file in the Assets folder
+            ItemData clone = newData.GetCopy();
+            items.Add(clone);
+        }
+
+        if (inventoryUI.activeSelf) RefreshUI();
+    }
+
+    public void RefreshUI()
+    {
+        // Clear old UI slots
+        foreach (Transform child in contentParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Create new UI slots for current items
         foreach (ItemData item in items)
         {
             GameObject slot = Instantiate(itemSlotPrefab, contentParent);
-            // Assume the prefab has an 'ItemSlot' script to set the text/icons
-            slot.GetComponent<ItemSlot>().Setup(item);
+            slot.GetComponent<ItemSlot>().Setup(item, this);
         }
     }
 
@@ -45,7 +66,8 @@ public class InventoryManager : MonoBehaviour
         bool isActive = !inventoryUI.activeSelf;
         inventoryUI.SetActive(isActive);
 
-        // Pause/Resume Logic
+        if (isActive) RefreshUI();
+
         Time.timeScale = isActive ? 0f : 1f;
     }
 }

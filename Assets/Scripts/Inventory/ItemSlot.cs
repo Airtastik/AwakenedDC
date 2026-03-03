@@ -6,6 +6,8 @@
 //Players will see an icon, the item name, the description, and have the option to use the item. 
 //The game should pause when the inventory is opened and resume when it restarts.
 
+// Prompt 2 (3/3/26): Update all the scripts to incorperate stacking.
+
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -16,11 +18,15 @@ public class ItemSlot : MonoBehaviour
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI descriptionText;
     public TextMeshProUGUI quantityText;
-    private ItemData currentItem;
 
-    public void Setup(ItemData newItem)
+    private ItemData currentItem;
+    private InventoryManager manager;
+
+    public void Setup(ItemData newItem, InventoryManager m)
     {
         currentItem = newItem;
+        manager = m;
+
         nameText.text = newItem.itemName;
         descriptionText.text = newItem.description;
         quantityText.text = "x" + newItem.quantity.ToString();
@@ -29,7 +35,17 @@ public class ItemSlot : MonoBehaviour
 
     public void OnUseButtonClicked()
     {
-        currentItem.Use();
-        // Optional: Update quantity text or destroy slot if quantity reaches 0
+        if (currentItem.quantity > 0)
+        {
+            currentItem.quantity--;
+            Debug.Log($"Used {currentItem.itemName}. Remaining: {currentItem.quantity}");
+
+            if (currentItem.quantity <= 0)
+            {
+                manager.items.Remove(currentItem);
+            }
+
+            manager.RefreshUI(); // Update the labels and list
+        }
     }
 }
