@@ -65,7 +65,7 @@ MonoBehaviour:
   enemies:
   - {fileID: 3743211790169896993, guid: 31798d83a7270324681657339af3dcdd, type: 3}
   pickups:
-  - {fileID: 2780621678714489233, guid: 2193072a550f6e74da66e422ea260c51, type: 3}
+  - {fileID: 8630531689026170417, guid: fc62a9ac5345fbe4bbd089f3ad6e09ac, type: 3}
   treasurePrefab: {fileID: 7678888677872435788, guid: d3ed052ea2615bb4d9df96924a49ecb8, type: 3}
   staircasePrefab: {fileID: 6517814864680356131, guid: a7bee8d2d91720b4c972a5876142c7a5, type: 3}
   roomCount: 12

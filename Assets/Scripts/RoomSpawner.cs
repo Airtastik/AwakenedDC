@@ -47,7 +47,7 @@ public class RoomSpawner : MonoBehaviour
     public List<DungeonEnemyAI> enemies;
 
     /// list of all pickups willing to spawn
-    public List<Item> pickups;
+    public List<WorldItem> pickups;
 
     /// the treasure prefab being instantiated
     public GameObject treasurePrefab;
