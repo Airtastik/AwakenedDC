@@ -59,6 +59,9 @@ public class BattleSystem : MonoBehaviour
     public delegate void SwitchRequested(List<PlayerUnit> availableMembers);
     public static event SwitchRequested OnSwitchRequested;
 
+    public delegate void InventoryChanged(List<Item> items);
+    public static event InventoryChanged OnInventoryChanged;
+
     // ─────────────────────────────────────────────────────────────────────────
     #region Setup
     // ─────────────────────────────────────────────────────────────────────────
@@ -67,15 +70,35 @@ public class BattleSystem : MonoBehaviour
 
     private IEnumerator LateStart()
     {
-        yield return null; // let TestUnit Awake() scripts run first
+        yield return null; // let Awake() scripts run first
 
-        foreach (GameObject obj in playerPartyObjects)
+        // ── Player party ─────────────────────────────────────────────────────
+        // If a PartyManager exists, use it as the source of truth for player
+        // stats so HP/SP/XP persist across scenes.
+        // Fall back to playerPartyObjects if no PartyManager is present
+        // (useful for isolated test scenes).
+        if (PartyManager.Instance != null && PartyManager.Instance.PartySize > 0)
         {
-            PlayerUnit pu = obj.GetComponent<PlayerUnit>();
-            if (pu != null) playerParty.Add(pu);
-            else Debug.LogWarning($"{obj.name} has no PlayerUnit.");
+            var spawned = PartyManager.Instance.SpawnParty();
+            foreach (GameObject obj in spawned)
+            {
+                PlayerUnit pu = obj.GetComponent<PlayerUnit>();
+                if (pu != null) playerParty.Add(pu);
+            }
+            Debug.Log($"[BattleSystem] Party loaded from PartyManager ({playerParty.Count} members).");
+        }
+        else
+        {
+            foreach (GameObject obj in playerPartyObjects)
+            {
+                PlayerUnit pu = obj.GetComponent<PlayerUnit>();
+                if (pu != null) playerParty.Add(pu);
+                else Debug.LogWarning($"{obj.name} has no PlayerUnit.");
+            }
+            Debug.Log("[BattleSystem] No PartyManager found — using scene party objects.");
         }
 
+        // ── Enemy party ──────────────────────────────────────────────────────
         foreach (GameObject obj in enemyPartyObjects)
         {
             EnemyUnit eu = obj.GetComponent<EnemyUnit>();
@@ -86,8 +109,13 @@ public class BattleSystem : MonoBehaviour
         if (playerParty.Count == 0) { Debug.LogError("Player party is empty!"); yield break; }
         if (enemyParty.Count  == 0) { Debug.LogError("Enemy party is empty!");  yield break; }
 
-        foreach (var u in playerParty) u.InitHealth();
-        foreach (var u in enemyParty)  u.InitHealth();
+        // Don't call InitHealth here when using PartyManager —
+        // HP/SP are already the persisted values from last battle.
+        if (PartyManager.Instance == null)
+        {
+            foreach (var u in playerParty) u.InitHealth();
+        }
+        foreach (var u in enemyParty) u.InitHealth();
 
         IsReady = true;
         StartCoroutine(SetupBattle());
@@ -224,10 +252,17 @@ public class BattleSystem : MonoBehaviour
         if (state != BattleState.PlayerTurn) { Log("Not your turn!"); return; }
         if (moveIndex < 0 || moveIndex >= activePlayer.moveList.Length) { Log("Invalid move."); return; }
 
+        Move move = activePlayer.moveList[moveIndex];
+        if (!activePlayer.HasSP(move.spCost))
+        {
+            Log($"Not enough SP! ({move.moveName} costs {move.spCost} SP)");
+            return;
+        }
+
         EnemyUnit target = GetTargetEnemy(targetEnemyIndex);
         if (target == null) { Log("No valid target."); return; }
 
-        StartCoroutine(PlayerAttackTurn(activePlayer.moveList[moveIndex], target));
+        StartCoroutine(PlayerAttackTurn(move, target));
     }
 
     public void PlayerSwitch(int partyIndex)
@@ -242,6 +277,22 @@ public class BattleSystem : MonoBehaviour
         StartCoroutine(SwitchPlayerUnit(switchTarget));
     }
 
+    /// <summary>
+    /// Use an item from PlayerInventory on a party member.
+    /// targetPartyIndex -1 = auto-target (most wounded / active player).
+    /// </summary>
+    public void PlayerUseItem(Item item, int targetPartyIndex = -1)
+    {
+        if (state != BattleState.PlayerTurn) { Log("Not your turn!"); return; }
+
+        var inventory = PlayerInventory.Instance;
+        if (inventory == null) { Log("No inventory found."); return; }
+        if (!inventory.ConsumeItem(item))   { Log($"No {item.itemName} left."); return; }
+
+        OnInventoryChanged?.Invoke(inventory.items);
+        StartCoroutine(ItemUseTurn(item, targetPartyIndex));
+    }
+
     #endregion
 
     // ─────────────────────────────────────────────────────────────────────────
@@ -251,6 +302,13 @@ public class BattleSystem : MonoBehaviour
     private IEnumerator PlayerAttackTurn(Move move, EnemyUnit target)
     {
         Unit actor = activePlayer;
+
+        // Spend SP upfront — already validated in PlayerUseMove
+        if (move.spCost > 0)
+        {
+            activePlayer.SpendSP(move.spCost);
+            NotifyStatsChanged();
+        }
 
         if (!AccuracyCheck(move))
         {
@@ -279,6 +337,72 @@ public class BattleSystem : MonoBehaviour
         Log($"Go, {activePlayer.unitName}!");
         yield return new WaitForSeconds(actionDelay);
 
+        yield return StartCoroutine(EndCurrentTurn(actor));
+    }
+
+    private IEnumerator ItemUseTurn(Item item, int targetPartyIndex)
+    {
+        Unit actor = activePlayer;
+
+        // Resolve target
+        PlayerUnit target = (targetPartyIndex >= 0 && targetPartyIndex < playerParty.Count)
+            ? playerParty[targetPartyIndex]
+            : GetMostWoundedPlayer() ?? activePlayer;
+
+        Log($"{activePlayer.unitName} used {item.itemName}!");
+        yield return new WaitForSeconds(actionDelay * 0.5f);
+
+        switch (item.effect)
+        {
+            case ItemEffect.HealTarget:
+                target.Heal(item.power);
+                Log($"{target.unitName} recovered {item.power} HP!");
+                NotifyStatsChanged();
+                break;
+
+            case ItemEffect.HealParty:
+                foreach (var pu in GetLivingPlayers())
+                {
+                    pu.Heal(item.power);
+                    Log($"{pu.unitName} recovered {item.power} HP!");
+                }
+                NotifyStatsChanged();
+                break;
+
+            case ItemEffect.ReviveTarget:
+                // Target the first fainted member if no index given
+                PlayerUnit fainted = (targetPartyIndex >= 0 && targetPartyIndex < playerParty.Count)
+                    ? playerParty[targetPartyIndex]
+                    : playerParty.FirstOrDefault(u => !u.IsAlive);
+                if (fainted != null && !fainted.IsAlive)
+                {
+                    fainted.currentHealth = Mathf.RoundToInt(fainted.maxHealth * 0.3f);
+                    Log($"{fainted.unitName} was revived with {fainted.currentHealth} HP!");
+                    NotifyStatsChanged();
+                }
+                else Log("No fainted ally to revive.");
+                break;
+
+            case ItemEffect.BuffAttack:
+                target.attackP = Mathf.RoundToInt(target.attackP * item.statMult);
+                Log($"{target.unitName}'s Attack rose!");
+                NotifyStatsChanged();
+                break;
+
+            case ItemEffect.BuffDefence:
+                target.defence = Mathf.RoundToInt(target.defence * item.statMult);
+                Log($"{target.unitName}'s Defence rose!");
+                NotifyStatsChanged();
+                break;
+
+            case ItemEffect.CureEffects:
+                target.currentEffects.Clear();
+                Log($"{target.unitName}'s status effects were cured!");
+                NotifyStatsChanged();
+                break;
+        }
+
+        yield return new WaitForSeconds(actionDelay);
         yield return StartCoroutine(EndCurrentTurn(actor));
     }
 
@@ -491,6 +615,9 @@ public class BattleSystem : MonoBehaviour
         foreach (PlayerUnit pu in survivors) { pu.GainExperience(xpShare); Log($"{pu.unitName} gained {xpShare} XP!"); }
         Log($"Party earned {totalGold} gold!");
         NotifyStatsChanged();
+
+        // Persist HP/SP/XP back to PartyManager so state survives scene change
+        PartyManager.Instance?.SaveParty(playerParty);
     }
 
     private IEnumerator BattleLost()
@@ -499,6 +626,9 @@ public class BattleSystem : MonoBehaviour
         Log("All party members have fainted...");
         yield return new WaitForSeconds(actionDelay);
         Log("Game Over.");
+
+        // Save even on loss — members are clamped to 1 HP by PartyManager
+        PartyManager.Instance?.SaveParty(playerParty);
     }
 
     #endregion

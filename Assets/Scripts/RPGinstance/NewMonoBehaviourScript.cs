@@ -18,6 +18,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
     private Label         battleMessage;    // single-line message in action panel
     private VisualElement movesContainer;
     private VisualElement switchContainer;
+    private VisualElement itemsContainer;
     private Button        guardBtn;
     private VisualElement targetOverlay;
     private VisualElement targetList;
@@ -81,6 +82,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
         BuildPartyCards();
         BuildMoveButtons();
         BuildSwitchButtons();
+        BuildItemButtons();
         SetActionsEnabled(false);
         Debug.Log("[BattleUI] UI populated.");
     }
@@ -115,6 +117,10 @@ public class NewMonoBehaviourScript : MonoBehaviour
         movesContainer  = movesFoldout?.contentContainer;
         switchContainer = specialFoldout?.contentContainer;
 
+        var itemsFoldout = root.Q<Foldout>("items");
+        if (itemsFoldout == null) Debug.LogError("[BattleUI] Foldout 'items' not found.");
+        itemsContainer = itemsFoldout?.contentContainer;
+
         guardBtn = root.Q<Button>("guard");
         if (guardBtn == null) Debug.LogError("[BattleUI] Button 'guard' not found.");
         else guardBtn.clicked += OnGuardClicked;
@@ -147,6 +153,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
         BattleSystem.OnActiveUnitsChanged += OnActiveUnitsChanged;
         BattleSystem.OnTurnQueueUpdated   += OnTurnQueueUpdated;
         BattleSystem.OnSwitchRequested    += OnSwitchRequested;
+        BattleSystem.OnInventoryChanged   += OnInventoryChanged;
     }
 
     private void UnsubscribeEvents()
@@ -157,6 +164,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
         BattleSystem.OnActiveUnitsChanged -= OnActiveUnitsChanged;
         BattleSystem.OnTurnQueueUpdated   -= OnTurnQueueUpdated;
         BattleSystem.OnSwitchRequested    -= OnSwitchRequested;
+        BattleSystem.OnInventoryChanged   -= OnInventoryChanged;
     }
 
     #endregion
@@ -303,7 +311,16 @@ public class NewMonoBehaviourScript : MonoBehaviour
         }
 
         if (card.Q(className: "hp-txt") is Label hpTxt) hpTxt.text = $"{unit.currentHealth}/{unit.maxHealth}";
-        if (card.Q(className: "sp-txt") is Label spTxt) spTxt.text = "—";
+
+        // SP bar — only meaningful for player units with maxSP > 0
+        var spFill = card.Q(className: "sp-bar-fill");
+        if (spFill != null && unit.maxSP > 0)
+        {
+            float spRatio = (float)unit.currentSP / unit.maxSP;
+            spFill.style.width = Length.Percent(spRatio * 100f);
+        }
+        if (card.Q(className: "sp-txt") is Label spTxt)
+            spTxt.text = unit.maxSP > 0 ? $"{unit.currentSP}/{unit.maxSP}" : "—";
 
         card.EnableInClassList("fainted-card", !unit.IsAlive);
         card.RemoveFromClassList("active-card");
@@ -368,13 +385,19 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
             foreach (var t in new[] { "fire","water","nature","normal","absurd" })
                 btn.RemoveFromClassList($"move-type-{t}");
+            btn.RemoveFromClassList("move-no-sp");
 
             if (activePlayer?.moveList != null && i < activePlayer.moveList.Length)
             {
-                Move move = activePlayer.moveList[i];
-                btn.text = move.moveName;
-                btn.SetEnabled(true);
+                Move move    = activePlayer.moveList[i];
+                bool canAfford = activePlayer.HasSP(move.spCost);
+
+                // Label: "Move Name  [2 SP]" or "Move Name  [free]"
+                string spTag = move.spCost > 0 ? $"  [{move.spCost} SP]" : "  [free]";
+                btn.text = move.moveName + spTag;
+                btn.SetEnabled(canAfford);
                 btn.AddToClassList($"move-type-{move.elementalType.ToString().ToLower()}");
+                if (!canAfford) btn.AddToClassList("move-no-sp");
             }
             else
             {
@@ -413,6 +436,41 @@ public class NewMonoBehaviourScript : MonoBehaviour
             .Select(o => o?.GetComponent<PlayerUnit>()).Where(u => u != null).ToList();
         for (int i = 0; i < btns.Count && i < players.Count; i++)
             btns[i].SetEnabled(players[i].IsAlive);
+    }
+
+    private void BuildItemButtons()
+    {
+        if (itemsContainer == null) return;
+        itemsContainer.Clear();
+
+        var inventory = PlayerInventory.Instance;
+        if (inventory == null || inventory.items.Count == 0)
+        {
+            var empty = new Label("No items.");
+            empty.AddToClassList("empty-label");
+            itemsContainer.Add(empty);
+            return;
+        }
+
+        // Show one button per unique item type, with count badge
+        foreach (Item item in inventory.GetUniqueItems())
+        {
+            int count = inventory.CountOf(item.itemName);
+            var btn   = new Button();
+            btn.AddToClassList("item-btn");
+            btn.text = $"{item.itemName}  x{count}";
+            btn.tooltip = item.description;
+
+            Item captured = item;
+            btn.clicked += () => OnItemClicked(captured);
+            itemsContainer.Add(btn);
+        }
+    }
+
+    private void RefreshItemButtons()
+    {
+        if (!battleReady) return;
+        BuildItemButtons(); // rebuild is simpler than diffing counts
     }
 
     #endregion
@@ -507,6 +565,17 @@ public class NewMonoBehaviourScript : MonoBehaviour
         SetActionsEnabled(false);
     }
 
+    private void OnItemClicked(Item item)
+    {
+        if (battleSystem.state != BattleState.PlayerTurn) return;
+        SetActionsEnabled(false);
+        // Items that need a specific target show the party picker; others auto-target
+        if (item.effect == ItemEffect.ReviveTarget)
+            ShowPartyTargetOverlay(item);
+        else
+            battleSystem.PlayerUseItem(item);
+    }
+
     #endregion
 
     // ─────────────────────────────────────────────────────────────────────────
@@ -557,6 +626,41 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         if (!battleReady) return;
         RefreshSwitchButtons();
+    }
+
+    private void OnInventoryChanged(List<Item> items)
+    {
+        if (!battleReady) return;
+        RefreshItemButtons();
+    }
+
+    private void ShowPartyTargetOverlay(Item item)
+    {
+        targetList.Clear();
+        var allPlayers = battleSystem.playerPartyObjects
+            .Select((o, i) => (unit: o?.GetComponent<PlayerUnit>(), index: i))
+            .Where(p => p.unit != null && !p.unit.IsAlive)
+            .ToList();
+
+        foreach (var (unit, index) in allPlayers)
+        {
+            var btn = new Button();
+            btn.AddToClassList("target-btn");
+            btn.text = $"{unit.unitName}  (fainted)";
+            int captured = index;
+            btn.clicked += () => { HideTargetOverlay(); battleSystem.PlayerUseItem(item, captured); };
+            targetList.Add(btn);
+        }
+
+        if (targetList.childCount == 0)
+        {
+            // No fainted targets — just use it normally
+            HideTargetOverlay();
+            battleSystem.PlayerUseItem(item);
+            return;
+        }
+
+        targetOverlay.RemoveFromClassList("hidden");
     }
 
     private IEnumerator ShowResultDelayed(BattleState state, string subtitle)

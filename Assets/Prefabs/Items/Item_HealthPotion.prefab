@@ -122,8 +122,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6974556360461991746}
-  - component: {fileID: 2780621678714489233}
   - component: {fileID: -3523525125427468954}
+  - component: {fileID: 8701208647283468158}
   m_Layer: 0
   m_Name: Item_HealthPotion
   m_TagString: Item
@@ -147,20 +147,6 @@ Transform:
   - {fileID: 3473773520757984906}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2780621678714489233
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6353637914116672544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26875e96a88b49d47b00021435690d8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Item
-  itemName: Health Potion
-  healthAmount: 20
 --- !u!65 &-3523525125427468954
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -182,3 +168,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.5657983, y: 1.5156327, z: 2.8971615}
   m_Center: {x: -0.30584693, y: 0.2578165, z: -0.033955574}
+--- !u!114 &8701208647283468158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6353637914116672544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e48fdbe6a87175e4ba5c8be0a084bd1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
+  item: {fileID: 11400000, guid: 3009eebbaa074d04dbe96dc1317d3ee0, type: 2}

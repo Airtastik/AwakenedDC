@@ -1,128 +1,110 @@
-// Generated using Gemini 3 Fast on 2/22/2026
-// Prompt: I want to create an inventory and Item pickup system. I want to start
-// with a simple health potion. I want to have the option to pick up the health potion when I get close enough.
-
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
 
+/// <summary>
+/// Tracks the player's items both in the overworld and in battle.
+/// Attach to the player GameObject. Assign your item ScriptableObjects
+/// in the Inspector under Starting Items for testing.
+/// </summary>
 public class PlayerInventory : MonoBehaviour
 {
-    [Header("Inventory Data")]
+    [Header("Inventory")]
     public List<Item> items = new List<Item>();
+
+    [Header("Starting Items (for testing)")]
+    public List<Item> startingItems = new List<Item>();
 
     [Header("Interaction Settings")]
     public KeyCode interactionKey = KeyCode.E;
-    private Item nearbyItem; // Stores the item we are currently standing near
+    private ItemPickup nearbyPickup;
 
-    [Header("UI References")]
-    public GameObject inventoryMenu; 
+    [Header("Legacy UI (overworld)")]
+    public GameObject  inventoryMenu;
+    public TextMeshProUGUI itemListText;
     private bool isInventoryOpen = false;
 
-    [Header("UI Definition")]
-    public TextMeshProUGUI itemListText; 
+    // ── Static instance so BattleSystem can find it across scenes ────────────
+    public static PlayerInventory Instance { get; private set; }
+
+    void Awake()
+    {
+        if (Instance == null) { Instance = this; DontDestroyOnLoad(gameObject); }
+        else { Destroy(gameObject); return; }
+
+        foreach (var item in startingItems)
+            if (item != null) items.Add(item);
+    }
 
     void Update()
     {
-        // Toggle Inventory
         if (Input.GetKeyDown(KeyCode.I))
         {
             isInventoryOpen = !isInventoryOpen;
-            inventoryMenu.SetActive(isInventoryOpen);
-
-            // Handle Mouse and Time
-            if (isInventoryOpen)
-            {
-                Time.timeScale = 0f; // Pause the game
-                Cursor.lockState = CursorLockMode.None; // Free the mouse
-                Cursor.visible = true;
-                UpdateUI(); // Refresh the list
-            }
-            else
-            {
-                Time.timeScale = 1f; // Resume
-                Cursor.lockState = CursorLockMode.Locked; // Re-lock mouse for FPS
-                Cursor.visible = false;
-            }
+            if (inventoryMenu != null) inventoryMenu.SetActive(isInventoryOpen);
+            if (isInventoryOpen) { Time.timeScale = 0f; Cursor.lockState = CursorLockMode.None; Cursor.visible = true; UpdateLegacyUI(); }
+            else                 { Time.timeScale = 1f; Cursor.lockState = CursorLockMode.Locked; Cursor.visible = false; }
         }
 
-        // Interaction logic
-        if (!isInventoryOpen && nearbyItem != null && Input.GetKeyDown(interactionKey))
-        {
-            PickUp(nearbyItem);
-        }
+        if (!isInventoryOpen && nearbyPickup != null && Input.GetKeyDown(interactionKey))
+            nearbyPickup.PickUp(this);
     }
 
-    // --- DETECTION LOGIC ---
-
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        // Check if the object has the "Item" tag
         if (other.CompareTag("Item"))
         {
-            Item itemScript = other.GetComponent<Item>();
-            if (itemScript != null)
-            {
-                nearbyItem = itemScript;
-                Debug.Log("Near " + nearbyItem.itemName + ". Press " + interactionKey + " to pick up.");
-            }
+            var pickup = other.GetComponent<ItemPickup>();
+            if (pickup != null) { nearbyPickup = pickup; Debug.Log($"Near {pickup.item?.itemName}. Press {interactionKey} to pick up."); }
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    void OnTriggerExit(Collider other)
     {
-        // When walking away, clear the reference so we can't pick it up from afar
-        if (other.CompareTag("Item"))
-        {
-            nearbyItem = null;
-            Debug.Log("Left item range.");
-        }
+        if (other.CompareTag("Item")) nearbyPickup = null;
     }
 
-    // --- INVENTORY LOGIC ---
+    // ── Inventory helpers ─────────────────────────────────────────────────────
 
-    public void PickUp(Item item)
+    public void AddItem(Item item)
     {
-        Debug.Log("Successfully picked up: " + item.itemName);
-
         items.Add(item);
-
-        // Option A: Destroy the object in the world
-        // Destroy(item.gameObject); 
-
-        // Option B: Just deactivate it (Better if you want to reference the specific object later)
-        item.gameObject.SetActive(false);
-
-        // Clear the nearby reference since the object is now "gone"
-        nearbyItem = null;
+        Debug.Log($"[Inventory] Picked up {item.itemName}. Total: {CountOf(item.itemName)}");
     }
 
-    void UpdateUI()
+    /// <summary>
+    /// Consume one copy of the item. Returns false if not in inventory.
+    /// </summary>
+    public bool ConsumeItem(Item item)
     {
-        // Clear the current text
+        int idx = items.IndexOf(item);
+        if (idx < 0) { Debug.LogWarning($"[Inventory] {item.itemName} not found."); return false; }
+        items.RemoveAt(idx);
+        return true;
+    }
+
+    public int CountOf(string itemName) => items.FindAll(i => i.itemName == itemName).Count;
+
+    public List<Item> GetUniqueItems()
+    {
+        var seen  = new HashSet<string>();
+        var unique = new List<Item>();
+        foreach (var item in items)
+            if (seen.Add(item.itemName)) unique.Add(item);
+        return unique;
+    }
+
+    // ── Legacy overworld UI ───────────────────────────────────────────────────
+
+    void UpdateLegacyUI()
+    {
+        if (itemListText == null) return;
         itemListText.text = "--- INVENTORY ---\n";
-
-        if (items.Count == 0)
-        {
-            itemListText.text += "Empty";
-            return;
-        }
-
-        // Create a dictionary to count duplicates (e.g., "Health Potion x3")
-        Dictionary<string, int> counts = new Dictionary<string, int>();
-
-        foreach (Item item in items)
-        {
-            if (counts.ContainsKey(item.itemName))
-                counts[item.itemName]++;
-            else
-                counts[item.itemName] = 1;
-        }
-
-        // Display the items and their counts
+        if (items.Count == 0) { itemListText.text += "Empty"; return; }
+        var counts = new Dictionary<string, int>();
+        foreach (var item in items)
+            counts[item.itemName] = counts.ContainsKey(item.itemName) ? counts[item.itemName] + 1 : 1;
         foreach (var entry in counts)
-        {
-            itemListText.text += entry.Key + " x" + entry.Value + "\n";
-        }
+            itemListText.text += $"{entry.Key} x{entry.Value}\n";
     }
 }
