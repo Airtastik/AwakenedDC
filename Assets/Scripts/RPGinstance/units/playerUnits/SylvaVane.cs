@@ -21,26 +21,35 @@ public class SylvaVane : MonoBehaviour
 
         p.moveList = new Move[]
         {
-            // Free attack — instinctive flinch, no SP needed
+            // ── Regular Moves (0-2) ──────────────────────────────────────────
             new Move { moveName = "Startled Flinch",   moveType = MoveType.Attack, elementalType = ElementalType.Nature,
                        baseDamage = 14, accuracy = 0.95f, spCost = 0,
                        effectToApply = "Poison", effectChance = 0.40f },
 
-            // Major heal — costs 3 SP (her big move)
-            new Move { moveName = "Brown Paper Bag",   moveType = MoveType.Heal,   elementalType = ElementalType.Nature,
-                       baseHealing = 50, accuracy = 1.0f, spCost = 3 },
-
-            // Minor heal — costs 1 SP
             new Move { moveName = "Offer Peppermint",  moveType = MoveType.Heal,   elementalType = ElementalType.Nature,
                        baseHealing = 25, accuracy = 1.0f, spCost = 1 },
 
-            // Attack debuff — costs 2 SP
             new Move { moveName = "Projected Anxiety", moveType = MoveType.Debuff, elementalType = ElementalType.Nature,
-                       baseDamage = 5, accuracy = 0.85f, spCost = 2,
+                       baseDamage = 5, accuracy = 0.85f, spCost = 1,
                        effectToApply = "Poison", effectChance = 0.95f,
                        buffStat = StatType.AttackP, statModifier = 0.70f },
+
+            // ── Special Moves (3-5) ──────────────────────────────────────────
+            // Big emergency heal — panic breathing into a paper bag
+            new Move { moveName = "Brown Paper Bag",   moveType = MoveType.Heal,   elementalType = ElementalType.Nature,
+                       baseHealing = 50, accuracy = 1.0f, spCost = 3 },
+
+            // Her anxiety becomes contagious — poisons and slows the whole enemy party
+            new Move { moveName = "Mass Hysteria",     moveType = MoveType.Special, elementalType = ElementalType.Nature,
+                       baseDamage = 8, accuracy = 0.80f, spCost = 3,
+                       effectToApply = "Poison", effectChance = 0.85f,
+                       buffStat = StatType.Speed, statModifier = 0.65f },
+
+            // A burst of accidental healing energy — restores HP to the whole party
+            new Move { moveName = "Nervous Energy",    moveType = MoveType.Special, elementalType = ElementalType.Absurd,
+                       baseHealing = 20, accuracy = 1.0f, spCost = 4 },
         };
 
-        Debug.Log($"[PlayerSetup] {p.unitName} configured. HP: {p.maxHealth}  SP: {p.maxSP}");
+        Debug.Log($"[PlayerSetup] {p.unitName} configured. HP:{p.maxHealth} SP:{p.maxSP}");
     }
 }

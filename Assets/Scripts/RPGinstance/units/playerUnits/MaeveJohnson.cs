@@ -21,27 +21,35 @@ public class MaeveJohnson : MonoBehaviour
 
         p.moveList = new Move[]
         {
-            // Free attack — always available
-            new Move { moveName = "Scathing Rebuttal",  moveType = MoveType.Attack, elementalType = ElementalType.Fire,
+            // ── Regular Moves (0-2) ──────────────────────────────────────────
+            new Move { moveName = "Scathing Rebuttal",   moveType = MoveType.Attack, elementalType = ElementalType.Fire,
                        baseDamage = 22, accuracy = 0.95f, spCost = 0,
                        effectToApply = "Burn", effectChance = 0.35f },
 
-            // Nuclear option — costs 3 SP
-            new Move { moveName = "Burn Bridges",       moveType = MoveType.Attack, elementalType = ElementalType.Fire,
-                       baseDamage = 40, accuracy = 0.70f, spCost = 3 },
-
-            // Debuff + Burn — costs 2 SP
-            new Move { moveName = "Condescending Glare",moveType = MoveType.Debuff, elementalType = ElementalType.Fire,
-                       baseDamage = 8, accuracy = 0.90f, spCost = 2,
+            new Move { moveName = "Condescending Glare", moveType = MoveType.Debuff, elementalType = ElementalType.Fire,
+                       baseDamage = 8, accuracy = 0.90f, spCost = 1,
                        effectToApply = "Burn", effectChance = 0.90f,
                        buffStat = StatType.Defence, statModifier = 0.75f },
 
-            // Self crit-rate buff — costs 1 SP
-            new Move { moveName = "Stubborn Pride",     moveType = MoveType.Buff,   elementalType = ElementalType.Normal,
+            new Move { moveName = "Stubborn Pride",      moveType = MoveType.Buff,   elementalType = ElementalType.Normal,
                        accuracy = 1.0f, spCost = 1,
                        buffStat = StatType.CriticalRate, statModifier = 1.5f },
+
+            // ── Special Moves (3-5) ──────────────────────────────────────────
+            // She pushes past her limits — nuclear damage
+            new Move { moveName = "Burn Bridges",        moveType = MoveType.Attack, elementalType = ElementalType.Fire,
+                       baseDamage = 40, accuracy = 0.70f, spCost = 3 },
+
+            // Scorched earth — hits all enemies simultaneously
+            new Move { moveName = "Ignition Point",      moveType = MoveType.Special, elementalType = ElementalType.Fire,
+                       baseDamage = 28, accuracy = 0.85f, spCost = 3,
+                       effectToApply = "Burn", effectChance = 0.60f },
+
+            // Rage-fuelled self destruct — massive damage, costs most of her SP
+            new Move { moveName = "Last Resort",         moveType = MoveType.Attack, elementalType = ElementalType.Absurd,
+                       baseDamage = 60, accuracy = 0.60f, spCost = 4 },
         };
 
-        Debug.Log($"[PlayerSetup] {p.unitName} configured. HP: {p.maxHealth}  SP: {p.maxSP}");
+        Debug.Log($"[PlayerSetup] {p.unitName} configured. HP:{p.maxHealth} SP:{p.maxSP}");
     }
 }
