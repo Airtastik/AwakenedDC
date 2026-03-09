@@ -521,6 +521,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4297899392242328275, guid: 86080012bd8e25c499c8f318e42f51c4, type: 3}
+      propertyPath: m_Spacing
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5904796500544742598, guid: 86080012bd8e25c499c8f318e42f51c4, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -537,6 +541,30 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0.21428573
       objectReference: {fileID: 0}
+    - target: {fileID: 6579691620690779556, guid: 86080012bd8e25c499c8f318e42f51c4, type: 3}
+      propertyPath: m_ScaleFactor
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7861412274786967350, guid: 86080012bd8e25c499c8f318e42f51c4, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 700
+      objectReference: {fileID: 0}
+    - target: {fileID: 7861412274786967350, guid: 86080012bd8e25c499c8f318e42f51c4, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8044131246767839834, guid: 86080012bd8e25c499c8f318e42f51c4, type: 3}
+      propertyPath: m_MovementType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8044131246767839834, guid: 86080012bd8e25c499c8f318e42f51c4, type: 3}
+      propertyPath: m_ScrollSensitivity
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8044131246767839834, guid: 86080012bd8e25c499c8f318e42f51c4, type: 3}
+      propertyPath: m_VerticalScrollbarSpacing
+      value: -11
+      objectReference: {fileID: 0}
     - target: {fileID: 8446210619539048155, guid: 86080012bd8e25c499c8f318e42f51c4, type: 3}
       propertyPath: m_Name
       value: Canvas
@@ -544,8 +572,16 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2777551123740992931, guid: 86080012bd8e25c499c8f318e42f51c4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 873383791}
   m_SourcePrefab: {fileID: 100100000, guid: 86080012bd8e25c499c8f318e42f51c4, type: 3}
+--- !u!1 &516099047 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2777551123740992931, guid: 86080012bd8e25c499c8f318e42f51c4, type: 3}
+  m_PrefabInstance: {fileID: 388489538}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &530203332
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,6 +780,20 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1873119542685108012, guid: 86080012bd8e25c499c8f318e42f51c4, type: 3}
   m_PrefabInstance: {fileID: 388489538}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &873383791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516099047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!1 &1377823973
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,7 +805,6 @@ GameObject:
   - component: {fileID: 1377823976}
   - component: {fileID: 1377823975}
   - component: {fileID: 1377823974}
-  - component: {fileID: 1377823977}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -831,24 +880,6 @@ Transform:
   - {fileID: 530203333}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1377823977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1377823973}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c00d53c41e04d9f46ad450c4f56ca0e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
-  items: []
-  interactionKey: 101
-  nearbyItem: {fileID: 0}
-  inventoryMenu: {fileID: 309085559}
-  isInventoryOpen: 0
-  itemListText: {fileID: 0}
 --- !u!4 &1550565513 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5926150417671406291, guid: 95811fd593f9e8c40b101d7f10349098, type: 3}
