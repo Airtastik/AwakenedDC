@@ -18,6 +18,7 @@ public class MaeveJohnson : MonoBehaviour
         p.criticalDMG   = 2.20f;
         p.criticalRate  = 0.30f;
         p.effectRes     = 0.10f;
+        p.traitCannotBeBiuffed = true; // Cannot be buffed by party members
 
         p.moveList = new Move[]
         {

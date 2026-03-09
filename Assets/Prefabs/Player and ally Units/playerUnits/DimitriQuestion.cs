@@ -39,21 +39,25 @@ public class DimitriQuestion : MonoBehaviour
 
             // ── Special Moves (3-5) ──────────────────────────────────────────
 
-            // He stops existing briefly. The enemy is very confused.
-            new Move { moveName = "Temporary Absence", moveType = MoveType.Special, elementalType = ElementalType.Absurd,
-                       baseDamage = 10, accuracy = 0.90f, spCost = 2,
-                       effectToApply = "Confusion", effectChance = 0.95f,
-                       buffStat = StatType.Defence, statModifier = 1.50f },
+            // He stops existing briefly. Returns different. Everyone is different too.
+            // Removes all permanent debuffs from the party.
+            new Move { moveName = "Temporary Absence", moveType = MoveType.Utility, elementalType = ElementalType.Absurd,
+                       accuracy = 1.00f, spCost = 2,
+                       clearPartyTraits = true },
 
-            // A box cutter that cuts something metaphysical. Very damaging.
-            new Move { moveName = "Cut The Concept",   moveType = MoveType.Attack,  elementalType = ElementalType.Absurd,
-                       baseDamage = 50, accuracy = 0.70f, spCost = 3 },
+            // Something about the box. The box changes things.
+            // Removes all permanent debuffs from the party, plus a self-heal.
+            new Move { moveName = "Open A Different Box", moveType = MoveType.Utility, elementalType = ElementalType.Absurd,
+                       accuracy = 1.00f, spCost = 3,
+                       baseHealing = 30,
+                       clearPartyTraits = true },
 
-            // He becomes entirely unreadable. Stats? What stats.
-            new Move { moveName = "??????????",        moveType = MoveType.Special, elementalType = ElementalType.Absurd,
-                       baseDamage = 30, accuracy = 0.85f, spCost = 4,
+            // He becomes entirely unreadable. The debuffs can't find anyone.
+            // Removes all permanent debuffs from the party + massive confusion on all enemies.
+            new Move { moveName = "??????????",        moveType = MoveType.Utility, elementalType = ElementalType.Absurd,
+                       accuracy = 1.00f, spCost = 4,
                        effectToApply = "Confusion", effectChance = 1.00f,
-                       buffStat = StatType.Defence, statModifier = 1.80f },
+                       clearPartyTraits = true },
         };
 
         Debug.Log($"[PlayerSetup] {p.unitName} configured. HP:{p.maxHealth} SP:{p.maxSP}");

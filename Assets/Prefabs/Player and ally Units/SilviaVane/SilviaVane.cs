@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerUnit))]
-public class SylvaVane : MonoBehaviour
+public class SilviaVane : MonoBehaviour
 {
     void Awake()
     {
@@ -18,6 +18,7 @@ public class SylvaVane : MonoBehaviour
         p.criticalDMG   = 1.40f;
         p.criticalRate  = 0.08f;
         p.effectRes     = 0.35f;
+        p.traitCannotAttack  = true;   // Cannot directly attack enemies
 
         p.moveList = new Move[]
         {

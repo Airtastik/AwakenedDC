@@ -31,6 +31,9 @@ public class EncounterManager : MonoBehaviour
     [Range(0f, 0.20f)] public float xpScale       = 0.10f;
     [Range(0f, 0.20f)] public float goldScale     = 0.08f;
 
+    [Header("Spawn Points — assign Enemy1..Enemy4 transforms from battle scene")]
+    public List<Transform> spawnPoints = new List<Transform>();
+
     // ── Pending encounter set before scene load ───────────────────────────────
     private static EncounterData pendingEncounter;
 
@@ -97,6 +100,14 @@ public class EncounterManager : MonoBehaviour
             // We apply level scaling on top of those base values.
             ApplyLevelScaling(eu, slot.level);
             eu.InitHealth();
+
+            // Position at spawn point if one is assigned for this slot
+            int index = spawnedEnemies.Count;
+            if (spawnPoints != null && index < spawnPoints.Count && spawnPoints[index] != null)
+            {
+                obj.transform.position = spawnPoints[index].position;
+                obj.transform.rotation = spawnPoints[index].rotation;
+            }
 
             spawnedEnemies.Add(obj);
             Debug.Log($"[EncounterManager] Spawned {eu.unitName} at level {slot.level}. HP:{eu.maxHealth} ATK:{eu.attackP}");

@@ -4,7 +4,8 @@ public enum MoveType
     Heal,
     Buff,
     Debuff,
-    Special
+    Special,
+    Utility   // Miscellaneous non-combat effects (e.g. trait removal)
 }
 
 public enum StatType

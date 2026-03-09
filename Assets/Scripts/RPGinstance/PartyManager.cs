@@ -5,34 +5,37 @@ using System.Linq;
 /// <summary>
 /// Singleton that persists between scenes and owns the canonical party state.
 ///
-/// SETUP:
-///   1. Create an empty GameObject in your first scene, add PartyManager to it.
-///   2. Drag your four character setup scripts (DimitriGlass, MaeveJohnson, etc.)
-///      into the Inspector list "Member Prefabs". These are the GameObjects that
-///      have PlayerUnit + character script on them.
-///   3. That's it. BattleSystem reads from PartyManager automatically.
+/// SETUP (two options):
 ///
-/// FLOW:
-///   - On first load, PartyManager snapshots stats from the member prefabs.
-///   - Before a battle, BattleTransfer.EnemyRoster is set by the overworld.
-///   - BattleSystem.LateStart() calls PartyManager.SpawnParty() to get live
-///     PlayerUnit GameObjects, then calls SaveParty() after battle ends.
-///   - Status effects are cleared between battles; HP/SP/XP carry over.
+///   A) Use the default test party (quickest):
+///      - Create an empty GameObject, add PartyManager.
+///      - Leave Member Prefabs empty — the four default characters are created
+///        automatically from scratch using DefaultParty.
+///
+///   B) Use your own prefabs:
+///      - Create GameObjects with PlayerUnit + character script (e.g. DimitriGlass).
+///      - Drag them into Member Prefabs in the Inspector.
+///      - PartyManager will snapshot their stats on startup.
+///
+/// BattleSystem reads from PartyManager automatically and assigns the spawned
+/// GameObjects to its playerPartyObjects list before battle begins.
 /// </summary>
 public class PartyManager : MonoBehaviour
 {
     public static PartyManager Instance { get; private set; }
 
-    [Header("Starting roster — assign GameObjects with PlayerUnit + character scripts")]
+    [Header("Party prefabs — leave empty to use built-in test party")]
     public List<GameObject> memberPrefabs = new List<GameObject>();
 
-    // Persistent data records — one per party member
+    [Header("Spawn Points — assign Player1..Player4 transforms from battle scene")]
+    public List<Transform> spawnPoints = new List<Transform>();
+
+    // Persistent data records
     private List<MemberData> records = new List<MemberData>();
 
-    // Live GameObjects spawned for the current battle (kept under this transform)
+    // Live GameObjects currently spawned for battle
     private List<GameObject> spawnedMembers = new List<GameObject>();
 
-    // ── Events ────────────────────────────────────────────────────────────────
     public delegate void PartyUpdated(List<MemberData> party);
     public static event PartyUpdated OnPartyUpdated;
 
@@ -43,15 +46,15 @@ public class PartyManager : MonoBehaviour
         if (Instance != null) { Destroy(gameObject); return; }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        InitialiseFromPrefabs();
+
+        if (memberPrefabs.Count > 0)
+            InitialiseFromPrefabs();
+        else
+            Debug.LogWarning("[PartyManager] No member prefabs assigned! Add prefabs to the Member Prefabs list in the Inspector.");
     }
 
-    // ── Initialisation ────────────────────────────────────────────────────────
+    // ── Option B: initialise from Inspector prefabs ───────────────────────────
 
-    /// <summary>
-    /// First-time setup: instantiate each prefab briefly, capture its stats
-    /// into a MemberData record, then destroy the temporary instance.
-    /// </summary>
     private void InitialiseFromPrefabs()
     {
         records.Clear();
@@ -59,9 +62,9 @@ public class PartyManager : MonoBehaviour
         {
             if (prefab == null) continue;
 
-            // Instantiate off-screen so Awake() runs and stats get set
+            // Instantiate active so Awake() fires and character scripts set stats
             GameObject temp = Instantiate(prefab);
-            temp.SetActive(false);
+            temp.SetActive(true);
 
             PlayerUnit pu = temp.GetComponent<PlayerUnit>();
             if (pu == null)
@@ -71,7 +74,6 @@ public class PartyManager : MonoBehaviour
                 continue;
             }
 
-            // InitHealth so currentHealth/SP are set correctly
             pu.InitHealth();
 
             var data = new MemberData();
@@ -88,13 +90,12 @@ public class PartyManager : MonoBehaviour
     // ── Battle interface ──────────────────────────────────────────────────────
 
     /// <summary>
-    /// Creates live PlayerUnit GameObjects from current records.
-    /// Called by BattleSystem before battle starts.
-    /// Returns the list of spawned GameObjects to hand to BattleSystem.
+    /// Creates live PlayerUnit GameObjects from current records and returns them.
+    /// BattleSystem calls this in LateStart() and assigns the result to
+    /// playerPartyObjects so the rest of the battle pipeline works unchanged.
     /// </summary>
     public List<GameObject> SpawnParty()
     {
-        // Clean up any previous spawn
         foreach (var obj in spawnedMembers)
             if (obj != null) Destroy(obj);
         spawnedMembers.Clear();
@@ -104,27 +105,33 @@ public class PartyManager : MonoBehaviour
             var obj = new GameObject($"Party_{data.unitName}");
             obj.transform.SetParent(transform);
 
-            // Add PlayerUnit and apply saved data
             var pu = obj.AddComponent<PlayerUnit>();
             data.ApplyTo(pu);
 
+            // Position at spawn point if one is assigned for this slot
+            int index = spawnedMembers.Count;
+            if (spawnPoints != null && index < spawnPoints.Count && spawnPoints[index] != null)
+            {
+                obj.transform.position = spawnPoints[index].position;
+                obj.transform.rotation = spawnPoints[index].rotation;
+            }
+
             spawnedMembers.Add(obj);
+            Debug.Log($"[PartyManager] Spawned {data.unitName}  HP:{data.currentHealth}/{data.maxHealth}  SP:{data.currentSP}/{data.maxSP}");
         }
 
-        Debug.Log($"[PartyManager] Spawned {spawnedMembers.Count} party members for battle.");
         return spawnedMembers;
     }
 
     /// <summary>
-    /// Reads current state back from live PlayerUnits into records.
-    /// Called by BattleSystem after battle ends (win or loss).
+    /// Saves live PlayerUnit state back into records after a battle.
+    /// HP is clamped to 1 minimum so nobody is dead in the overworld.
     /// </summary>
     public void SaveParty(List<PlayerUnit> liveParty)
     {
         for (int i = 0; i < records.Count && i < liveParty.Count; i++)
         {
             records[i].CaptureFrom(liveParty[i]);
-            // Clamp HP to 1 on loss so they aren't dead outside battle
             if (records[i].currentHealth <= 0)
                 records[i].currentHealth = 1;
         }
@@ -135,26 +142,17 @@ public class PartyManager : MonoBehaviour
 
     // ── Accessors ─────────────────────────────────────────────────────────────
 
-    public List<MemberData> GetRecords() => records;
+    public List<MemberData> GetRecords()              => records;
+    public MemberData       GetRecord(string name)    => records.FirstOrDefault(r => r.unitName == name);
+    public int              PartySize                 => records.Count;
 
-    public MemberData GetRecord(string unitName) =>
-        records.FirstOrDefault(r => r.unitName == unitName);
-
-    public int PartySize => records.Count;
-
-    /// <summary>Restore full HP and SP for all members (e.g. rest point).</summary>
     public void FullRestore()
     {
-        foreach (var r in records)
-        {
-            r.currentHealth = r.maxHealth;
-            r.currentSP     = r.maxSP;
-        }
+        foreach (var r in records) { r.currentHealth = r.maxHealth; r.currentSP = r.maxSP; }
         OnPartyUpdated?.Invoke(records);
         Debug.Log("[PartyManager] Party fully restored.");
     }
 
-    /// <summary>Restore a partial amount of HP to all living members.</summary>
     public void RestoreHP(int amount)
     {
         foreach (var r in records)

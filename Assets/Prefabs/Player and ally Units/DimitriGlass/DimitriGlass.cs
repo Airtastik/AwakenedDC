@@ -18,6 +18,7 @@ public class DimitriGlass : MonoBehaviour
         p.criticalDMG   = 1.60f;
         p.criticalRate  = 0.15f;
         p.effectRes     = 0.20f;
+        p.traitLockedXP      = true;   // Cannot level up until floor changes
 
         p.moveList = new Move[]
         {

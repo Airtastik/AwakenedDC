@@ -276,6 +276,14 @@ public class BattleSystem : MonoBehaviour
             return;
         }
 
+        // Trait: Sylva cannot directly attack enemies
+        if (activePlayer.traitCannotAttack &&
+            (move.moveType == MoveType.Attack || move.moveType == MoveType.Special))
+        {
+            Log($"{activePlayer.unitName} cannot directly attack!");
+            return;
+        }
+
         EnemyUnit target = GetTargetEnemy(targetEnemyIndex);
         if (target == null) { Log("No valid target."); return; }
 
@@ -372,6 +380,8 @@ public class BattleSystem : MonoBehaviour
         switch (item.effect)
         {
             case ItemEffect.HealTarget:
+                if (target.traitCannotBeHealed && target != activePlayer)
+                { Log($"{target.unitName} cannot be healed by others!"); break; }
                 target.Heal(item.power);
                 Log($"{target.unitName} recovered {item.power} HP!");
                 NotifyStatsChanged();
@@ -380,6 +390,8 @@ public class BattleSystem : MonoBehaviour
             case ItemEffect.HealParty:
                 foreach (var pu in GetLivingPlayers())
                 {
+                    if (pu.traitCannotBeHealed && pu != activePlayer)
+                    { Log($"{pu.unitName} resists the heal!"); continue; }
                     pu.Heal(item.power);
                     Log($"{pu.unitName} recovered {item.power} HP!");
                 }
@@ -387,12 +399,13 @@ public class BattleSystem : MonoBehaviour
                 break;
 
             case ItemEffect.ReviveTarget:
-                // Target the first fainted member if no index given
                 PlayerUnit fainted = (targetPartyIndex >= 0 && targetPartyIndex < playerParty.Count)
                     ? playerParty[targetPartyIndex]
                     : playerParty.FirstOrDefault(u => !u.IsAlive);
                 if (fainted != null && !fainted.IsAlive)
                 {
+                    if (fainted.traitCannotBeHealed)
+                    { Log($"{fainted.unitName} cannot be revived by others!"); break; }
                     fainted.currentHealth = Mathf.RoundToInt(fainted.maxHealth * 0.3f);
                     Log($"{fainted.unitName} was revived with {fainted.currentHealth} HP!");
                     NotifyStatsChanged();
@@ -401,12 +414,16 @@ public class BattleSystem : MonoBehaviour
                 break;
 
             case ItemEffect.BuffAttack:
+                if (target.traitCannotBeBiuffed && target != activePlayer)
+                { Log($"{target.unitName} cannot be buffed by others!"); break; }
                 target.attackP = Mathf.RoundToInt(target.attackP * item.statMult);
                 Log($"{target.unitName}'s Attack rose!");
                 NotifyStatsChanged();
                 break;
 
             case ItemEffect.BuffDefence:
+                if (target.traitCannotBeBiuffed && target != activePlayer)
+                { Log($"{target.unitName} cannot be buffed by others!"); break; }
                 target.defence = Mathf.RoundToInt(target.defence * item.statMult);
                 Log($"{target.unitName}'s Defence rose!");
                 NotifyStatsChanged();
@@ -477,7 +494,52 @@ public class BattleSystem : MonoBehaviour
             case MoveType.Heal:    yield return StartCoroutine(ExecuteHeal(move, attacker));              break;
             case MoveType.Buff:    yield return StartCoroutine(ExecuteBuff(move, attacker, attacker));    break;
             case MoveType.Debuff:  yield return StartCoroutine(ExecuteBuff(move, attacker, defender));    break;
+            case MoveType.Utility: yield return StartCoroutine(ExecuteUtility(move, attacker));           break;
         }
+    }
+
+    private IEnumerator ExecuteUtility(Move move, Unit caster)
+    {
+        Log($"{caster.unitName} used {move.moveName}!");
+        yield return new WaitForSeconds(actionDelay * 0.5f);
+
+        // Remove permanent traits from all living allies
+        if (move.clearPartyTraits)
+        {
+            foreach (PlayerUnit ally in GetLivingPlayers())
+            {
+                bool changed = false;
+                if (ally.traitLockedXP)        { ally.traitLockedXP        = false; changed = true; }
+                if (ally.traitCannotAttack)    { ally.traitCannotAttack    = false; changed = true; }
+                if (ally.traitCannotBeBiuffed) { ally.traitCannotBeBiuffed = false; changed = true; }
+                if (ally.traitCannotBeHealed)  { ally.traitCannotBeHealed  = false; changed = true; }
+                if (changed) Log($"{ally.unitName}'s curse was lifted!");
+            }
+            NotifyStatsChanged();
+        }
+
+        // Optional self-heal
+        if (move.baseHealing > 0 && caster is PlayerUnit pu)
+        {
+            pu.Heal(move.baseHealing);
+            Log($"{pu.unitName} restored {move.baseHealing} HP!");
+            NotifyStatsChanged();
+        }
+
+        // Optional status on all enemies
+        if (!string.IsNullOrEmpty(move.effectToApply))
+        {
+            foreach (EnemyUnit enemy in GetLivingEnemies())
+            {
+                if (UnityEngine.Random.value < move.effectChance)
+                {
+                    StatusEffect effect = BuildEffect(move.effectToApply, move.elementalType);
+                    if (effect != null) { enemy.AddEffect(effect); Log($"{enemy.unitName} is {effect.effectName}!"); }
+                }
+            }
+        }
+
+        yield return new WaitForSeconds(actionDelay * 0.5f);
     }
 
     private IEnumerator ExecuteAttack(Move move, Unit attacker, Unit defender)
@@ -508,6 +570,13 @@ public class BattleSystem : MonoBehaviour
         Unit healTarget = caster is PlayerUnit ? (Unit)GetMostWoundedPlayer() : GetMostWoundedEnemy();
         if (healTarget == null) healTarget = caster;
 
+        // Trait: Roman cannot be healed by allies (only self-heals work)
+        if (healTarget is PlayerUnit ht && ht.traitCannotBeHealed && caster != healTarget)
+        {
+            Log($"{healTarget.unitName} cannot be healed by others!");
+            yield break;
+        }
+
         Log($"{caster.unitName} used {move.moveName} on {healTarget.unitName}!");
         yield return new WaitForSeconds(actionDelay * 0.5f);
 
@@ -518,6 +587,14 @@ public class BattleSystem : MonoBehaviour
 
     private IEnumerator ExecuteBuff(Move move, Unit attacker, Unit target)
     {
+        // Trait: Maeve cannot be buffed by allies (self-buffs are fine — attacker == target)
+        if (move.moveType == MoveType.Buff &&
+            target is PlayerUnit pt && pt.traitCannotBeBiuffed && attacker != target)
+        {
+            Log($"{target.unitName} cannot be buffed by others!");
+            yield break;
+        }
+
         string action = move.moveType == MoveType.Buff ? "buffed" : "debuffed";
         Log($"{attacker.unitName} used {move.moveName}! {target.unitName}'s {move.buffStat} was {action}!");
         yield return new WaitForSeconds(actionDelay * 0.5f);

@@ -18,6 +18,7 @@ public class RomanBlake : MonoBehaviour
         p.criticalDMG   = 1.30f;
         p.criticalRate  = 0.05f;
         p.effectRes     = 0.40f;
+        p.traitCannotBeHealed  = true; // Cannot be healed by party members
 
         p.moveList = new Move[]
         {
