@@ -21,6 +21,7 @@ public class ItemSlot : MonoBehaviour
 
     private ItemData currentItem;
     private InventoryManager manager;
+    public Button useButton;
 
     public void Setup(ItemData newItem, InventoryManager m)
     {
@@ -31,15 +32,17 @@ public class ItemSlot : MonoBehaviour
         descriptionText.text = newItem.description;
         quantityText.text = "x" + newItem.quantity.ToString();
         iconImage.sprite = newItem.icon;
+        useButton.onClick.RemoveAllListeners();
+        useButton.onClick.AddListener(OnUseButtonClicked);
     }
 
     public void OnUseButtonClicked()
     {
+        Debug.Log("Pressed button");
         if (currentItem.quantity > 0)
         {
             currentItem.quantity--;
             Debug.Log($"Used {currentItem.itemName}. Remaining: {currentItem.quantity}");
-
             if (currentItem.quantity <= 0)
             {
                 manager.items.Remove(currentItem);

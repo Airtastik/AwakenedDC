@@ -309,6 +309,7 @@ MonoBehaviour:
   nameText: {fileID: 4563575115531914476}
   descriptionText: {fileID: 2479394286029667701}
   quantityText: {fileID: 2136205659712152558}
+  useButton: {fileID: 7411182965355358076}
 --- !u!1 &4861697320151889073
 GameObject:
   m_ObjectHideFlags: 0
