@@ -99,23 +99,40 @@ public class BattleSystem : MonoBehaviour
         }
 
         // ── Enemy party ──────────────────────────────────────────────────────
-        foreach (GameObject obj in enemyPartyObjects)
+        // If EncounterManager has a prepared encounter, use it.
+        // Otherwise fall back to enemyPartyObjects placed in the scene.
+        if (EncounterManager.Instance != null && EncounterManager.HasPendingEncounter)
         {
-            EnemyUnit eu = obj.GetComponent<EnemyUnit>();
-            if (eu != null) enemyParty.Add(eu);
-            else Debug.LogWarning($"{obj.name} has no EnemyUnit.");
+            var spawned = EncounterManager.Instance.SpawnEnemies();
+            foreach (GameObject obj in spawned)
+            {
+                EnemyUnit eu = obj.GetComponent<EnemyUnit>();
+                if (eu != null) enemyParty.Add(eu);
+            }
+            Debug.Log($"[BattleSystem] Enemy party loaded from EncounterManager ({enemyParty.Count} enemies).");
+        }
+        else
+        {
+            foreach (GameObject obj in enemyPartyObjects)
+            {
+                EnemyUnit eu = obj.GetComponent<EnemyUnit>();
+                if (eu != null) enemyParty.Add(eu);
+                else Debug.LogWarning($"{obj.name} has no EnemyUnit.");
+            }
+            Debug.Log("[BattleSystem] No EncounterManager found — using scene enemy objects.");
         }
 
         if (playerParty.Count == 0) { Debug.LogError("Player party is empty!"); yield break; }
         if (enemyParty.Count  == 0) { Debug.LogError("Enemy party is empty!");  yield break; }
 
-        // Don't call InitHealth here when using PartyManager —
-        // HP/SP are already the persisted values from last battle.
+        // Players: skip InitHealth if PartyManager is handling persistence
         if (PartyManager.Instance == null)
-        {
             foreach (var u in playerParty) u.InitHealth();
-        }
-        foreach (var u in enemyParty) u.InitHealth();
+
+        // Enemies: EncounterManager.SpawnEnemies() already called InitHealth;
+        // only call it here for scene-placed fallback enemies.
+        if (EncounterManager.Instance == null)
+            foreach (var u in enemyParty) u.InitHealth();
 
         IsReady = true;
         StartCoroutine(SetupBattle());
