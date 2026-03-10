@@ -100,7 +100,66 @@ SphereCollider:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD:Assets/Items/HealthPotion.prefab
   m_GameObject: {fileID: 8668894968901126574}
+=======
+  m_GameObject: {fileID: 155936746796121485}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &6353637914116672544
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6974556360461991746}
+  - component: {fileID: -3523525125427468954}
+  - component: {fileID: 8701208647283468158}
+  m_Layer: 0
+  m_Name: Item_HealthPotion
+  m_TagString: Item
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6974556360461991746
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6353637914116672544}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.39433, y: 0, z: -2.41332}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3473773520757984906}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &-3523525125427468954
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6353637914116672544}
+>>>>>>> origin/main:Assets/Prefabs/Items/Item_HealthPotion.prefab
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -113,14 +172,21 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
+<<<<<<< HEAD:Assets/Items/HealthPotion.prefab
   m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8630531689026170417
+=======
+  m_Size: {x: 3.5657983, y: 1.5156327, z: 2.8971615}
+  m_Center: {x: -0.30584693, y: 0.2578165, z: -0.033955574}
+--- !u!114 &8701208647283468158
+>>>>>>> origin/main:Assets/Prefabs/Items/Item_HealthPotion.prefab
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD:Assets/Items/HealthPotion.prefab
   m_GameObject: {fileID: 8668894968901126574}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -140,3 +206,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b74c93d71d2cd7479866446c39d3858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CylindricalBillboard
+=======
+  m_GameObject: {fileID: 6353637914116672544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e48fdbe6a87175e4ba5c8be0a084bd1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
+  item: {fileID: 11400000, guid: 3009eebbaa074d04dbe96dc1317d3ee0, type: 2}
+>>>>>>> origin/main:Assets/Prefabs/Items/Item_HealthPotion.prefab

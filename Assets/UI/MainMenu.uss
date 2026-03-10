@@ -1,0 +1,52 @@
+.root {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    background-color: rgb(13, 17, 23);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.title-main {
+    font-size: 48px;
+    -unity-font-style: bold;
+    color: rgb(240, 192, 64);
+    letter-spacing: 8px;
+    -unity-text-align: upper-center;
+}
+
+.title-sub {
+    font-size: 16px;
+    color: rgb(160, 120, 30);
+    letter-spacing: 6px;
+    -unity-text-align: upper-center;
+    margin-top: 2px;
+}
+
+.divider {
+    width: 240px;
+    height: 1px;
+    background-color: rgba(240, 192, 64, 0.3);
+    margin-top: 20px;
+    margin-bottom: 28px;
+}
+
+.menu-btn {
+    width: 280px;
+    height: 46px;
+    margin: 6px 0;
+    border-radius: 3px;
+    border-width: 1px;
+    border-color: rgba(240, 192, 64, 0.5);
+    background-color: transparent;
+    color: rgb(220, 220, 220);
+    font-size: 12px;
+    letter-spacing: 3px;
+    -unity-font-style: bold;
+}
+
+.menu-btn:hover {
+    background-color: rgba(240, 192, 64, 0.1);
+    border-color: rgb(240, 192, 64);
+    color: rgb(240, 192, 64);
+}
