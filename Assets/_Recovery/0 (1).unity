@@ -182,10 +182,6 @@ MonoBehaviour:
   experience: 0
   experienceToNextLevel: 0
   statPointsAvailable: 0
-  traitLockedXP: 0
-  traitCannotAttack: 0
-  traitCannotBeBiuffed: 0
-  traitCannotBeHealed: 0
 --- !u!114 &106037315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,7 +543,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 691062569}
-  - component: {fileID: 691062570}
   m_Layer: 0
   m_Name: Enemy4
   m_TagString: Untagged
@@ -570,40 +565,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &691062570
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 691062568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a2c4de96ab405d41a07adb4071862a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerUnit
-  unitName: 
-  elementalType: 0
-  maxHealth: 0
-  currentHealth: 0
-  maxSP: 0
-  currentSP: 0
-  attackP: 0
-  defence: 0
-  speed: 0
-  criticalDMG: 0
-  criticalRate: 0
-  effectRes: 0
-  moveList: []
-  currentEffects: []
-  level: 0
-  experience: 0
-  experienceToNextLevel: 0
-  statPointsAvailable: 0
-  traitLockedXP: 0
-  traitCannotAttack: 0
-  traitCannotBeBiuffed: 0
-  traitCannotBeHealed: 0
 --- !u!1 &881269814
 GameObject:
   m_ObjectHideFlags: 0
@@ -1174,10 +1135,6 @@ MonoBehaviour:
   experience: 0
   experienceToNextLevel: 0
   statPointsAvailable: 0
-  traitLockedXP: 0
-  traitCannotAttack: 0
-  traitCannotBeBiuffed: 0
-  traitCannotBeHealed: 0
 --- !u!1 &1709333138
 GameObject:
   m_ObjectHideFlags: 0
@@ -1302,10 +1259,6 @@ MonoBehaviour:
   experience: 0
   experienceToNextLevel: 0
   statPointsAvailable: 0
-  traitLockedXP: 0
-  traitCannotAttack: 0
-  traitCannotBeBiuffed: 0
-  traitCannotBeHealed: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

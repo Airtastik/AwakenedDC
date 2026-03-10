@@ -4,19 +4,20 @@
 // Ensure that the HUD updates in real-time as the Main Character's stats change during gameplay.
 
 using UnityEngine;
-using UnityEngine.UI; // Use TMPro if you prefer TextMeshPro
+using UnityEngine.UI;
+using TMPro;
 using System.Collections.Generic;
 
 public class PlayerHUD : MonoBehaviour
 {
     [Header("Settings")]
-    public string mainCharacterName = "Dimitri"; // Set this to your MC's name
+    public string mainCharacterName = "Dimitri";
 
     [Header("UI References")]
     public Slider hpSlider;
     public Slider xpSlider;
-    public Text levelText;
-    public Text hpText; // Optional: "100 / 100"
+    public TMP_Text levelText;
+    public TMP_Text hpText; 
 
     void OnEnable()
     {
