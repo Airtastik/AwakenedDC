@@ -32,6 +32,23 @@ public class MemberData
     // ── Moves ─────────────────────────────────────────────────────────────────
     public Move[] moveList;
 
+    // ── Permanent Traits ──────────────────────────────────────────────────────
+    public bool traitLockedXP;
+    public bool traitCannotAttack;
+    public bool traitCannotBeBiuffed;
+    public bool traitCannotBeHealed;
+
+    public string traitDescription
+    {
+        get {
+            if (traitLockedXP)          return "XP locked until next floor";
+            if (traitCannotAttack)      return "Cannot directly attack";
+            if (traitCannotBeBiuffed)   return "Cannot be buffed by allies";
+            if (traitCannotBeHealed)    return "Cannot be healed by allies";
+            return "—";
+        }
+    }
+
     // ── Status effects are cleared between battles ────────────────────────────
     // (intentional — battles are discrete encounters)
 
@@ -58,6 +75,11 @@ public class MemberData
         statPointsAvailable   = pu.statPointsAvailable;
 
         moveList = pu.moveList;
+
+        traitLockedXP        = pu.traitLockedXP;
+        traitCannotAttack    = pu.traitCannotAttack;
+        traitCannotBeBiuffed = pu.traitCannotBeBiuffed;
+        traitCannotBeHealed  = pu.traitCannotBeHealed;
     }
 
     /// <summary>Apply this record's values onto a live PlayerUnit.</summary>
@@ -84,5 +106,10 @@ public class MemberData
 
         pu.moveList        = moveList;
         pu.currentEffects  = new System.Collections.Generic.List<StatusEffect>();
+
+        pu.traitLockedXP        = traitLockedXP;
+        pu.traitCannotAttack    = traitCannotAttack;
+        pu.traitCannotBeBiuffed = traitCannotBeBiuffed;
+        pu.traitCannotBeHealed  = traitCannotBeHealed;
     }
 }
