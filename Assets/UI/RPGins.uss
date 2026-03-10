@@ -118,6 +118,7 @@
 }
 .move-btn:hover    { background-color: rgb(26, 58, 92); color: white; }
 .move-btn:disabled { opacity: 0.3; }
+.move-no-sp        { opacity: 0.4; border-color: rgb(80, 80, 80); color: rgb(120, 120, 120); }
 
 .move-type-fire   { border-color: rgb(122, 32, 32);  color: rgb(255, 170, 136); background-color: rgb(32, 10, 10);  }
 .move-type-water  { border-color: rgb(26, 74, 106);  color: rgb(136, 221, 255); background-color: rgb(10, 16, 32);  }
@@ -201,28 +202,75 @@
 .hp-bar-fill.hp-low { background-color: rgb(248, 81, 73);  }
 .hp-txt { font-size: 8px; color: rgb(139, 148, 158); width: 48px; -unity-text-align: upper-right; margin-left: 3px; }
 
-/* SP Bar */
-.sp-row { flex-direction: row; align-items: center; }
-.sp-lbl { font-size: 8px; color: rgb(139, 148, 158); width: 18px; margin-right: 3px; }
-.sp-bar-bg  { flex-grow: 1; height: 4px; background-color: rgb(33, 38, 45); border-radius: 3px; overflow: hidden; }
-.sp-bar-fill { height: 100%; border-radius: 3px; background-color: rgb(88, 166, 255); transition-duration: 0.3s; transition-property: width; }
-.sp-txt { font-size: 8px; color: rgb(139, 148, 158); width: 48px; -unity-text-align: upper-right; margin-left: 3px; }
+/* SP Diamonds */
+.sp-row     { flex-direction: row; align-items: center; margin-top: 2px; }
+.sp-lbl     { font-size: 8px; color: rgb(139, 148, 158); width: 18px; margin-right: 3px; }
+.sp-diamonds { flex-direction: row; align-items: center; }
+.sp-diamond {
+    width: 9px; height: 9px;
+    margin: 0 2px;
+    rotate: 45deg;
+    border-radius: 1px;
+    border-width: 1px;
+    border-color: rgb(88, 166, 255);
+    background-color: rgb(88, 166, 255);
+    transition-duration: 0.2s;
+    transition-property: background-color, border-color;
+}
+.sp-diamond.sp-empty {
+    background-color: rgba(0,0,0,0);
+    border-color: rgb(50, 80, 120);
+}
 
 /* Effect badges */
 .effects-row  { flex-direction: row; flex-wrap: wrap; margin-top: 2px; }
 .effect-badge { font-size: 7px; border-radius: 2px; padding: 1px 3px; margin: 1px; background-color: rgb(48, 54, 61); color: rgb(240, 136, 62); border-width: 1px; border-color: rgb(240, 136, 62); }
 
-/* Switch buttons inside foldout */
-.switch-btn {
+/* Special buttons inside foldout */
+.special-btn {
     height: 26px; margin: 2px 0;
     border-radius: 4px; border-width: 1px;
-    border-color: rgb(78, 205, 196);
-    background-color: rgb(14, 30, 30);
-    color: rgb(78, 205, 196);
+    border-color: rgb(170, 88, 255);
+    background-color: rgb(24, 10, 38);
+    color: rgb(210, 160, 255);
     font-size: 10px;
 }
-.switch-btn:hover    { background-color: rgb(26, 53, 53); color: white; }
-.switch-btn:disabled { opacity: 0.3; }
+.special-btn:hover    { background-color: rgb(44, 20, 68); color: white; }
+.special-btn:disabled { opacity: 0.3; }
+
+/* Item buttons inside foldout */
+.item-btn {
+    height: 26px; margin: 2px 0;
+    border-radius: 4px; border-width: 1px;
+    border-color: rgb(240, 192, 64);
+    background-color: rgb(30, 26, 10);
+    color: rgb(240, 192, 64);
+    font-size: 10px;
+}
+.item-btn:hover    { background-color: rgb(46, 40, 16); color: white; }
+.item-btn:disabled { opacity: 0.3; }
+
+/* Queue entry boxes */
+.queue-entry {
+    flex-direction: row;
+    align-items: center;
+    margin: 2px 2px;
+    padding: 3px 6px;
+    border-radius: 4px;
+    border-width: 1px;
+    min-height: 22px;
+}
+.queue-player { border-color: rgb(46, 120, 60);  background-color: rgba(20, 50, 25, 0.90); }
+.queue-enemy  { border-color: rgb(140, 40,  40);  background-color: rgba(50, 16, 16, 0.90); }
+.queue-next   { border-width: 2px; }
+.queue-next.queue-player { border-color: rgb(78, 205, 100);  background-color: rgba(20, 60, 28, 0.97); }
+.queue-next.queue-enemy  { border-color: rgb(224, 92,  92);  background-color: rgba(60, 18, 18, 0.97); }
+.queue-index  { font-size: 8px;  color: rgb(110, 118, 129); width: 14px; margin-right: 4px; -unity-text-align: upper-center; }
+.queue-name   { font-size: 10px; flex-grow: 1; }
+.queue-player .queue-name { color: rgb(120, 220, 140); }
+.queue-enemy  .queue-name { color: rgb(220, 110, 110); }
+.queue-next   .queue-name { -unity-font-style: bold; }
+.queue-type-pip { font-size: 7px; border-radius: 2px; padding: 1px 3px; margin-left: 4px; }
 
 /* ── Overlays ──────────────────────────────────────── */
 .overlay {
