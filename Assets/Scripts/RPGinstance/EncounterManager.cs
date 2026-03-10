@@ -34,6 +34,10 @@ public class EncounterManager : MonoBehaviour
     [Header("Spawn Points — assign Enemy1..Enemy4 transforms from battle scene")]
     public List<Transform> spawnPoints = new List<Transform>();
 
+    [Header("Test Encounter — drag enemy prefabs here to test without an overworld")]
+    public List<GameObject> testEnemyPrefabs = new List<GameObject>();
+    public int testLevel = 1;
+
     // ── Pending encounter set before scene load ───────────────────────────────
     private static EncounterData pendingEncounter;
 
@@ -65,7 +69,9 @@ public class EncounterManager : MonoBehaviour
     }
 
     /// <summary>True if an encounter has been queued and is ready to spawn.</summary>
-    public static bool HasPendingEncounter => pendingEncounter != null && pendingEncounter.enemies.Count > 0;
+    public static bool HasPendingEncounter => 
+        (pendingEncounter != null && pendingEncounter.enemies.Count > 0) ||
+        (Instance != null && Instance.testEnemyPrefabs != null && Instance.testEnemyPrefabs.Count > 0);
 
     // ── Spawning ──────────────────────────────────────────────────────────────
 
@@ -82,7 +88,38 @@ public class EncounterManager : MonoBehaviour
 
         if (pendingEncounter == null || pendingEncounter.enemies.Count == 0)
         {
-            Debug.LogWarning("[EncounterManager] SpawnEnemies called but no encounter is prepared.");
+            // No prepared encounter — try test prefabs assigned directly in Inspector
+            if (testEnemyPrefabs == null || testEnemyPrefabs.Count == 0)
+            {
+                Debug.LogWarning("[EncounterManager] SpawnEnemies called but no encounter or test prefabs are set.");
+                return spawnedEnemies;
+            }
+
+            Debug.Log("[EncounterManager] Using test prefabs for this encounter.");
+            foreach (GameObject prefab in testEnemyPrefabs)
+            {
+                if (prefab == null) continue;
+
+                GameObject obj = Instantiate(prefab);
+                obj.transform.SetParent(transform);
+
+                EnemyUnit eu = obj.GetComponent<EnemyUnit>();
+                if (eu == null) { Debug.LogWarning($"[EncounterManager] {prefab.name} has no EnemyUnit — skipped."); Destroy(obj); continue; }
+
+                ApplyLevelScaling(eu, testLevel);
+                eu.InitHealth();
+
+                int index = spawnedEnemies.Count;
+                if (spawnPoints != null && index < spawnPoints.Count && spawnPoints[index] != null)
+                {
+                    obj.transform.position = spawnPoints[index].position;
+                    obj.transform.rotation = spawnPoints[index].rotation;
+                }
+
+                spawnedEnemies.Add(obj);
+                Debug.Log($"[EncounterManager] Test-spawned {eu.unitName} at level {testLevel}.");
+            }
+
             return spawnedEnemies;
         }
 
