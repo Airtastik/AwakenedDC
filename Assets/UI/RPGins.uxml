@@ -11,7 +11,7 @@
         <ui:VisualElement name="PlayerSlot1" class="PlayerPanel">
             <ui:Label text="PARTY" class="panel-label party-label"/>
         </ui:VisualElement>
-        <ui:VisualElement name="playerActions" class="PlayerActions">
+        <ui:VisualElement name="playerActions" class="PlayerActions" style="bottom: 17%;">
             <ui:VisualElement class="bottom-actions">
                 <ui:Button text="GUARD" name="guard" class="action-btn guard-btn"/>
             </ui:VisualElement>
@@ -28,7 +28,7 @@
                 <ui:Button name="move-btn-1" text="—" class="action-btn move-btn"/>
                 <ui:Button name="move-btn-2" text="—" class="action-btn move-btn"/>
             </ui:Foldout>
-            <ui:Label name="battle-message" text="" class="battle-message"/>
+            <ui:Label name="battle-message" text="" class="battle-message" style="color: rgb(255, 255, 255);"/>
         </ui:VisualElement>
         <ui:VisualElement name="target-overlay" class="overlay hidden">
             <ui:VisualElement class="overlay-popup">

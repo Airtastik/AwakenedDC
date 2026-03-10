@@ -20,6 +20,13 @@ public class PlayerBillboard : MonoBehaviour
     [Header("Faint")]
     public Color faintColour = new Color(0.4f, 0.4f, 0.4f, 0.5f);
 
+
+    [Header("Idle Pulse")]
+    [Tooltip("Enemies gently pulse in scale while alive to feel threatening.")]
+    public bool idlePulse = true;
+    public float pulseScale = 0.03f;   // How much it grows
+    public float pulseSpeed = 1.00f;   // How fast it pulses
+
     // ── Internals ─────────────────────────────────────────────────────────────
     private SpriteRenderer sr;
     private Camera          cam;
@@ -52,6 +59,7 @@ public class PlayerBillboard : MonoBehaviour
 
         lastPosition = transform.position;
     }
+
 
     // ── Billboard ─────────────────────────────────────────────────────────────
 

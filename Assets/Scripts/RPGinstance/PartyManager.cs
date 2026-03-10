@@ -90,9 +90,9 @@ public class PartyManager : MonoBehaviour
     // ── Battle interface ──────────────────────────────────────────────────────
 
     /// <summary>
-    /// Creates live PlayerUnit GameObjects from current records and returns them.
-    /// BattleSystem calls this in LateStart() and assigns the result to
-    /// playerPartyObjects so the rest of the battle pipeline works unchanged.
+    /// Instantiates the actual prefab (preserving sprite, billboard, etc.) and
+    /// applies the saved MemberData stats on top. Returns the spawned GameObjects.
+    /// BattleSystem calls this in LateStart().
     /// </summary>
     public List<GameObject> SpawnParty()
     {
@@ -100,24 +100,44 @@ public class PartyManager : MonoBehaviour
             if (obj != null) Destroy(obj);
         spawnedMembers.Clear();
 
-        foreach (MemberData data in records)
+        for (int i = 0; i < records.Count; i++)
         {
-            var obj = new GameObject($"Party_{data.unitName}");
-            obj.transform.SetParent(transform);
+            MemberData data = records[i];
 
-            var pu = obj.AddComponent<PlayerUnit>();
-            data.ApplyTo(pu);
+            // Find the matching prefab by index — falls back to a blank GO if none found
+            GameObject prefab = (i < memberPrefabs.Count) ? memberPrefabs[i] : null;
 
-            // Position at spawn point if one is assigned for this slot
-            int index = spawnedMembers.Count;
-            if (spawnPoints != null && index < spawnPoints.Count && spawnPoints[index] != null)
+            GameObject obj;
+            if (prefab != null)
             {
-                obj.transform.position = spawnPoints[index].position;
-                obj.transform.rotation = spawnPoints[index].rotation;
+                // Instantiate the real prefab so sprite, billboard, etc. are preserved
+                obj = Instantiate(prefab);
+                obj.name = $"Party_{data.unitName}";
+            }
+            else
+            {
+                // Fallback: plain GameObject with just a PlayerUnit
+                Debug.LogWarning($"[PartyManager] No prefab for slot {i} ({data.unitName}) — spawning blank.");
+                obj = new GameObject($"Party_{data.unitName}");
+                obj.AddComponent<PlayerUnit>();
+            }
+
+            // Apply saved stats (HP, SP, XP, level etc.) on top of prefab defaults
+            var pu = obj.GetComponent<PlayerUnit>();
+            if (pu != null)
+                data.ApplyTo(pu);
+            else
+                Debug.LogWarning($"[PartyManager] Spawned {obj.name} has no PlayerUnit.");
+
+            // Position at spawn point if assigned
+            if (spawnPoints != null && i < spawnPoints.Count && spawnPoints[i] != null)
+            {
+                obj.transform.position = spawnPoints[i].position;
+                obj.transform.rotation = spawnPoints[i].rotation;
             }
 
             spawnedMembers.Add(obj);
-            Debug.Log($"[PartyManager] Spawned {data.unitName}  HP:{data.currentHealth}/{data.maxHealth}  SP:{data.currentSP}/{data.maxSP}");
+            Debug.Log($"[PartyManager] Spawned {data.unitName} from prefab. HP:{data.currentHealth}/{data.maxHealth}  SP:{data.currentSP}/{data.maxSP}");
         }
 
         return spawnedMembers;

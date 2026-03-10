@@ -227,20 +227,23 @@ public class NewMonoBehaviourScript : MonoBehaviour
         ClearChildrenAfterLabel(playerPanel);
         unitCards.Clear();
 
-        foreach (GameObject obj in battleSystem.enemyPartyObjects)
+        // Use the actual spawned unit lists, not the raw GameObject inspector lists
+        foreach (EnemyUnit eu in battleSystem.EnemyParty)
         {
-            if (obj == null) continue;
-            var eu = obj.GetComponent<EnemyUnit>();
-            if (eu != null) { var c = MakeUnitCard(eu, false); enemyPanel.Add(c); unitCards[eu] = c; Debug.Log($"[BattleUI] Enemy card: {eu.unitName}"); }
-            else Debug.LogWarning($"[BattleUI] {obj.name} has no EnemyUnit.");
+            if (eu == null) continue;
+            var c = MakeUnitCard(eu, false);
+            enemyPanel.Add(c);
+            unitCards[eu] = c;
+            Debug.Log($"[BattleUI] Enemy card: {eu.unitName}");
         }
 
-        foreach (GameObject obj in battleSystem.playerPartyObjects)
+        foreach (PlayerUnit pu in battleSystem.PlayerParty)
         {
-            if (obj == null) continue;
-            var pu = obj.GetComponent<PlayerUnit>();
-            if (pu != null) { var c = MakeUnitCard(pu, true); playerPanel.Add(c); unitCards[pu] = c; Debug.Log($"[BattleUI] Player card: {pu.unitName}"); }
-            else Debug.LogWarning($"[BattleUI] {obj.name} has no PlayerUnit.");
+            if (pu == null) continue;
+            var c = MakeUnitCard(pu, true);
+            playerPanel.Add(c);
+            unitCards[pu] = c;
+            Debug.Log($"[BattleUI] Player card: {pu.unitName}");
         }
     }
 
@@ -407,15 +410,13 @@ public class NewMonoBehaviourScript : MonoBehaviour
     private void RefreshMoveButtons()
     {
         if (!battleReady) return;
-        var activePlayer = battleSystem.GetLivingPlayers().FirstOrDefault();
-        RefreshMoveBtnSet(activePlayer, "move-btn-", 0, 3);
+        RefreshMoveBtnSet(battleSystem.ActivePlayer, "move-btn-", 0, 3);
     }
 
     private void RefreshSpecialButtons()
     {
         if (!battleReady) return;
-        var activePlayer = battleSystem.GetLivingPlayers().FirstOrDefault();
-        RefreshMoveBtnSet(activePlayer, "special-btn-", 3, 3);
+        RefreshMoveBtnSet(battleSystem.ActivePlayer, "special-btn-", 3, 3);
     }
 
     private void RefreshMoveBtnSet(PlayerUnit activePlayer, string btnPrefix, int moveOffset, int count)

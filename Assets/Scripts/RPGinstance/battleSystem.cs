@@ -22,9 +22,16 @@ public class BattleSystem : MonoBehaviour
     private List<PlayerUnit> playerParty = new List<PlayerUnit>();
     private List<EnemyUnit>  enemyParty  = new List<EnemyUnit>();
 
+    // Public read-only accessors for UI
+    public IReadOnlyList<PlayerUnit> PlayerParty => playerParty;
+    public IReadOnlyList<EnemyUnit>  EnemyParty  => enemyParty;
+
     // ── Active Units ──────────────────────────────────────────────────────────
     private PlayerUnit activePlayer;
     private EnemyUnit  activeEnemy;
+
+    public PlayerUnit ActivePlayer => activePlayer;
+    public EnemyUnit  ActiveEnemy  => activeEnemy;
 
     // ── State ─────────────────────────────────────────────────────────────────
     public BattleState state { get; private set; }

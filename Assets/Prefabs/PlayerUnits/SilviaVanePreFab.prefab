@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3764340344550799949}
   - component: {fileID: 7619585073590967425}
   - component: {fileID: 8078414810210386527}
-  - component: {fileID: 290185545343477695}
+  - component: {fileID: 325962089077973612}
   m_Layer: 0
   m_Name: SilviaVanePreFab
   m_TagString: Untagged
@@ -221,7 +221,7 @@ MonoBehaviour:
   hurtColour: {r: 1, g: 0.3, b: 0.3, a: 1}
   flashDuration: 0.12
   faintColour: {r: 0.4, g: 0.4, b: 0.4, a: 0.5}
---- !u!114 &290185545343477695
+--- !u!114 &325962089077973612
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
