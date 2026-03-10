@@ -873,6 +873,7 @@ GameObject:
   - component: {fileID: 1377823975}
   - component: {fileID: 1377823974}
   - component: {fileID: 1377823977}
+  - component: {fileID: 1377823980}
   - component: {fileID: 1377823979}
   - component: {fileID: 1377823978}
   m_Layer: 0
@@ -1068,6 +1069,19 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1377823973}
   m_Enabled: 1
+--- !u!114 &1377823980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377823973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15bcd29b48704f24e8ca3fc8c3697e07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossRoom
+  bossBattle: BossBattle
 --- !u!1001 &123422688603415335
 PrefabInstance:
   m_ObjectHideFlags: 0
