@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26875e96a88b49d47b00021435690d8d, type: 3}
+  m_Script: {fileID: 11500000, guid: 949c1146553c009489a96623acf30743, type: 3}
   m_Name: HealthPotion
-  m_EditorClassIdentifier: Assembly-CSharp::Item
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Health Potion
-  description: Restores 30 HP to one ally.
-  effect: 0
-  power: 30
-  statMult: 1.25
-  healthAmount: 20
+  icon: {fileID: 21300000, guid: fb1285ff153dddf43ad643cfd3745a92, type: 3}
+  description: Restores [x] health.
+  quantity: 1
