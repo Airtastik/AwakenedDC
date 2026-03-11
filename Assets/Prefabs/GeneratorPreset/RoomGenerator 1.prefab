@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &409153089993883532
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8768753124680777096}
+  - component: {fileID: 7395429547303579258}
+  - component: {fileID: 1466247865375986204}
+  m_Layer: 0
+  m_Name: RoomGenerator 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8768753124680777096
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409153089993883532}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7395429547303579258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409153089993883532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd3b30a7f5232d549a20388e7e36f537, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoomSpawner
+  startRoomPrefab: {fileID: 2244040062701960396, guid: 20bb051053b3b9f4c8b365f5cad1f9ad, type: 3}
+  roomPrefabs:
+  - {fileID: 2244040062701960396, guid: 20bb051053b3b9f4c8b365f5cad1f9ad, type: 3}
+  - {fileID: 2244040062701960396, guid: 4e49871134e88534fbcf3b6e5b6811ee, type: 3}
+  - {fileID: 2244040062701960396, guid: 941d09addd1a402438a1c108e3879f31, type: 3}
+  - {fileID: 2244040062701960396, guid: e637821c38278ca4eb45027f18f05da9, type: 3}
+  - {fileID: 2244040062701960396, guid: 578ec3858b80d8b4aaf6640b01b6b72a, type: 3}
+  - {fileID: 2244040062701960396, guid: 256f4f24a34f11848abd7b86dea1ec53, type: 3}
+  - {fileID: 2244040062701960396, guid: 3be504b3724b82043948b8ca7380a4f4, type: 3}
+  - {fileID: 2244040062701960396, guid: a4b59e0bb347c79468bd315bd85e9bca, type: 3}
+  - {fileID: 2244040062701960396, guid: 98bc896014d3fc846a9a670934a54a7f, type: 3}
+  - {fileID: 2244040062701960396, guid: c555b930f552aa142a6bf6bbe0ec6878, type: 3}
+  - {fileID: 2244040062701960396, guid: 0d6a7d7bd984dd946bfc1c7c42306a3f, type: 3}
+  - {fileID: 2244040062701960396, guid: 46eb0ea7956213847a8d5d3def9db50f, type: 3}
+  - {fileID: 2244040062701960396, guid: 7032496127a91c0488a2627894373613, type: 3}
+  - {fileID: 2244040062701960396, guid: eb9bd1cf56cbc4c45a194fda2af0cc24, type: 3}
+  - {fileID: 2244040062701960396, guid: 210e07dea0aff804bace40ab39e9a689, type: 3}
+  enemies:
+  - {fileID: 3743211790169896993, guid: 31798d83a7270324681657339af3dcdd, type: 3}
+  pickups:
+  - {fileID: 6617480351595878364, guid: 89c4d3eec94eace44881c0a86282182c, type: 3}
+  - {fileID: 7664217926434271769, guid: ab50467c7c4e70d4db20b386c958d722, type: 3}
+  - {fileID: 4256656236328615423, guid: 7455dbb68b4482342bf51e580bf8301d, type: 3}
+  - {fileID: 6983663489085828949, guid: f99f846d0e7d38e4a8092d2258c4b77c, type: 3}
+  - {fileID: 5980604051166141996, guid: 03f6a822f909d3842a5158835670b140, type: 3}
+  treasurePrefab: {fileID: 7678888677872435788, guid: d3ed052ea2615bb4d9df96924a49ecb8, type: 3}
+  staircasePrefab: {fileID: 6517814864680356131, guid: a7bee8d2d91720b4c972a5876142c7a5, type: 3}
+  roomCount: 16
+  hallwayWeighting: 0.78
+  totalEnemyMax: 6
+  wanderingEnemySpawnChance: 0.1
+  awaitingEnemySpawnChance: 0.4
+  totalPickupMax: 15
+  wanderingPickupSpawnChance: 0.2
+  awaitingPickupSpawnChance: 0.8
+--- !u!114 &1466247865375986204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409153089993883532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 156c808c60e4dd547b545d2df3d15cf5, type: 2}
+  m_BuildHeightMesh: 0
