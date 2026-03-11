@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7395429547303579258}
   - component: {fileID: 1466247865375986204}
   m_Layer: 0
-  m_Name: RoomGenerator
+  m_Name: RoomGenerator 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,23 +45,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd3b30a7f5232d549a20388e7e36f537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSpawner
-  startRoomPrefab: {fileID: 2244040062701960396, guid: bb2f994f9404cc14789675753967d6eb, type: 3}
+  startRoomPrefab: {fileID: 2244040062701960396, guid: 3553335defd97994eb7e1e0d9748fd72, type: 3}
   roomPrefabs:
-  - {fileID: 2244040062701960396, guid: bb2f994f9404cc14789675753967d6eb, type: 3}
-  - {fileID: 2244040062701960396, guid: 3e5acfa93598d70448b08067ccef1429, type: 3}
-  - {fileID: 2244040062701960396, guid: d4262fdcdbcaf5b4084285c8b2afe511, type: 3}
-  - {fileID: 2244040062701960396, guid: 15c2ee334b683af499852d709e3156cc, type: 3}
-  - {fileID: 2244040062701960396, guid: 6efa1c4b8fa89664683014a0a0953cf3, type: 3}
-  - {fileID: 2244040062701960396, guid: 19bd1d5ef8bda4048b8eec15342935a0, type: 3}
-  - {fileID: 2244040062701960396, guid: c816a00c4e322d54d898c2f55a18704a, type: 3}
-  - {fileID: 2244040062701960396, guid: ce565488c9636c14ab5a3da63c2a7cef, type: 3}
-  - {fileID: 2244040062701960396, guid: 3fcbf2487e28d404bb63aa6d2fec3d06, type: 3}
-  - {fileID: 2244040062701960396, guid: c15b0c9548ff7814692981848e76f519, type: 3}
-  - {fileID: 2244040062701960396, guid: e7552f951a328a54188aa129737c3897, type: 3}
-  - {fileID: 2244040062701960396, guid: 53ce1b2c7a5a23f4eab81e04d95a40bd, type: 3}
-  - {fileID: 2244040062701960396, guid: 474b7cc354b179c47a9fef745cc2818f, type: 3}
-  - {fileID: 2244040062701960396, guid: 0f0a872fa8b448942bf378750b5f255f, type: 3}
-  - {fileID: 2244040062701960396, guid: 91a164b531acdb44898fba4e98262990, type: 3}
+  - {fileID: 2244040062701960396, guid: 3553335defd97994eb7e1e0d9748fd72, type: 3}
+  - {fileID: 2244040062701960396, guid: 4d50ac3e973e1a54f9c99b7f3239783e, type: 3}
+  - {fileID: 2244040062701960396, guid: 6ab3326c5910bfe4cbef1196bab607a5, type: 3}
+  - {fileID: 2244040062701960396, guid: 6f3221e09e88ae84d9a5b83bad2c2bb2, type: 3}
+  - {fileID: 2244040062701960396, guid: f910b413001835247a7d67961fae5bd1, type: 3}
+  - {fileID: 2244040062701960396, guid: 023ff9b2d39ae9f4f94e65a8c14309df, type: 3}
+  - {fileID: 2244040062701960396, guid: 22d7c39d07ed47c49aa46777933c7d4c, type: 3}
+  - {fileID: 2244040062701960396, guid: ed106bc1293d81f4c9e9d0ccc6607307, type: 3}
+  - {fileID: 2244040062701960396, guid: 4824a3cf2a27c114d96fc7fe601f29e8, type: 3}
+  - {fileID: 2244040062701960396, guid: a8d8b9ff1f4a98342b72d03a0cbb325a, type: 3}
+  - {fileID: 2244040062701960396, guid: 5c7f889c77191e44d89b68eba28f1402, type: 3}
+  - {fileID: 2244040062701960396, guid: 3b1fc34581538f74fbbccb22836d1a7d, type: 3}
+  - {fileID: 2244040062701960396, guid: 24a30314a858b3a4f9787cf9d2edae78, type: 3}
+  - {fileID: 2244040062701960396, guid: 1adfc22bef695fc4fb780deb1b667f3b, type: 3}
+  - {fileID: 2244040062701960396, guid: b5fe2b3818b4ae943b20c5f6b3691faa, type: 3}
   enemies:
   - {fileID: 3743211790169896993, guid: 31798d83a7270324681657339af3dcdd, type: 3}
   pickups:
@@ -72,12 +72,12 @@ MonoBehaviour:
   - {fileID: 5980604051166141996, guid: 03f6a822f909d3842a5158835670b140, type: 3}
   treasurePrefab: {fileID: 7678888677872435788, guid: d3ed052ea2615bb4d9df96924a49ecb8, type: 3}
   staircasePrefab: {fileID: 6517814864680356131, guid: a7bee8d2d91720b4c972a5876142c7a5, type: 3}
-  roomCount: 12
-  hallwayWeighting: 0.75
-  totalEnemyMax: 4
+  roomCount: 24
+  hallwayWeighting: 0.81
+  totalEnemyMax: 8
   wanderingEnemySpawnChance: 0.1
   awaitingEnemySpawnChance: 0.4
-  totalPickupMax: 10
+  totalPickupMax: 20
   wanderingPickupSpawnChance: 0.2
   awaitingPickupSpawnChance: 0.8
 --- !u!114 &1466247865375986204
