@@ -250,7 +250,7 @@ public class RoomSpawner : MonoBehaviour
                         for (int i = 0; i < decisionMatrix[x, y].pickupCount; i++)
                         {
                             allSpawnedItems.Add(Instantiate(pickups[UnityEngine.Random.Range(0, pickups.Count)], new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION + UnityEngine.Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE),
-                                0, (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION + UnityEngine.Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE)), Quaternion.identity));
+                                0.5f, (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION + UnityEngine.Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE)), Quaternion.identity));
                         }
                         // Debug.LogError($"{decisionMatrix[x, y].pickupCount} pickups chosen at {x}, {y}");
                     }
