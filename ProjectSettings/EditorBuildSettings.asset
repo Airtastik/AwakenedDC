@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/MainMenu.unity
     guid: 9850effecdc7f394c8676962ac34dfb6
   - enabled: 1
-    path: Assets/Scenes/RPGtest.unity
+    path: Assets/Scenes/RPG.unity
     guid: 096079e4edf9cf54f971dfd9bfc38df8
   - enabled: 1
     path: Assets/AwakenedDCBuild.unity
