@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7904553784463062483}
   - component: {fileID: 3213941252773196696}
   - component: {fileID: 3743211790169896993}
+  - component: {fileID: 4691989503095535291}
   m_Layer: 0
   m_Name: Enemy_1_Base
   m_TagString: Untagged
@@ -130,6 +131,23 @@ MonoBehaviour:
   spriteRenderer: {fileID: 3939571317957465565}
   frontSprite: {fileID: 21300000, guid: 3854802cf79540d4c98a00e2bddf1274, type: 3}
   backSprite: {fileID: 21300000, guid: e5704278c44a381409a10c50ad09f686, type: 3}
+--- !u!114 &4691989503095535291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4535301183017896239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57a0533d96a83da45a18bfd3962b7a57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleEncounterTrigger
+  enemyRoster: {fileID: 0}
+  encounterLevel: 1
+  returnSpawnID: 
+  destroyAfterTrigger: 0
+  triggerOnce: 1
 --- !u!1 &7005433045190482053
 GameObject:
   m_ObjectHideFlags: 0
