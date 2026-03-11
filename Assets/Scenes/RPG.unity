@@ -1115,14 +1115,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1865163856}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d249020f45e3e1d4fad62a379a52c213, type: 3}
+  m_Script: {fileID: 11500000, guid: d248cc9bb92e9e14c8cc566dcdc705b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartyManager
   memberPrefabs:
-  - {fileID: 4535301183017896239, guid: 58bff154b5c7f5f48a0f276d79922930, type: 3}
   - {fileID: 4535301183017896239, guid: e16dc65f15d65af48b60250d081f4439, type: 3}
-  - {fileID: 4535301183017896239, guid: 876c61086a1a11b4f8634c3d28afa79e, type: 3}
+  - {fileID: 4535301183017896239, guid: 58bff154b5c7f5f48a0f276d79922930, type: 3}
   - {fileID: 4535301183017896239, guid: 3953d1ab9f1430d4cb9908f9a85a3093, type: 3}
+  - {fileID: 4535301183017896239, guid: 876c61086a1a11b4f8634c3d28afa79e, type: 3}
   spawnPoints:
   - {fileID: 106037312}
   - {fileID: 1765469874}
