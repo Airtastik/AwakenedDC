@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Item
+  - Staircase
   layers:
   - Default
   - TransparentFX

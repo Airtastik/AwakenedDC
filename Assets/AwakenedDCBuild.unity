@@ -1053,6 +1053,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatsManager
   statsUI: {fileID: 177185631}
+  slots: []
 --- !u!114 &810311901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1257,6 +1258,7 @@ GameObject:
   - component: {fileID: 1377823977}
   - component: {fileID: 1377823979}
   - component: {fileID: 1377823978}
+  - component: {fileID: 1377823980}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1454,6 +1456,18 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1377823973}
   m_Enabled: 1
+--- !u!114 &1377823980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377823973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4582b0cdf66a3994496038ea479befce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PreBoss
 --- !u!224 &1405729799 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1432047864393624851, guid: 86080012bd8e25c499c8f318e42f51c4, type: 3}
@@ -2215,7 +2229,7 @@ PrefabInstance:
     - target: {fileID: 7395429547303579258, guid: 5932261808d1a1349ae53533bf053605, type: 3}
       propertyPath: 'pickups.Array.data[5]'
       value: 
-      objectReference: {fileID: 2780621678714489233, guid: 2193072a550f6e74da66e422ea260c51, type: 3}
+      objectReference: {fileID: 4315258453080926654, guid: fc62a9ac5345fbe4bbd089f3ad6e09ac, type: 3}
     - target: {fileID: 7395429547303579258, guid: 5932261808d1a1349ae53533bf053605, type: 3}
       propertyPath: 'roomPrefabs.Array.data[14]'
       value: 
