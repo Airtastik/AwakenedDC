@@ -10,7 +10,10 @@
         <ui:VisualElement name="VisualElement" class="dividerControls"/>
         <ui:Label text="Item Pickup: E" name="Label" class="title-sub"/>
         <ui:VisualElement name="VisualElement" class="dividerControls"/>
-        <ui:Label text="UI Interaction: Point and Click" name="Label" class="title-sub"/>
+        <ui:Label text="Inventory: I (i)" name="Label" class="title-sub"/>
+        <ui:VisualElement name="VisualElement" class="dividerControls"/>
+        <ui:Label text="Stats: O" name="Label" class="title-sub"/>
+        <ui:VisualElement name="VisualElement" class="dividerControls"/>
         <ui:Button name="btn-back" text="Back" class="menu-btn" style="text-overflow: clip; height: 26px; width: 92px;"/>
     </ui:VisualElement>
 </ui:UXML>

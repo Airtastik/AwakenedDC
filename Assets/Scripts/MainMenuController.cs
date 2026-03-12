@@ -10,6 +10,7 @@ public class MainMenuController : MonoBehaviour
 {
     public VisualTreeAsset mainMenuUXML;
     public VisualTreeAsset controlsUXML;
+    public VisualTreeAsset creditsUXML;
 
     UIDocument uiDocument;
 
@@ -28,6 +29,7 @@ public class MainMenuController : MonoBehaviour
 
         var btnAwaken = root.Q<Button>("btn-awaken");
         var btnControls = root.Q<Button>("btn-controls");
+        var btnCredits = root.Q<Button>("btn-credits");
 
         btnAwaken.clicked += () =>
         {
@@ -40,6 +42,12 @@ public class MainMenuController : MonoBehaviour
             Debug.Log("Controls clicked");
             ShowControlsMenu();
         };
+
+        btnCredits.clicked += () =>
+        {
+            Debug.Log("Credits clicked");
+            ShowCreditsMenu();
+        };
     }
 
     void ShowControlsMenu()
@@ -48,6 +56,22 @@ public class MainMenuController : MonoBehaviour
 
         root.Clear();
         controlsUXML.CloneTree(root);
+
+        var btnBack = root.Q<Button>("btn-back");
+
+        btnBack.clicked += () =>
+        {
+            Debug.Log("Back clicked");
+            ShowMainMenu();
+        };
+    }
+
+    void ShowCreditsMenu()
+    {
+        var root = uiDocument.rootVisualElement;
+
+        root.Clear();
+        creditsUXML.CloneTree(root);
 
         var btnBack = root.Q<Button>("btn-back");
 
