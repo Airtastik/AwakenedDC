@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 7619585073590967425}
   - component: {fileID: 8078414810210386527}
   m_Layer: 0
-  m_Name: DimitriGlassPrefab
+  m_Name: DimitriGlassPrefab 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

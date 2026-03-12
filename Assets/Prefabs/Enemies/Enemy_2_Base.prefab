@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 513.8, y: 229.3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 616708165189933564}
@@ -130,8 +130,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   spriteRenderer: {fileID: 5892405736783949802}
-  frontSprite: {fileID: 21300000, guid: 616c5071c9f25a5468ab06ff52df80c0, type: 3}
-  backSprite: {fileID: 21300000, guid: 96946a1707659a74f84120695c900bb7, type: 3}
+  frontSprite: {fileID: 21300000, guid: faf01a6364a2fe94db23693d38cbed79, type: 3}
+  backSprite: {fileID: 21300000, guid: 73f1cdffe0b5cd547875277186186334, type: 3}
   enemyRoster: {fileID: 0}
   encounterLevel: 1
   destroyAfterBattle: 1

@@ -12,10 +12,12 @@ GameObject:
   - component: {fileID: 3979845500620485281}
   - component: {fileID: 7904553784463062483}
   - component: {fileID: 3213941252773196696}
-  - component: {fileID: 4022483649038309597}
-  - component: {fileID: 6100229701076279817}
+  - component: {fileID: 3764340344550799949}
+  - component: {fileID: 7619585073590967425}
+  - component: {fileID: 8078414810210386527}
+  - component: {fileID: 6115017558216280945}
   m_Layer: 0
-  m_Name: LunaPrefab
+  m_Name: DimitriQuestionPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,11 +33,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0, z: -0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5663722519041330199}
-  - {fileID: 3599941579731788061}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &3979845500620485281
@@ -110,7 +111,41 @@ NavMeshAgent:
   m_BaseOffset: 0.9
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!212 &4022483649038309597
+--- !u!114 &3764340344550799949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4535301183017896239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a2c4de96ab405d41a07adb4071862a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerUnit
+  unitName: 
+  elementalType: 0
+  maxHealth: 0
+  currentHealth: 0
+  maxSP: 0
+  currentSP: 0
+  attackP: 0
+  defence: 0
+  speed: 0
+  criticalDMG: 0
+  criticalRate: 0
+  effectRes: 0
+  moveList: []
+  currentEffects: []
+  level: 0
+  experience: 0
+  experienceToNextLevel: 0
+  statPointsAvailable: 0
+  traitLockedXP: 0
+  traitCannotAttack: 0
+  traitCannotBeBiuffed: 0
+  traitCannotBeHealed: 0
+--- !u!212 &7619585073590967425
 SpriteRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
@@ -159,7 +194,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 10924731a072d374b97cb942e7cd5250, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -169,7 +204,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &6100229701076279817
+--- !u!114 &8078414810210386527
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,83 +213,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 4535301183017896239}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c30c1d2f66f3614ea9db38419cf2ab6, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cd124bb2f5eaaa4b8830ab751aabfe7, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NPCBillboard
-  frontSprite: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
-  backSprite: {fileID: 21300000, guid: 53dbe657d4d0129489f82fcfeb274680, type: 3}
-  idleBob: 0
-  bobHeight: 0.04
-  bobSpeed: 1.2
-  highlightColour: {r: 1, g: 1, b: 0.6, a: 1}
---- !u!1 &5909744181795731448
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3599941579731788061}
-  - component: {fileID: 8218396783558558402}
-  - component: {fileID: 5918891560565743880}
-  m_Layer: 0
-  m_Name: Trigger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3599941579731788061
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5909744181795731448}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8383668359630175391}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &8218396783558558402
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5909744181795731448}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.65862113
-  m_Center: {x: 0.0114943385, y: 0, z: 0}
---- !u!114 &5918891560565743880
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerBillboard
+  frontSprite: {fileID: 21300000, guid: 10924731a072d374b97cb942e7cd5250, type: 3}
+  backSprite: {fileID: 21300000, guid: 10924731a072d374b97cb942e7cd5250, type: 3}
+  hurtColour: {r: 1, g: 0.3, b: 0.3, a: 1}
+  flashDuration: 0.12
+  faintColour: {r: 0.4, g: 0.4, b: 0.4, a: 0.5}
+  idlePulse: 1
+  pulseScale: 0.03
+  pulseSpeed: 1
+--- !u!114 &6115017558216280945
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5909744181795731448}
+  m_GameObject: {fileID: 4535301183017896239}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33ea691686771d54e8e30f2292612170, type: 3}
+  m_Script: {fileID: 11500000, guid: f3e19ecebfd95bb44b51e1a8fbab514a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTrigger
-  npcLines: []
-  npcPortrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::DimitriQuestion
 --- !u!1 &7005433045190482053
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,7 +317,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 10924731a072d374b97cb942e7cd5250, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -274,8 +274,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   spriteRenderer: {fileID: 2859110701444991087}
-  frontSprite: {fileID: 21300000, guid: a1b19518795909440a32881bf4ffe495, type: 3}
-  backSprite: {fileID: 21300000, guid: a1b19518795909440a32881bf4ffe495, type: 3}
+  frontSprite: {fileID: 21300000, guid: fdc14227c1325594a986d8fb0613fa12, type: 3}
+  backSprite: {fileID: 21300000, guid: fdc14227c1325594a986d8fb0613fa12, type: 3}
   enemyRoster: {fileID: 0}
   encounterLevel: 1
   destroyAfterBattle: 1
