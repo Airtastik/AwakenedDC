@@ -17,13 +17,14 @@ public class Dialogue : MonoBehaviour
 
     public Sprite playerSprite;
 
+    public GameObject dialoguePanel;
+
     private int index;
 
     // Start is called before the first frame update
     void Start()
     {
-        textComponent.text = string.Empty;
-        gameObject.SetActive(false);
+        dialoguePanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -45,6 +46,7 @@ public class Dialogue : MonoBehaviour
 
     public void StartDialogue(string[] newLines, Sprite npcSprite)
     {
+        
         StopAllCoroutines();
 
         lines = newLines;
@@ -55,7 +57,7 @@ public class Dialogue : MonoBehaviour
         sprite1.sprite = playerSprite;
         sprite2.sprite = npcSprite;
 
-        gameObject.SetActive(true);
+        dialoguePanel.SetActive(true);
 
         StartCoroutine(TypeLine());
     }
@@ -79,7 +81,7 @@ public class Dialogue : MonoBehaviour
         }
         else
         {
-            gameObject.SetActive(false);
+            dialoguePanel.SetActive(false);
         }
     }
 }
