@@ -47,5 +47,5 @@ Bandages sprite - Model: Gemeni 3 Fast, Date: 3/5, Prompt: Can you make a bandag
 Morphine sprite - Model: Gemeni 3 Fast, Date: 3/5, Prompt: Can you make a morphine 2d pixel art sprite thats no larger than 40x40 
 Defibrillator sprite - Model: Gemeni 3 Fast, Date: 3/5, Prompt: Can you make a defibrillator 2d pixel art sprite thats no larger than 40x40
 
-To play the final build, download the final build zip file, then extract it, and run the exe file.
+To play the final build, download the FIN.7Z zip file, then extract it, and run the exe file.
 
