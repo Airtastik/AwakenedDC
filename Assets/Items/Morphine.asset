@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Morphine
   icon: {fileID: 21300000, guid: 79f3686144362914ba00f4a2eef8ccc4, type: 3}
-  description: '[Placeholder]'
+  description: Administers a high-grade pain relief
   quantity: 1

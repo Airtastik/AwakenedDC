@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Health Potion
   icon: {fileID: 21300000, guid: fb1285ff153dddf43ad643cfd3745a92, type: 3}
-  description: Restores [x] health.
+  description: An elixir of health
   quantity: 1

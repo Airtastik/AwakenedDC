@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Pain Killers
   icon: {fileID: 21300000, guid: 86b353f07a16e6e468c81e97b5ba5f38, type: 3}
-  description: '[Placeholder]'
+  description: A standard bottle of pills
   quantity: 1

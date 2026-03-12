@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Steroids
   icon: {fileID: 21300000, guid: bde97ffd7e37e5047ad6aacf63ff48dd, type: 3}
-  description: '[Placeholder]'
+  description: Overrides muscle growth limits
   quantity: 1
