@@ -605,6 +605,51 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     private void HideTargetOverlay() => targetOverlay.AddToClassList("hidden");
 
+    private void ShowAllyTargetOverlay(int moveIndex)
+    {
+        pendingMoveIndex = moveIndex;
+        targetList.Clear();
+
+        // Change overlay title to show we are picking an ally
+        var title = targetOverlay.Q<Label>();
+        if (title != null) title.text = "SELECT ALLY";
+
+        var players = battleSystem.PlayerParty;
+        for (int i = 0; i < players.Count; i++)
+        {
+            var pu = players[i];
+            if (!pu.IsAlive) continue;
+
+            var btn = new Button();
+            btn.AddToClassList("target-btn");
+            btn.AddToClassList("target-ally-btn");
+
+            // Show name, HP, and flag if they can't be targeted
+            bool cannotBeHealed = pu.traitCannotBeHealed && battleSystem.ActivePlayer != pu;
+            bool cannotBeBuffed = pu.traitCannotBeBiuffed && battleSystem.ActivePlayer != pu;
+            Move move = battleSystem.ActivePlayer.moveList[moveIndex];
+            bool blocked = (move.moveType == MoveType.Heal && cannotBeHealed) ||
+                           (move.moveType == MoveType.Buff && cannotBeBuffed);
+
+            btn.text = blocked
+                ? $"{pu.unitName}  ✖ trait blocked"
+                : $"{pu.unitName}  {pu.currentHealth}/{pu.maxHealth} HP";
+            btn.SetEnabled(!blocked);
+
+            int capturedI = i;
+            btn.clicked += () =>
+            {
+                HideTargetOverlay();
+                // Restore overlay title for next use
+                var t = targetOverlay.Q<Label>();
+                if (t != null) t.text = "SELECT TARGET";
+                battleSystem.PlayerUseMoveOnAlly(pendingMoveIndex, capturedI);
+            };
+            targetList.Add(btn);
+        }
+        targetOverlay.RemoveFromClassList("hidden");
+    }
+
     private void ShowResultOverlay(BattleState result, string subtitle)
     {
         resultTitle.text = result == BattleState.Won ? "VICTORY" : "DEFEAT";
@@ -637,9 +682,36 @@ public class NewMonoBehaviourScript : MonoBehaviour
     private void OnMoveClicked(int index)
     {
         if (battleSystem.state != BattleState.PlayerTurn) return;
+
+        PlayerUnit actor = battleSystem.ActivePlayer;
+        if (actor?.moveList == null || index >= actor.moveList.Length) return;
+
+        Move move = actor.moveList[index];
         SetActionsEnabled(false);
-        if (battleSystem.GetLivingEnemies().Count > 1) ShowTargetOverlay(index);
-        else battleSystem.PlayerUseMove(index, 0);
+
+        switch (move.moveType)
+        {
+            case MoveType.Heal:
+            case MoveType.Buff:
+                // These target allies — show party picker
+                ShowAllyTargetOverlay(index);
+                break;
+
+            case MoveType.Attack:
+            case MoveType.Special:
+            case MoveType.Debuff:
+                // These target enemies
+                if (battleSystem.GetLivingEnemies().Count > 1)
+                    ShowTargetOverlay(index);
+                else
+                    battleSystem.PlayerUseMove(index, 0);
+                break;
+
+            default:
+                // Utility / self-targeting moves fire immediately
+                battleSystem.PlayerUseMove(index, 0);
+                break;
+        }
     }
 
     private void OnGuardClicked()

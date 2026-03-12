@@ -9,7 +9,7 @@ public class ManikinNormal : MonoBehaviour
 
         e.unitName         = "Ward Manikin";
         e.elementalType    = ElementalType.Normal;
-        e.maxHealth        = 5;
+        e.maxHealth        = 30;
         e.attackP          = 10;
         e.defence          = 8;
         e.speed            = 8;
