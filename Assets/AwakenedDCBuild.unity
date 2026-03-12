@@ -1270,7 +1270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartyManager
   memberPrefabs:
-  - {fileID: 4535301183017896239, guid: e16dc65f15d65af48b60250d081f4439, type: 3}
+  - {fileID: 4535301183017896239, guid: 52363048c8c692b4bbfe6cae6cf33eb4, type: 3}
   - {fileID: 4535301183017896239, guid: 58bff154b5c7f5f48a0f276d79922930, type: 3}
   - {fileID: 4535301183017896239, guid: 3953d1ab9f1430d4cb9908f9a85a3093, type: 3}
   - {fileID: 4535301183017896239, guid: 876c61086a1a11b4f8634c3d28afa79e, type: 3}
@@ -2857,7 +2857,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTrigger
   npcLines:
-  - Test2
+  - 'Rodney: You lost?'
+  - 'Dimitri: Probably. '
+  - 'Rodney: You know where you''re going? '
+  - 'Dimitri: No. I just saw a weird girl in my dreams. '
+  - 'Rodney:  I saw her too stay close to me. '
+  - 'Dimitri: Why?  '
+  - 'Rodney: Because you''ll disappear and I''ll feel responsible. I don''t want
+    that.  '
+  - 'Dimitri: I understand '
   npcPortrait: {fileID: 21300000, guid: 0b630fbfd946bf54bb3f9832a11bc528, type: 3}
 --- !u!1 &1455560200
 GameObject:
