@@ -10,34 +10,17 @@ public class PreBoss : MonoBehaviour
     {
         if (other.CompareTag("Staircase"))
         {
+            Debug.Log("Current Level: " + level);
             if (level > 1) {
-                // Debug.Log("[PreBoss] Player entered pre-boss area. Transitioning to boss scene...");
-                SceneManager.sceneLoaded += OnSceneLoaded; // Subscribe to scene loaded event
-                SceneManager.LoadScene("PreBoss");
+                GameObject player = GameObject.FindGameObjectWithTag("Player");
+                var controller = player.GetComponent<CharacterController>();
+                if (controller != null) controller.enabled = false;
+                player.transform.position = new Vector3(200,201,200);
+                if (controller != null) controller.enabled = true;
+                player.transform.rotation = Quaternion.identity;
             } else 
                 manager.buildEnviornment(++level);
 
         } 
-    }
-
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-        {
-            var controller = player.GetComponent<CharacterController>();
-            if (controller != null) controller.enabled = false;
-
-            player.transform.position = new Vector3(0,1,0);
-
-            if (controller != null) controller.enabled = true;
-            Debug.Log("[PreBoss] Player found on scene load. Setting position and rotation.");
-            player.transform.rotation = Quaternion.identity; // Set to desired spawn rotation
-        }
-        else
-        {
-            Debug.LogWarning("[PreBoss] Player not found on scene transition.");
-        }
-        SceneManager.sceneLoaded -= OnSceneLoaded; // Unsubscribe to prevent multiple calls
     }
 }
