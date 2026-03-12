@@ -55,12 +55,6 @@ public class RoomSpawner : MonoBehaviour
     /// the staircase prefab being instantiated
     public GameObject staircasePrefab;
 
-    /// a list of all spawned game objects so we can easily delete them later
-    private List<GameObject> allSpawnedObjects = new List<GameObject>();
-    private List<Room> allSpawnedRooms = new List<Room>();
-    private List<DungeonEnemyAI> allSpawnedEnemies = new List<DungeonEnemyAI>();
-    private List<WorldItem> allSpawnedItems = new List<WorldItem>();
-
     /// amount of rooms on the floor (does not count starting room)
     /// may go over if too many paths are initially generated. Think of it as a soft cap
     /// roomCount = alpha <= beta | beta exists in the range (alpha, infinity)
@@ -179,23 +173,23 @@ public class RoomSpawner : MonoBehaviour
                     Room room = populatedMatrix[x, y];
                     RoomDecision roomDecision = decisionMatrix[x, y];
 
-                    allSpawnedRooms.Add(Instantiate(room, new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION, 0,
-                        (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION), Quaternion.identity));
+                    Instantiate(room, new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION, 0,
+                        (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION), Quaternion.identity, transform);
                     
                     // ROOM_OFFSET_RANGE
                     if (roomDecision.isStaircase)
                     {
                         // Debug.LogError($"staircase chosen at {x}, {y}");
                         // spawn staircase
-                        allSpawnedObjects.Add(Instantiate(staircasePrefab, new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION, 0,
-                            (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION), Quaternion.identity));
+                        Instantiate(staircasePrefab, new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION, 0,
+                            (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION), Quaternion.identity, transform);
                     }
                     else if (roomDecision.isTreasure)
                     {
                         // Debug.LogError($"treasure chosen at {x}, {y}");
                         // spawn treasure
-                        allSpawnedObjects.Add(Instantiate(treasurePrefab, new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION, 0,
-                            (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION), Quaternion.identity));
+                        Instantiate(treasurePrefab, new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION, 0,
+                            (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION), Quaternion.identity, transform);
                     }
                 }
 
@@ -227,9 +221,8 @@ public class RoomSpawner : MonoBehaviour
                             float spawnX = (ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION + UnityEngine.Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE);
                             float spawnZ = (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION + UnityEngine.Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE);
 
-                            Vector3 spawnPos = new Vector3(spawnX, 1.0f, spawnZ);
-                            DungeonEnemyAI newEnemy = Instantiate(enemies[UnityEngine.Random.Range(0, enemies.Count)], spawnPos, Quaternion.identity);
-                            allSpawnedEnemies.Add(newEnemy);
+                            Vector3 spawnPos = new Vector3(spawnX, 5.0f, spawnZ);
+                            DungeonEnemyAI newEnemy = Instantiate(enemies[UnityEngine.Random.Range(0, enemies.Count)], spawnPos, Quaternion.identity, transform);
 
                             NavMeshAgent agent = newEnemy.GetComponent<NavMeshAgent>();
 
@@ -249,28 +242,13 @@ public class RoomSpawner : MonoBehaviour
 
                         for (int i = 0; i < decisionMatrix[x, y].pickupCount; i++)
                         {
-                            allSpawnedItems.Add(Instantiate(pickups[UnityEngine.Random.Range(0, pickups.Count)], new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION + UnityEngine.Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE),
-                                0.6f, (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION + UnityEngine.Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE)), Quaternion.identity));
+                            Instantiate(pickups[UnityEngine.Random.Range(0, pickups.Count)], new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION + UnityEngine.Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE),
+                                0.5f, (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION + UnityEngine.Random.Range(-ROOM_OFFSET_RANGE, ROOM_OFFSET_RANGE)), Quaternion.identity, transform);
                         }
                         // Debug.LogError($"{decisionMatrix[x, y].pickupCount} pickups chosen at {x}, {y}");
                     }
                 }
             }
-        }
-    }
-
-    public void purgeEnviornment() {
-        for (int i = 0; i < allSpawnedObjects.Count; i++) {
-            Destroy(allSpawnedObjects[i]);
-        }
-        for (int i = 0; i < allSpawnedEnemies.Count; i++) {
-            Destroy(allSpawnedEnemies[i]);
-        }
-        for (int i = 0; i < allSpawnedRooms.Count; i++) {
-            Destroy(allSpawnedRooms[i]);
-        }
-        for (int i = 0; i < allSpawnedItems.Count; i++) {
-            Destroy(allSpawnedItems[i]);
         }
     }
 

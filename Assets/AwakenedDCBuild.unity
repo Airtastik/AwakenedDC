@@ -1397,6 +1397,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
+--- !u!1 &1377823973 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3651569616152883821, guid: e2bc4a80e99d17742a6840648e0ce87b, type: 3}
+  m_PrefabInstance: {fileID: 7820894448287676547}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1377823974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377823973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4582b0cdf66a3994496038ea479befce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PreBoss
+  manager: {fileID: 1616887848}
 --- !u!224 &1405729799 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1432047864393624851, guid: 86080012bd8e25c499c8f318e42f51c4, type: 3}
