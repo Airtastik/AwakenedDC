@@ -1,13 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
+
+//Used ChatGPT 5.3
+//Prompt: Right now, the dialogue starts right at the beginning of the game and never any time else. However, I want it to be when the player runs into the prefab of a character, it loads a preset dialogue with them. sprite1 will always be our character, but I want sprite2 to change to depend on the prefab the player runs into. How would I do this?
 
 public class Dialogue : MonoBehaviour
 {
     public TextMeshProUGUI textComponent;
     public string[] lines;
     public float textSpeed;
+    public Image sprite1;
+    public Image sprite2;
+
+    public Sprite playerSprite;
 
     private int index;
 
@@ -15,7 +23,7 @@ public class Dialogue : MonoBehaviour
     void Start()
     {
         textComponent.text = string.Empty;
-        StartDialogue();
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -35,9 +43,20 @@ public class Dialogue : MonoBehaviour
         }
     }
 
-    void StartDialogue()
+    public void StartDialogue(string[] newLines, Sprite npcSprite)
     {
+        StopAllCoroutines();
+
+        lines = newLines;
         index = 0;
+
+        textComponent.text = string.Empty;
+
+        sprite1.sprite = playerSprite;
+        sprite2.sprite = npcSprite;
+
+        gameObject.SetActive(true);
+
         StartCoroutine(TypeLine());
     }
 
