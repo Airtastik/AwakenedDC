@@ -10,7 +10,7 @@ public class PreBoss : MonoBehaviour
     {
         if (other.CompareTag("Staircase"))
         {
-            if (level > 2) {
+            if (level > 1) {
                 // Debug.Log("[PreBoss] Player entered pre-boss area. Transitioning to boss scene...");
                 SceneManager.sceneLoaded += OnSceneLoaded; // Subscribe to scene loaded event
                 SceneManager.LoadScene("PreBoss");
