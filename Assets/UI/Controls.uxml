@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/MainMenu.uss?fileID=7433441132597879392&amp;guid=197d0e0eab982304191395fd44bbe754&amp;type=3#MainMenu"/>
+    <ui:VisualElement name="root" class="root">
+        <ui:Label text="Controls" class="title-main"/>
+        <ui:Label text="Move: WASD" name="Label" class="title-sub"/>
+        <ui:VisualElement class="dividerControls"/>
+        <ui:Label text="Jump: Space" name="Label" class="title-sub"/>
+        <ui:VisualElement name="VisualElement" class="dividerControls"/>
+        <ui:Label text="Sprint: Shift" name="Label" class="title-sub"/>
+        <ui:VisualElement name="VisualElement" class="dividerControls"/>
+        <ui:Label text="Item Pickup: E" name="Label" class="title-sub"/>
+        <ui:VisualElement name="VisualElement" class="dividerControls"/>
+        <ui:Label text="UI Interaction: Point and Click" name="Label" class="title-sub"/>
+        <ui:Button name="btn-back" text="Back" class="menu-btn" style="text-overflow: clip; height: 26px; width: 92px;"/>
+    </ui:VisualElement>
+</ui:UXML>

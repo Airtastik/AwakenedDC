@@ -17,11 +17,15 @@ public class Dialogue : MonoBehaviour
     private int          index;
     private bool         isRunning = false;
     private System.Action onFinished;
+    public GameObject dialoguePanel;
+
+    private int index;
 
     void Start()
     {
         if (textComponent != null) textComponent.text = string.Empty;
         gameObject.SetActive(false);
+        dialoguePanel.SetActive(false);
     }
 
     void Update()
@@ -49,6 +53,8 @@ public class Dialogue : MonoBehaviour
     public void StartDialogue(string[] dialogueLines, Sprite portrait = null, System.Action onComplete = null)
     {
         if (dialogueLines == null || dialogueLines.Length == 0) return;
+        
+        StopAllCoroutines();
 
         lines      = dialogueLines;
         onFinished = onComplete;
@@ -62,6 +68,8 @@ public class Dialogue : MonoBehaviour
 
         gameObject.SetActive(true);
         textComponent.text = string.Empty;
+        dialoguePanel.SetActive(true);
+
         StartCoroutine(TypeLine());
         isRunning = true;
     }

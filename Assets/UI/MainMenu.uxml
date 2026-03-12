@@ -2,9 +2,9 @@
     <Style src="project://database/Assets/UI/MainMenu.uss?fileID=7433441132597879392&amp;guid=197d0e0eab982304191395fd44bbe754&amp;type=3#MainMenu"/>
     <ui:VisualElement name="root" class="root">
         <ui:Label text="AWAKENED" class="title-main"/>
-        <ui:Label text="ADMISSION: BETA" class="title-sub"/>
+        <ui:Label text="Full Build!!!" class="title-sub"/>
         <ui:VisualElement class="divider"/>
-        <ui:Button name="btn-awaken" text="AWAKENED DC" class="menu-btn"/>
-        <ui:Button name="btn-rpg" text="RPG TEST" class="menu-btn"/>
+        <ui:Button name="btn-awaken" text="Start..." class="menu-btn" style="text-overflow: clip;"/>
+        <ui:Button name="btn-controls" text="Controls" class="menu-btn"/>
     </ui:VisualElement>
 </ui:UXML>
