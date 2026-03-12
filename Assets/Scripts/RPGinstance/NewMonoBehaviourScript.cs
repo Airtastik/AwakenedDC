@@ -436,17 +436,31 @@ public class NewMonoBehaviourScript : MonoBehaviour
             foreach (var t in new[] { "fire","water","nature","normal","absurd" })
                 btn.RemoveFromClassList($"move-type-{t}");
             btn.RemoveFromClassList("move-no-sp");
+            btn.RemoveFromClassList("move-trait-blocked");
 
             int moveIndex = moveOffset + i;
             if (activePlayer?.moveList != null && moveIndex < activePlayer.moveList.Length)
             {
                 Move move      = activePlayer.moveList[moveIndex];
                 bool canAfford = activePlayer.HasSP(move.spCost);
-                string spTag   = move.spCost > 0 ? $"  [{move.spCost} SP]" : "  [free]";
-                btn.text = move.moveName + spTag;
-                btn.SetEnabled(canAfford);
+
+                // Trait block: Silvia cannot use Attack or Special moves that target enemies
+                bool traitBlocked = activePlayer.traitCannotAttack &&
+                                    (move.moveType == MoveType.Attack || move.moveType == MoveType.Special);
+
+                bool usable = canAfford && !traitBlocked;
+
+                // ── Button label ──────────────────────────────────────────────
+                string spTag      = move.spCost > 0 ? $" [{move.spCost}SP]" : "";
+                string typeTag    = $" {move.elementalType}";
+                string summary    = BuildMoveSummary(move, traitBlocked);
+                btn.text    = $"{move.moveName}{spTag}  —  {summary}";
+                btn.tooltip = BuildMoveTooltip(move, traitBlocked);
+
+                btn.SetEnabled(usable);
                 btn.AddToClassList($"move-type-{move.elementalType.ToString().ToLower()}");
-                if (!canAfford) btn.AddToClassList("move-no-sp");
+                if (!canAfford)    btn.AddToClassList("move-no-sp");
+                if (traitBlocked)  btn.AddToClassList("move-trait-blocked");
             }
             else
             {
@@ -454,6 +468,67 @@ public class NewMonoBehaviourScript : MonoBehaviour
                 btn.SetEnabled(false);
             }
         }
+    }
+
+    /// One-line summary shown inside the button itself
+    private string BuildMoveSummary(Move move, bool traitBlocked)
+    {
+        if (traitBlocked) return "✖ Cannot attack";
+
+        switch (move.moveType)
+        {
+            case MoveType.Attack:
+                string dmgStr = move.baseDamage > 0 ? $"{move.baseDamage} dmg" : "";
+                string effStr = !string.IsNullOrEmpty(move.effectToApply) && move.effectChance > 0
+                    ? $"  {Mathf.RoundToInt(move.effectChance * 100)}% {move.effectToApply}" : "";
+                return dmgStr + effStr;
+
+            case MoveType.Heal:
+                string healStr = move.baseHealing > 0 ? $"Heal {move.baseHealing} HP" : "Restore HP";
+                return healStr;
+
+            case MoveType.Buff:
+                return move.buffStat != StatType.None
+                    ? $"↑ {move.buffStat} ×{move.statModifier:0.00}" : "Buff ally";
+
+            case MoveType.Debuff:
+                string debuffDmg = move.baseDamage > 0 ? $"{move.baseDamage} dmg  " : "";
+                string debuffEff = !string.IsNullOrEmpty(move.effectToApply) && move.effectChance > 0
+                    ? $"{Mathf.RoundToInt(move.effectChance * 100)}% {move.effectToApply}  " : "";
+                string debuffStat = move.statModifier != 0
+                    ? $"↓ {move.buffStat}" : "";
+                return debuffDmg + debuffEff + debuffStat;
+
+            case MoveType.Special:
+                string spDmg  = move.baseDamage  > 0 ? $"{move.baseDamage} dmg  " : "";
+                string spHeal = move.baseHealing  > 0 ? $"Heal {move.baseHealing}  " : "";
+                string spEff  = !string.IsNullOrEmpty(move.effectToApply) && move.effectChance > 0
+                    ? $"{Mathf.RoundToInt(move.effectChance * 100)}% {move.effectToApply}" : "";
+                return spDmg + spHeal + spEff;
+
+            case MoveType.Utility:
+                return "Clears party traits";
+
+            default: return "";
+        }
+    }
+
+    /// Full tooltip shown on hover
+    private string BuildMoveTooltip(Move move, bool traitBlocked)
+    {
+        if (traitBlocked)
+            return $"{move.moveName} — BLOCKED: Silvia cannot directly attack enemies.";
+
+        var parts = new System.Collections.Generic.List<string>();
+        parts.Add($"{move.moveName}  |  {move.moveType}  |  {move.elementalType}");
+        if (move.baseDamage  > 0) parts.Add($"Damage: {move.baseDamage}  (Acc: {move.accuracy * 100:0}%)");
+        if (move.baseHealing > 0) parts.Add($"Healing: {move.baseHealing}");
+        if (!string.IsNullOrEmpty(move.effectToApply) && move.effectChance > 0)
+            parts.Add($"Effect: {move.effectToApply}  ({move.effectChance * 100:0}% chance)");
+        if (move.statModifier != 0)
+            parts.Add($"Stat mod: {move.buffStat} x{move.statModifier:0.00}");
+        parts.Add(move.spCost > 0 ? $"Cost: {move.spCost} SP" : "Cost: Free");
+        return string.Join(" | ", parts);
     }
 
     private void BuildItemButtons()

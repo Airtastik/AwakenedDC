@@ -16,5 +16,6 @@ public enum StatType
     Speed,
     CriticalDMG,
     CriticalRate,
-    EffectRes
+    EffectRes,
+    None
 }
