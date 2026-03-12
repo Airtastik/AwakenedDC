@@ -16,7 +16,7 @@ public class SceneTransitionManager : MonoBehaviour
 
     [Header("Scene Names — must match exactly in Build Settings")]
     public string overworldSceneName = "AwakenedDCBuild";
-    public string battleSceneName    = "RPGScene";
+    public string battleSceneName    = "RPG";
 
     // Where to return the player after a battle
     private string returnScene;

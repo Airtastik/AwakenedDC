@@ -391,10 +391,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3743211790169896993, guid: 31798d83a7270324681657339af3dcdd, type: 3}
+      propertyPath: enemyRoster
+      value: 
+      objectReference: {fileID: 11400000, guid: 58e1d67e0554c4d409736f790a772f85, type: 2}
     - target: {fileID: 4535301183017896239, guid: 31798d83a7270324681657339af3dcdd, type: 3}
       propertyPath: m_Name
       value: Enemy_1_Base
       objectReference: {fileID: 0}
+    - target: {fileID: 4691989503095535291, guid: 31798d83a7270324681657339af3dcdd, type: 3}
+      propertyPath: enemyRoster
+      value: 
+      objectReference: {fileID: 11400000, guid: 58e1d67e0554c4d409736f790a772f85, type: 2}
     - target: {fileID: 8383668359630175391, guid: 31798d83a7270324681657339af3dcdd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
