@@ -1,14 +1,14 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/RPGins.uss?fileID=7433441132597879392&amp;guid=7034b6aad50bd164daa60706857fee6f&amp;type=3#RPGins"/>
     <ui:VisualElement name="RPGpanel" class="RPGpanel" style="visibility: visible; opacity: 1; background-color: rgba(13, 17, 23, 0);">
-        <ui:VisualElement name="EnemyPanel" class="enemyPanel">
+        <ui:VisualElement name="EnemyPanel" class="enemyPanel" style="bottom: 85%;">
             <ui:Label name="enemy-panel-label" text="ENEMIES" class="panel-label enemy-label"/>
         </ui:VisualElement>
         <ui:VisualElement name="gameInfo" class="gameInfo" style="border-left-color: rgb(255, 140, 0); border-right-color: rgb(255, 140, 0); border-top-color: rgb(255, 140, 0); border-bottom-color: rgb(255, 140, 0); background-color: rgba(36, 25, 18, 0.97);">
             <ui:Label text="TURN ORDER" class="panel-label queue-label" style="color: rgb(255, 140, 0);"/>
             <ui:VisualElement name="queue-list" class="queue-list" style="color: rgb(255, 255, 255);"/>
         </ui:VisualElement>
-        <ui:VisualElement name="PlayerSlot1" class="PlayerPanel">
+        <ui:VisualElement name="PlayerSlot1" class="PlayerPanel" style="top: 85%;">
             <ui:Label text="PARTY" class="panel-label party-label"/>
         </ui:VisualElement>
         <ui:VisualElement name="playerActions" class="PlayerActions" style="bottom: 17%; left: 80%;">

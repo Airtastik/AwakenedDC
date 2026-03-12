@@ -134,7 +134,6 @@ MonoBehaviour:
   backSprite: {fileID: 21300000, guid: f6d4aed7f6fcacc40b92372af3ec0786, type: 3}
   enemyRoster: {fileID: 0}
   encounterLevel: 1
-  returnSpawnID: 
   destroyAfterBattle: 1
 --- !u!114 &6922423143404631142
 MonoBehaviour:
@@ -148,9 +147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57a0533d96a83da45a18bfd3962b7a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleEncounterTrigger
-  enemyRoster: {fileID: 0}
+  enemyRoster: {fileID: 11400000, guid: 58e1d67e0554c4d409736f790a772f85, type: 2}
   encounterLevel: 1
-  returnSpawnID: 
   destroyAfterTrigger: 0
   triggerOnce: 1
 --- !u!1 &5742293136657817954

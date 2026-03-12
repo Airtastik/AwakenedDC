@@ -161,14 +161,17 @@ public class EncounterManager : MonoBehaviour
     {
         if (level <= 1) return; // Level 1 = base stats, no scaling needed
 
-        float mult = 1f + (level - 1);   // levels above 1
+        float levelsAbove1 = level - 1;  // e.g. level 5 → 4 levels of scaling
 
-        eu.maxHealth        = Scale(eu.maxHealth,        hpScale,     mult);
-        eu.attackP          = Scale(eu.attackP,          attackScale, mult);
-        eu.defence          = Scale(eu.defence,          defenceScale,mult);
-        eu.speed            = Scale(eu.speed,            speedScale,  mult);
-        eu.experienceReward = Scale(eu.experienceReward, xpScale,     mult);
-        eu.goldReward       = Scale(eu.goldReward,       goldScale,   mult);
+        eu.maxHealth        = Scale(eu.maxHealth,        hpScale,      levelsAbove1);
+        eu.attackP          = Scale(eu.attackP,          attackScale,  levelsAbove1);
+        eu.defence          = Scale(eu.defence,          defenceScale, levelsAbove1);
+        eu.speed            = Scale(eu.speed,            speedScale,   levelsAbove1);
+        eu.experienceReward = Scale(eu.experienceReward, xpScale,      levelsAbove1);
+        eu.goldReward       = Scale(eu.goldReward,       goldScale,    levelsAbove1);
+
+        Debug.Log($"[EncounterManager] Scaled {eu.unitName} to level {level}: " +
+                  $"HP:{eu.maxHealth} ATK:{eu.attackP} DEF:{eu.defence} SPD:{eu.speed}");
     }
 
     private static int Scale(int baseValue, float rate, float levelsAboveOne)

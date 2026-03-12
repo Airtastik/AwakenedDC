@@ -27,26 +27,27 @@
 /* ── Enemy Panel ───────────────────────────────────── */
 .enemyPanel {
     position: absolute;
-    left: 15%; right: 5%; top: 1%; bottom: 89%;
+    left: 15%; right: 5%; top: 1%; bottom: 76%;
     background-color: rgba(26, 15, 15, 0.95);
     border-color: rgb(122, 28, 28);
     border-width: 1px;
     border-radius: 6px;
     flex-direction: row;
-    align-items: center;
+    align-items: stretch;
     padding: 4px 8px;
+    overflow: hidden;
 }
 
 /* ── Player Party Panel ────────────────────────────── */
 .PlayerPanel {
     position: absolute;
-    left: 15%; right: 5%; top: 83%; bottom: 1%;
+    left: 15%; right: 5%; top: 76%; bottom: 1%;
     background-color: rgba(15, 26, 26, 0.95);
     border-color: rgb(28, 92, 92);
     border-width: 1px;
     border-radius: 6px;
     flex-direction: row;
-    align-items: center;
+    align-items: stretch;
     padding: 4px 8px;
 }
 
@@ -159,10 +160,12 @@
     border-radius: 5px;
     border-width: 1px;
     border-color: rgb(48, 54, 61);
-    padding: 5px 8px;
-    margin: 3px;
-    min-width: 120px;
+    padding: 4px 6px;
+    margin: 2px;
+    min-width: 60px;
+    max-width: 260px;
     flex-grow: 1;
+    flex-shrink: 1;
     transition-duration: 0.15s;
     transition-property: border-color, background-color;
 }
@@ -312,6 +315,8 @@
 .target-list  { flex-direction: column; width: 100%; margin-bottom: 8px; }
 .target-btn   { height: 30px; margin: 2px 0; border-radius: 4px; border-width: 1px; border-color: rgb(224, 92, 92); background-color: rgb(26, 10, 10); color: rgb(224, 92, 92); font-size: 10px; }
 .target-btn:hover { background-color: rgb(42, 16, 16); color: white; }
+.target-ally-btn  { border-color: rgb(78, 205, 196); background-color: rgb(10, 26, 26); color: rgb(78, 205, 196); }
+.target-ally-btn:hover { background-color: rgb(16, 42, 42); color: white; }
 
 .cancel-btn   { height: 26px; min-width: 80px; border-radius: 4px; border-width: 1px; border-color: rgb(110, 118, 129); background-color: transparent; color: rgb(110, 118, 129); font-size: 10px; margin-top: 4px; }
 .cancel-btn:hover { border-color: rgb(201, 209, 217); color: rgb(201, 209, 217); }

@@ -346,6 +346,73 @@ public class BattleSystem : MonoBehaviour
         StartCoroutine(PlayerAttackTurn(move, target));
     }
 
+    /// <summary>
+    /// Use a Heal or Buff move on a specific ally by party index.
+    /// Called by the UI when the player selects an ally target.
+    /// </summary>
+    public void PlayerUseMoveOnAlly(int moveIndex, int targetAllyIndex)
+    {
+        if (state != BattleState.PlayerTurn) { Log("Not your turn!"); return; }
+        if (moveIndex < 0 || moveIndex >= activePlayer.moveList.Length) { Log("Invalid move."); return; }
+
+        Move move = activePlayer.moveList[moveIndex];
+        if (!activePlayer.HasSP(move.spCost)) { Log($"Not enough SP!"); return; }
+
+        PlayerUnit allyTarget = (targetAllyIndex >= 0 && targetAllyIndex < playerParty.Count)
+            ? playerParty[targetAllyIndex] : activePlayer;
+
+        StartCoroutine(PlayerAllyTargetTurn(move, allyTarget));
+    }
+
+    private IEnumerator PlayerAllyTargetTurn(Move move, PlayerUnit allyTarget)
+    {
+        Unit actor = activePlayer;
+
+        if (move.spCost > 0) { activePlayer.SpendSP(move.spCost); NotifyStatsChanged(); }
+
+        if (!AccuracyCheck(move))
+        {
+            Log($"{activePlayer.unitName} used {move.moveName}... but it missed!");
+            yield return new WaitForSeconds(actionDelay);
+            yield return StartCoroutine(EndCurrentTurn(actor));
+            yield break;
+        }
+
+        // Route to the correct executor with the chosen ally as target
+        switch (move.moveType)
+        {
+            case MoveType.Heal:
+                // Trait: Roman cannot be healed by allies
+                if (allyTarget.traitCannotBeHealed && activePlayer != allyTarget)
+                {
+                    Log($"{allyTarget.unitName} cannot be healed by others!");
+                    yield return new WaitForSeconds(actionDelay);
+                    yield return StartCoroutine(EndCurrentTurn(actor));
+                    yield break;
+                }
+                Log($"{activePlayer.unitName} used {move.moveName} on {allyTarget.unitName}!");
+                yield return new WaitForSeconds(actionDelay * 0.5f);
+                allyTarget.Heal(move.baseHealing);
+                Log($"{allyTarget.unitName} restored {move.baseHealing} HP!");
+                NotifyStatsChanged();
+                break;
+
+            case MoveType.Buff:
+                yield return StartCoroutine(ExecuteBuff(move, activePlayer, allyTarget));
+                break;
+
+            default:
+                Log($"Move {move.moveName} does not target allies.");
+                yield return new WaitForSeconds(actionDelay);
+                yield return StartCoroutine(EndCurrentTurn(actor));
+                yield break;
+        }
+
+        yield return new WaitForSeconds(actionDelay);
+        if (CheckBattleOver()) yield break;
+        yield return StartCoroutine(EndCurrentTurn(actor));
+    }
+
     public void PlayerSwitch(int partyIndex)
     {
         if (state != BattleState.PlayerTurn) { Log("Not your turn!"); return; }
