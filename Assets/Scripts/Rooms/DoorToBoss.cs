@@ -8,6 +8,7 @@ public class DoorToBoss : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("[DoorToBoss] Player entered boss door area. Transitioning to pre-boss scene...");
+            SceneManager.LoadScene("MainMenu");
         } 
     }
 
