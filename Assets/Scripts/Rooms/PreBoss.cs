@@ -3,13 +3,20 @@ using UnityEngine.SceneManagement;
 
 public class PreBoss : MonoBehaviour
 {
+    private int level = 0;
+    public GenerationManager manager;
+    
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Staircase"))
         {
-            Debug.Log("[PreBoss] Player entered pre-boss area. Transitioning to boss scene...");
-            SceneManager.sceneLoaded += OnSceneLoaded; // Subscribe to scene loaded event
-            SceneManager.LoadScene("PreBoss");
+            if (level > 2) {
+                // Debug.Log("[PreBoss] Player entered pre-boss area. Transitioning to boss scene...");
+                SceneManager.sceneLoaded += OnSceneLoaded; // Subscribe to scene loaded event
+                SceneManager.LoadScene("PreBoss");
+            } else 
+                manager.buildEnviornment(++level);
+
         } 
     }
 
