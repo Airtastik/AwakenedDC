@@ -31,6 +31,14 @@
     margin-bottom: 28px;
 }
 
+.dividerControls {
+    width: 240px;
+    height: 1px;
+    background-color: rgba(240, 192, 64, 0.3);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 .menu-btn {
     width: 280px;
     height: 46px;
