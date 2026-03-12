@@ -1,5 +1,7 @@
 # AwakenedDC
 
+Controls: 'i' to open inventory, 'o' to open stats menu, 'e' to pick up items.
+
 sourced sprite for tiling of floor of room prefabs from: 
 https://www.sketchuptextureclub.com/textures/architecture/tiles-interior/marble-tiles/grey/dolomia-marble-floor-tile-texture-seamless-14489 
 https://www.sketchuptextureclub.com/public/texture_d/0036-dolomia-marble-floor-tile-texture-seamless-hr.jpg 

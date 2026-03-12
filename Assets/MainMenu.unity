@@ -453,6 +453,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuController
   mainMenuUXML: {fileID: 9197481963319205126, guid: a421ba5a609c1264ca0c769eff72d041, type: 3}
   controlsUXML: {fileID: 9197481963319205126, guid: 710139a55ff64674c81aa51d1aff99c3, type: 3}
+  creditsUXML: {fileID: 9197481963319205126, guid: 5434b52bb3b25154e9552c2c220caae0, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
