@@ -717,8 +717,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
     private void OnGuardClicked()
     {
         if (battleSystem.state != BattleState.PlayerTurn) return;
-        ShowMessage("Guarding...");
         SetActionsEnabled(false);
+        battleSystem.PlayerGuard();
     }
 
     private void OnItemClicked(Item item)

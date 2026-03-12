@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 513.8, y: 229.3, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 616708165189933564}
@@ -130,8 +130,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   spriteRenderer: {fileID: 5892405736783949802}
-  frontSprite: {fileID: 21300000, guid: 00fb9a0fe6c47d048b9608ad71894be7, type: 3}
-  backSprite: {fileID: 21300000, guid: f6d4aed7f6fcacc40b92372af3ec0786, type: 3}
+  frontSprite: {fileID: 21300000, guid: 616c5071c9f25a5468ab06ff52df80c0, type: 3}
+  backSprite: {fileID: 21300000, guid: 96946a1707659a74f84120695c900bb7, type: 3}
   enemyRoster: {fileID: 0}
   encounterLevel: 1
   destroyAfterBattle: 1
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57a0533d96a83da45a18bfd3962b7a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleEncounterTrigger
-  enemyRoster: {fileID: 11400000, guid: 58e1d67e0554c4d409736f790a772f85, type: 2}
+  enemyRoster: {fileID: 11400000, guid: d8dc826b4e9fa3140b926ebe17db94db, type: 2}
   encounterLevel: 1
   destroyAfterTrigger: 0
   triggerOnce: 1

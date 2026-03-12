@@ -413,6 +413,34 @@ public class BattleSystem : MonoBehaviour
         yield return StartCoroutine(EndCurrentTurn(actor));
     }
 
+    /// <summary>Player skips their turn and gains a temporary defence boost.</summary>
+    public void PlayerGuard()
+    {
+        if (state != BattleState.PlayerTurn) { Log("Not your turn!"); return; }
+        StartCoroutine(PlayerGuardTurn());
+    }
+
+    private IEnumerator PlayerGuardTurn()
+    {
+        Unit actor = activePlayer;
+        Log($"{activePlayer.unitName} guards! Defence up this turn.");
+
+        // Temporary defence boost — 30% for one turn
+        float boosted = activePlayer.defence * 1.30f;
+        int   original = activePlayer.defence;
+        activePlayer.defence = Mathf.RoundToInt(boosted);
+        NotifyStatsChanged();
+
+        yield return new WaitForSeconds(actionDelay);
+
+        // Restore defence after turn ends
+        activePlayer.defence = original;
+        NotifyStatsChanged();
+
+        if (CheckBattleOver()) yield break;
+        yield return StartCoroutine(EndCurrentTurn(actor));
+    }
+
     public void PlayerSwitch(int partyIndex)
     {
         if (state != BattleState.PlayerTurn) { Log("Not your turn!"); return; }

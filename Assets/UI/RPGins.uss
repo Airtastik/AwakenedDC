@@ -34,6 +34,7 @@
     border-radius: 6px;
     flex-direction: row;
     align-items: stretch;
+    justify-content: flex-start;
     padding: 4px 8px;
     overflow: hidden;
 }
@@ -48,6 +49,7 @@
     border-radius: 6px;
     flex-direction: row;
     align-items: stretch;
+    justify-content: flex-start;
     padding: 4px 8px;
 }
 
@@ -166,6 +168,7 @@
     max-width: 260px;
     flex-grow: 1;
     flex-shrink: 1;
+    align-self: stretch;
     transition-duration: 0.15s;
     transition-property: border-color, background-color;
 }

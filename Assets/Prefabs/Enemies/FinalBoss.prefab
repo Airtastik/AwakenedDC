@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: 3718053556269521561}
   - component: {fileID: 8351490893836726523}
   m_Layer: 0
-  m_Name: Enemy_3_Base
+  m_Name: FinalBoss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -274,8 +274,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   spriteRenderer: {fileID: 2859110701444991087}
-  frontSprite: {fileID: 21300000, guid: 4a6bd405ee3aca5439e2e45c0309dc56, type: 3}
-  backSprite: {fileID: 21300000, guid: 5ef0b8a95d4897040adb5b91382ec7eb, type: 3}
+  frontSprite: {fileID: 21300000, guid: a1b19518795909440a32881bf4ffe495, type: 3}
+  backSprite: {fileID: 21300000, guid: a1b19518795909440a32881bf4ffe495, type: 3}
   enemyRoster: {fileID: 0}
   encounterLevel: 1
   destroyAfterBattle: 1
@@ -291,7 +291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57a0533d96a83da45a18bfd3962b7a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleEncounterTrigger
-  enemyRoster: {fileID: 11400000, guid: 7b7729aa447533b4dbe59dd0796aa290, type: 2}
+  enemyRoster: {fileID: 11400000, guid: 754567227928cf745b97e512925f2c14, type: 2}
   encounterLevel: 1
   destroyAfterTrigger: 0
   triggerOnce: 1
