@@ -63,7 +63,7 @@ MonoBehaviour:
   - {fileID: 2244040062701960396, guid: 1adfc22bef695fc4fb780deb1b667f3b, type: 3}
   - {fileID: 2244040062701960396, guid: b5fe2b3818b4ae943b20c5f6b3691faa, type: 3}
   enemies:
-  - {fileID: 3743211790169896993, guid: 31798d83a7270324681657339af3dcdd, type: 3}
+  - {fileID: 3718053556269521561, guid: 4e90391111cc5bf47ad0a9470de29386, type: 3}
   pickups:
   - {fileID: 6617480351595878364, guid: 89c4d3eec94eace44881c0a86282182c, type: 3}
   - {fileID: 7664217926434271769, guid: ab50467c7c4e70d4db20b386c958d722, type: 3}

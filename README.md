@@ -9,7 +9,8 @@ https://www.sketchuptextureclub.com/textures/architecture/plaster/painted-plaste
 https://www.sketchuptextureclub.com//public/texture_d/216-fine-plaster-painted-pbr-texture-seamless-hr-2025121451533.jpg
 
 Source for enemy sprite:
-https://opengameart.org/content/female-cultist
+Model: Gemini 3 Fast, Date: 3/11
+Prompt 1: I want you to generate two images based on this image. Each image should be 512x512. For the second image I want it to be a very distorted and sinister version of the enemy depicted in the base image. For the first image I want it to be only halfway distorted and sinister. I want the background to be easily removable. I want the enemies pictured such that their entire body is within the image. it is ok if there is a lot of empty space. Prompt 2: Create side profiles so it looks like they are walking. 
 
 Source for health potion sprite:
 https://karsiori.itch.io/pixel-art-potion-pack-animated/download/eyJleHBpcmVzIjoxNzcxNzk0ODI2LCJpZCI6MjM3MzQ0N30%3d.AbKpFdQ%2b0gwSdkchFGt%2f6rlj8rg%3d
