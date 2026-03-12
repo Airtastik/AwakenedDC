@@ -1,40 +1,37 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-//Used ChatGPT 5.3
-//Prompt: Right now, the dialogue starts right at the beginning of the game and never any time else. However, I want it to be when the player runs into the prefab of a character, it loads a preset dialogue with them. sprite1 will always be our character, but I want sprite2 to change to depend on the prefab the player runs into. How would I do this?
-
 public class Dialogue : MonoBehaviour
 {
+    [Header("UI")]
     public TextMeshProUGUI textComponent;
-    public string[] lines;
-    public float textSpeed;
-    public Image sprite1;
-    public Image sprite2;
+    public Image           portraitImage;   // Assign the portrait Image in the Inspector
 
-    public Sprite playerSprite;
+    [Header("Settings")]
+    public float textSpeed = 0.05f;
 
-    private int index;
+    // ── Runtime state ─────────────────────────────────────────────────────────
+    private string[]     lines;
+    private int          index;
+    private bool         isRunning = false;
+    private System.Action onFinished;
 
-    // Start is called before the first frame update
     void Start()
     {
-        textComponent.text = string.Empty;
+        if (textComponent != null) textComponent.text = string.Empty;
         gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (!isRunning) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             if (textComponent.text == lines[index])
-            {
                 NextLine();
-            }
             else
             {
                 StopAllCoroutines();
@@ -43,26 +40,38 @@ public class Dialogue : MonoBehaviour
         }
     }
 
-    public void StartDialogue(string[] newLines, Sprite npcSprite)
+    // ── Public API ────────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// Start a dialogue sequence. onComplete fires when the last line is dismissed.
+    /// Called by NPCDialogueTrigger.
+    /// </summary>
+    public void StartDialogue(string[] dialogueLines, Sprite portrait = null, System.Action onComplete = null)
     {
-        StopAllCoroutines();
+        if (dialogueLines == null || dialogueLines.Length == 0) return;
 
-        lines = newLines;
-        index = 0;
+        lines      = dialogueLines;
+        onFinished = onComplete;
+        index      = 0;
 
-        textComponent.text = string.Empty;
-
-        sprite1.sprite = playerSprite;
-        sprite2.sprite = npcSprite;
+        if (portraitImage != null)
+        {
+            portraitImage.sprite  = portrait;
+            portraitImage.enabled = portrait != null;
+        }
 
         gameObject.SetActive(true);
-
+        textComponent.text = string.Empty;
         StartCoroutine(TypeLine());
+        isRunning = true;
     }
+
+    // ── Internal ──────────────────────────────────────────────────────────────
 
     IEnumerator TypeLine()
     {
-        foreach (char c in lines[index].ToCharArray())
+        textComponent.text = string.Empty;
+        foreach (char c in lines[index])
         {
             textComponent.text += c;
             yield return new WaitForSeconds(textSpeed);
@@ -74,12 +83,16 @@ public class Dialogue : MonoBehaviour
         if (index < lines.Length - 1)
         {
             index++;
-            textComponent.text = string.Empty;
+            StopAllCoroutines();
             StartCoroutine(TypeLine());
         }
         else
         {
+            // Last line dismissed — close and fire callback
+            isRunning = false;
             gameObject.SetActive(false);
+            onFinished?.Invoke();
+            onFinished = null;
         }
     }
 }

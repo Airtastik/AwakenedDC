@@ -1,25 +1,38 @@
 using UnityEngine;
 
-//Used ChatGPT 5.3
-//Prompt: Right now, the dialogue starts right at the beginning of the game and never any time else. However, I want it to be when the player runs into the prefab of a character, it loads a preset dialogue with them. sprite1 will always be our character, but I want sprite2 to change to depend on the prefab the player runs into. How would I do this?
-
+/// <summary>
+/// Attach to any NPC prefab. When the player walks into the trigger collider,
+/// dialogue starts and player movement is locked until it finishes.
+/// </summary>
 public class NPCDialogueTrigger : MonoBehaviour
 {
     public string[] npcLines;
-    public Sprite npcPortrait;
+    public Sprite   npcPortrait;
 
     private Dialogue dialogue;
 
     void Start()
     {
-        dialogue = FindObjectOfType<Dialogue>();
+        dialogue = FindFirstObjectByType<Dialogue>();
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!other.CompareTag("Player")) return;
+        if (dialogue == null)
         {
-            dialogue.StartDialogue(npcLines, npcPortrait);
+            Debug.LogWarning("[NPCDialogueTrigger] No Dialogue component found in scene.");
+            return;
         }
+
+        // Lock player movement for the duration of dialogue
+        PlayerMovement.Instance?.LockForDialogue();
+
+        dialogue.StartDialogue(npcLines, npcPortrait, OnDialogueFinished);
+    }
+
+    private void OnDialogueFinished()
+    {
+        PlayerMovement.Instance?.UnlockFromDialogue();
     }
 }

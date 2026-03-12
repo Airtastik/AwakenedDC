@@ -21,21 +21,13 @@ public class DungeonEnemyAI : MonoBehaviour
     public Sprite         backSprite;
 
     [Header("Battle Encounter")]
-    [Tooltip("The enemy roster to use when this enemy touches the player.")]
     public EnemyRoster enemyRoster;
+    public int         encounterLevel    = 1;
+    public bool        destroyAfterBattle = true;
 
-    [Tooltip("Level to scale enemies to in the battle.")]
-    public int encounterLevel = 1;
-
-    [Tooltip("Spawn point ID to return the player to after the battle.")]
-    public string returnSpawnID = "";
-
-    [Tooltip("Destroy this enemy after triggering a battle (so it's gone when returning).")]
-    public bool destroyAfterBattle = true;
-
-    // ── Internals ─────────────────────────────────────────────────────────────
     private NavMeshAgent agent;
     private bool         battleTriggered = false;
+    private float        patrolTimer     = 0f;
 
     void Start()
     {
@@ -63,12 +55,12 @@ public class DungeonEnemyAI : MonoBehaviour
 
             case EnemyState.Chase:
                 agent.SetDestination(player.position);
-                if (distanceToPlayer <= attackRange)     currentState = EnemyState.Attack;
-                if (!canSeePlayer && distanceToPlayer > detectRange) currentState = EnemyState.Patrol;
+                if (distanceToPlayer <= attackRange)                     currentState = EnemyState.Attack;
+                if (!canSeePlayer && distanceToPlayer > detectRange)     currentState = EnemyState.Patrol;
                 break;
 
             case EnemyState.Attack:
-                agent.SetDestination(transform.position); // stop moving
+                agent.SetDestination(transform.position);
                 TriggerBattle();
                 break;
         }
@@ -76,21 +68,15 @@ public class DungeonEnemyAI : MonoBehaviour
         UpdateVisuals();
     }
 
-    // ── Collision fallback — catches fast-moving players ─────────────────────
-
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-            TriggerBattle();
+        if (other.CompareTag("Player")) TriggerBattle();
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
-            TriggerBattle();
+        if (collision.gameObject.CompareTag("Player")) TriggerBattle();
     }
-
-    // ── Battle trigger ────────────────────────────────────────────────────────
 
     private void TriggerBattle()
     {
@@ -99,52 +85,47 @@ public class DungeonEnemyAI : MonoBehaviour
 
         if (enemyRoster == null)
         {
-            Debug.LogWarning($"[DungeonEnemyAI] {gameObject.name} has no EnemyRoster assigned — cannot start battle.");
+            Debug.LogWarning($"[DungeonEnemyAI] {gameObject.name} has no EnemyRoster assigned.");
             battleTriggered = false;
             return;
         }
 
-        Debug.Log($"[DungeonEnemyAI] {gameObject.name} triggered a battle!");
+        if (BattleStageManager.Instance == null)
+        {
+            Debug.LogError("[DungeonEnemyAI] No BattleStageManager found in scene!");
+            return;
+        }
 
-        if (destroyAfterBattle)
-            Destroy(gameObject);
+        Debug.Log($"[DungeonEnemyAI] {gameObject.name} triggered a battle.");
 
-        SceneTransitionManager.StartBattle(enemyRoster, encounterLevel, returnSpawnID);
+        if (destroyAfterBattle) Destroy(gameObject);
+
+        BattleStageManager.Instance.EnterBattle(enemyRoster, encounterLevel);
     }
-
-    // ── Patrol ────────────────────────────────────────────────────────────────
-
-    private float patrolTimer = 0f;
 
     void HandlePatrol()
     {
         patrolTimer -= Time.deltaTime;
         if (patrolTimer > 0) return;
-
         if (!agent.hasPath || agent.remainingDistance < 0.5f)
         {
-            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * 5f;
-            randomDirection += transform.position;
+            Vector3 randomDir = UnityEngine.Random.insideUnitSphere * 5f + transform.position;
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(randomDirection, out hit, 5f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(randomDir, out hit, 5f, NavMesh.AllAreas))
                 agent.SetDestination(hit.position);
         }
     }
 
-    // ── Line of sight ─────────────────────────────────────────────────────────
-
     bool HasLineOfSight(float distance)
     {
         if (distance > detectRange) return false;
-        Vector3 rayStart  = transform.position + Vector3.up;
-        Vector3 direction = (player.position - rayStart).normalized;
+        Vector3    rayStart  = transform.position + Vector3.up;
+        Vector3    direction = (player.position - rayStart).normalized;
         RaycastHit hit;
         if (Physics.Raycast(rayStart, direction, out hit, detectRange, detectionLayers))
             return hit.transform.CompareTag("Player");
         return false;
     }
-
-    // ── Visuals ───────────────────────────────────────────────────────────────
 
     void UpdateVisuals()
     {
@@ -154,17 +135,12 @@ public class DungeonEnemyAI : MonoBehaviour
         if (dirToPlayer != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(-dirToPlayer);
 
-        if (agent.velocity.magnitude > 0.1f)
+        if (spriteRenderer != null && agent.velocity.magnitude > 0.1f)
         {
-            Vector3 moveDir  = agent.velocity.normalized;
-            Vector3 toPlayer = dirToPlayer.normalized;
-            float   dot      = Vector3.Dot(moveDir, toPlayer);
-            if (spriteRenderer != null)
-                spriteRenderer.sprite = (dot < 0) ? backSprite : frontSprite;
+            float dot = Vector3.Dot(agent.velocity.normalized, dirToPlayer.normalized);
+            spriteRenderer.sprite = (dot < 0) ? backSprite : frontSprite;
         }
     }
-
-    // ── Gizmos ────────────────────────────────────────────────────────────────
 
     void OnDrawGizmosSelected()
     {
@@ -173,9 +149,6 @@ public class DungeonEnemyAI : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
         if (player != null)
-        {
-            Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position + Vector3.up, player.position);
-        }
     }
 }
