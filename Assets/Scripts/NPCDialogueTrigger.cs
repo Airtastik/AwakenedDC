@@ -25,14 +25,6 @@ public class NPCDialogueTrigger : MonoBehaviour
             return;
         }
 
-        // Lock player movement for the duration of dialogue
-        PlayerMovement.Instance?.LockForDialogue();
-
-        dialogue.StartDialogue(npcLines, npcPortrait, OnDialogueFinished);
-    }
-
-    private void OnDialogueFinished()
-    {
-        PlayerMovement.Instance?.UnlockFromDialogue();
+        dialogue.StartDialogue(npcLines, npcPortrait);
     }
 }
