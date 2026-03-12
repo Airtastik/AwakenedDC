@@ -19,8 +19,6 @@ public class Dialogue : MonoBehaviour
     private System.Action onFinished;
     public GameObject dialoguePanel;
 
-    private int index;
-
     void Start()
     {
         if (textComponent != null) textComponent.text = string.Empty;

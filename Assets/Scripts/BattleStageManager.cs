@@ -23,16 +23,17 @@ public class BattleStageManager : MonoBehaviour
     public Camera battleCam;
 
     [Header("Player")]
-    public GameObject player;
-    public MonoBehaviour playerMovement; // Drag your movement script here to disable it during battle
+    public GameObject    player;
+    public PlayerMovement playerMovement; // Drag your PlayerMovement script here
 
     [Header("Battle Stage")]
     public Vector3 battleStageCenter   = new Vector3(400f, 400f, 400f);
     public Vector3 playerBattleOffset  = new Vector3(0f, 0f, -3f); // Where player stands relative to stage center
 
     [Header("Battle System")]
-    public BattleSystem battleSystem;
-    public GameObject   battleUI;       // The UIDocument or canvas for the battle UI
+    public BattleSystem        battleSystem;
+    public GameObject          battleUI;        // The UIDocument or canvas for the battle UI
+    public MonoBehaviour       battleUIController; // Drag the NewMonoBehaviourScript here
 
     [Header("Transition")]
     public float transitionDelay = 0.3f;  // Brief pause before battle starts
@@ -93,8 +94,8 @@ public class BattleStageManager : MonoBehaviour
         overworldPlayerPos = player.transform.position;
         overworldPlayerRot = player.transform.rotation;
 
-        // 2. Disable player movement
-        if (playerMovement != null) playerMovement.enabled = false;
+        // 2. Lock player movement
+        if (playerMovement != null) playerMovement.LockForBattle();
 
         // 3. Brief pause
         yield return new WaitForSeconds(transitionDelay);
@@ -111,16 +112,41 @@ public class BattleStageManager : MonoBehaviour
         // 6. Show battle UI
         if (battleUI != null) battleUI.SetActive(true);
 
-        // 7. Prepare and start the encounter
+        // 7. Prepare the encounter
         EncounterManager.Prepare(roster, level);
 
         // Wait one frame for EncounterManager to register
         yield return null;
 
-        // 8. Tell BattleSystem to begin
-        // BattleSystem.LateStart() is a coroutine triggered by Start() —
-        // since it's already running we just need the encounter to be prepared.
-        // If BattleSystem hasn't started yet this frame, it will pick it up.
+        // 8. Reset BattleSystem and UI, then kick off setup in the right order
+        if (battleSystem != null)
+        {
+            // Disable then re-enable UI controller so its OnEnable/Start re-run
+            // against a fresh BattleSystem state
+            if (battleUIController != null)
+            {
+                battleUIController.enabled = false;
+            }
+
+            // Reset clears party lists and stops stale coroutines
+            battleSystem.ResetForNewBattle();
+
+            // BeginSetup starts LateStart() — it will idle on waitForSignal
+            battleSystem.BeginSetup();
+
+            // One frame for LateStart to reach the waitForSignal yield
+            yield return null;
+
+            // Re-enable UI controller — its Start() will call WaitForBattleReady
+            if (battleUIController != null)
+            {
+                battleUIController.enabled = true;
+            }
+
+            // Signal BattleSystem to proceed past the idle
+            battleSystem.StartBattle();
+        }
+
         Debug.Log("[BattleStageManager] Battle started.");
     }
 
@@ -141,8 +167,8 @@ public class BattleStageManager : MonoBehaviour
         player.transform.position = overworldPlayerPos;
         player.transform.rotation = overworldPlayerRot;
 
-        // 4. Re-enable player movement
-        if (playerMovement != null) playerMovement.enabled = true;
+        // 4. Unlock player movement
+        if (playerMovement != null) playerMovement.UnlockFromBattle();
 
         inBattle = false;
         OnBattleExit?.Invoke();

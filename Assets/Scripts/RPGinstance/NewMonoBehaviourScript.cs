@@ -48,6 +48,10 @@ public class NewMonoBehaviourScript : MonoBehaviour
             CacheElements();
             SubscribeEvents();
             Debug.Log("[BattleUI] OnEnable complete.");
+
+            // Re-run battle ready wait when re-enabled by BattleStageManager
+            if (battleSystem != null)
+                StartCoroutine(WaitForBattleReady());
         }
         catch (System.Exception e)
         {
@@ -61,12 +65,15 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         Debug.Log("[BattleUI] Start fired.");
         if (battleSystem == null) { Debug.LogError("[BattleUI] battleSystem not assigned!"); return; }
-        StartCoroutine(WaitForBattleReady());
+        // WaitForBattleReady is started by OnEnable which always fires before Start
     }
 
     private IEnumerator WaitForBattleReady()
     {
-        float timeout = 5f;
+        // Stop any previous wait
+        battleReady = false;
+
+        float timeout = 10f;
         while (!battleSystem.IsReady && timeout > 0)
         {
             timeout -= Time.deltaTime;
@@ -75,7 +82,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
         if (!battleSystem.IsReady)
         {
-            Debug.LogError("[BattleUI] Timed out. Check party objects are assigned in BattleSystem.");
+            Debug.LogError("[BattleUI] Timed out waiting for BattleSystem. Check Wait For Signal is ticked and BattleStageManager is in the scene.");
             yield break;
         }
 

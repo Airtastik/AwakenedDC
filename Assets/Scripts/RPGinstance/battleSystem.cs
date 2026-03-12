@@ -73,10 +73,59 @@ public class BattleSystem : MonoBehaviour
     #region Setup
     // ─────────────────────────────────────────────────────────────────────────
 
+    [Header("Merged Scene Settings")]
+    [Tooltip("Tick this when the battle stage lives in the same scene as the overworld. " +
+             "BattleSystem will idle until BattleStageManager calls StartBattle().")]
+    public bool waitForSignal = false;
+
+    private bool signalReceived = false;
+
+    /// <summary>
+    /// Called by BattleStageManager once the player teleports to the stage.
+    /// Only required when waitForSignal is true.
+    /// </summary>
+    public void StartBattle()
+    {
+        signalReceived = true;
+    }
+
+    /// <summary>
+    /// Clears the party lists and resets state so a second battle in the same
+    /// session starts cleanly. Called by BattleStageManager before each encounter.
+    /// </summary>
+    public void ResetForNewBattle()
+    {
+        StopAllCoroutines();
+        playerParty.Clear();
+        enemyParty.Clear();
+        IsReady        = false;
+        signalReceived = false;
+        // BattleStageManager calls StartBattle() immediately after this,
+        // which sets signalReceived = true, then calls StartCoroutine(LateStart())
+        // explicitly — so we do NOT start it here.
+        Debug.Log("[BattleSystem] Reset for new battle.");
+    }
+
+    /// <summary>
+    /// Called by BattleStageManager after ResetForNewBattle to actually run the setup.
+    /// </summary>
+    public void BeginSetup()
+    {
+        StartCoroutine(LateStart());
+    }
+
     void Start() => StartCoroutine(LateStart());
 
     private IEnumerator LateStart()
     {
+        // If merged-scene mode is on, idle here until BattleStageManager signals us
+        if (waitForSignal)
+        {
+            while (!signalReceived)
+                yield return null;
+            signalReceived = false;
+        }
+
         yield return null; // let Awake() scripts run first
 
         // ── Player party ─────────────────────────────────────────────────────
