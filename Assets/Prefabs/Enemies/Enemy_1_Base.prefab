@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0, z: -0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5663722519041330199}
@@ -94,7 +94,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4535301183017896239}
-  m_Enabled: 0
+  m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
@@ -106,7 +106,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0.9
+  m_BaseOffset: 2.1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &3743211790169896993
@@ -129,8 +129,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   spriteRenderer: {fileID: 3939571317957465565}
-  frontSprite: {fileID: 21300000, guid: 3854802cf79540d4c98a00e2bddf1274, type: 3}
-  backSprite: {fileID: 21300000, guid: e5704278c44a381409a10c50ad09f686, type: 3}
+  frontSprite: {fileID: 21300000, guid: ad2047dc87d117a4fb62a9090308d23b, type: 3}
+  backSprite: {fileID: 21300000, guid: 752aec2230a95cf438950e2524df9566, type: 3}
 --- !u!114 &4691989503095535291
 MonoBehaviour:
   m_ObjectHideFlags: 0
