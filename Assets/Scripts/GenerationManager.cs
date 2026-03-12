@@ -21,8 +21,13 @@ public class GenerationManager : MonoBehaviour
         }
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        player.transform.position = new Vector3(0, player.transform.position.y, 0);
+        var controller = player.GetComponent<CharacterController>();
+        if (controller != null) controller.enabled = false;
 
+        player.transform.position = new Vector3(0,1,0);
+
+        if (controller != null) controller.enabled = true;
+        
         currentSpawner = Instantiate(generatorPrefabs[idx], new Vector3(0, 0, 0), Quaternion.identity);
 
         

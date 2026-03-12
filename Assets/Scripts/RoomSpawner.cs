@@ -55,6 +55,8 @@ public class RoomSpawner : MonoBehaviour
     /// the staircase prefab being instantiated
     public GameObject staircasePrefab;
 
+    public GameObject littleGirlPrefab;
+
     /// amount of rooms on the floor (does not count starting room)
     /// may go over if too many paths are initially generated. Think of it as a soft cap
     /// roomCount = alpha <= beta | beta exists in the range (alpha, infinity)
@@ -182,6 +184,8 @@ public class RoomSpawner : MonoBehaviour
                         // Debug.LogError($"staircase chosen at {x}, {y}");
                         // spawn staircase
                         Instantiate(staircasePrefab, new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION, 0,
+                            (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION), Quaternion.identity, transform);
+                        Instantiate(littleGirlPrefab, new Vector3((ROOM_SIZE_SCALAR * x) - CENTRAL_ROOM_POSITION + 3, 1,
                             (ROOM_SIZE_SCALAR * y) - CENTRAL_ROOM_POSITION), Quaternion.identity, transform);
                     }
                     else if (roomDecision.isTreasure)

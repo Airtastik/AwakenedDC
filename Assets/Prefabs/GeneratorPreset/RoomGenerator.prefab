@@ -72,6 +72,7 @@ MonoBehaviour:
   - {fileID: 5980604051166141996, guid: 03f6a822f909d3842a5158835670b140, type: 3}
   treasurePrefab: {fileID: 7678888677872435788, guid: d3ed052ea2615bb4d9df96924a49ecb8, type: 3}
   staircasePrefab: {fileID: 6517814864680356131, guid: a7bee8d2d91720b4c972a5876142c7a5, type: 3}
+  littleGirlPrefab: {fileID: 4535301183017896239, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
   roomCount: 12
   hallwayWeighting: 0.75
   totalEnemyMax: 4
