@@ -722,8 +722,34 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8383668359630175391, guid: 58bff154b5c7f5f48a0f276d79922930, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1593431156}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4535301183017896239, guid: 58bff154b5c7f5f48a0f276d79922930, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 340072091}
   m_SourcePrefab: {fileID: 100100000, guid: 58bff154b5c7f5f48a0f276d79922930, type: 3}
+--- !u!1 &340072090 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4535301183017896239, guid: 58bff154b5c7f5f48a0f276d79922930, type: 3}
+  m_PrefabInstance: {fileID: 340072089}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &340072091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340072090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33ea691686771d54e8e30f2292612170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTrigger
+  npcLines:
+  - 'Catherene: You look like you haven''t slept in three days. Dimitri: ... Catherene:
+    Was that not an observation? That was an observation. Dimitri: Four. '
+  - 'Catherene: What? Dimitri: Four days. Catherene: ...Right. I''m Catherene. Try
+    to keep up.'
+  npcPortrait: {fileID: 21300000, guid: c2c4910e134143b4684c05ed8d550841, type: 3}
 --- !u!1001 &364966229
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3100,7 +3126,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTrigger
   npcLines:
-  - Test3
+  - "Sylva: Oh\u2014 oh sorry, I didn't see you there, I wasn't\u2014 are you okay?
+    You look\u2014 sorry, I don't mean to\u2014 are you a patient here? Dimitri:
+    I don't know. Sylva: You don't\u2014 okay. Okay that's. Yeah that's fair actually. "
+  - 'Dimitri: Are you okay? Sylva: (long pause) Nobody''s asked me that in a while.
+    Dimitri: You don''t have to answer. Sylva: ...I think I needed someone to ask.'
   npcPortrait: {fileID: 21300000, guid: f7ab9e5d09f29b940b14a3047fcaa5f6, type: 3}
 --- !u!114 &1662959042 stripped
 MonoBehaviour:
