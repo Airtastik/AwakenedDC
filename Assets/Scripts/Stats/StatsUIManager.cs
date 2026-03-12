@@ -3,68 +3,42 @@ using System.Collections.Generic;
 
 public class StatsUIManager : MonoBehaviour
 {
-    [Header("Menu Settings")]
-    [Tooltip("The parent GameObject that holds the entire Stats UI visual (e.g., the Background/Panel)")]
     public GameObject menuContainer;
     public KeyCode toggleKey = KeyCode.O;
 
-    [Header("Member Slots")]
-    [Tooltip("Assign your 4 UI panels here in order (Slot 1 to 4)")]
-    public UIStatEntry[] uiSlots = new UIStatEntry[4];
+    private UIStatEntry[] uiSlots;
 
-    private bool _isMenuOpen = false;
-
-    void Start()
+    void Awake()
     {
-        // Ensure the menu starts closed
-        _isMenuOpen = false;
-        if (menuContainer != null) menuContainer.SetActive(false);
+        // Automatically finds all UIStatEntry scripts in your children
+        uiSlots = GetComponentsInChildren<UIStatEntry>(true);
     }
 
     void Update()
     {
-        // Listen for the "O" key
         if (Input.GetKeyDown(toggleKey))
         {
-            ToggleMenu();
+            menuContainer.SetActive(!menuContainer.activeSelf);
+            if (menuContainer.activeSelf) RefreshUI();
         }
     }
 
-    public void ToggleMenu()
+    void OnEnable() => PartyManager.OnPartyUpdated += UpdateData;
+    void OnDisable() => PartyManager.OnPartyUpdated -= UpdateData;
+
+    // This matches the event signature from PartyManager
+    private void UpdateData(List<MemberData> data) => RefreshUI();
+
+    public void RefreshUI()
     {
-        _isMenuOpen = !_isMenuOpen;
+        if (!menuContainer.activeInHierarchy) return;
 
-        if (menuContainer != null)
-        {
-            menuContainer.SetActive(_isMenuOpen);
-        }
-
-        // If we just opened the menu, refresh the data to make sure it's current
-        if (_isMenuOpen)
-        {
-            RefreshUI(PartyManager.Instance.GetRecords());
-        }
-    }
-
-    void OnEnable()
-    {
-        PartyManager.OnPartyUpdated += RefreshUI;
-    }
-
-    void OnDisable()
-    {
-        PartyManager.OnPartyUpdated -= RefreshUI;
-    }
-
-    public void RefreshUI(List<MemberData> party)
-    {
-        // Safety check: if the menu is closed, we don't need to waste resources updating text
-        if (menuContainer != null && !menuContainer.activeInHierarchy) return;
+        var records = PartyManager.Instance.GetRecords();
 
         for (int i = 0; i < uiSlots.Length; i++)
         {
-            if (i < party.Count)
-                uiSlots[i].DisplayMember(party[i]);
+            if (i < records.Count)
+                uiSlots[i].DisplayMember(records[i]);
             else
                 uiSlots[i].DisplayMember(null);
         }
