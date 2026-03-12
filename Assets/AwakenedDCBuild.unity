@@ -1330,11 +1330,7 @@ MonoBehaviour:
   - {fileID: 547654849}
   - {fileID: 1265385113}
   - {fileID: 501595575}
-  testEnemyPrefabs:
-  - {fileID: 4535301183017896239, guid: 300bc28dea86c964ba83abff66f5c810, type: 3}
-  - {fileID: 4535301183017896239, guid: ec342d9387de1c74a8385098465b6507, type: 3}
-  - {fileID: 4535301183017896239, guid: ec342d9387de1c74a8385098465b6507, type: 3}
-  - {fileID: 4535301183017896239, guid: e51418b9ce87eb845ac5e6f9d45ef740, type: 3}
+  testEnemyPrefabs: []
   testLevel: 1
 --- !u!4 &585713001
 Transform:
@@ -2157,6 +2153,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8316346776519536529, guid: 232385e6314d215498a9585fb909637a, type: 3}
   m_PrefabInstance: {fileID: 1465263664996272224}
   m_PrefabAsset: {fileID: 0}
+--- !u!20 &1095869279 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 1135957135094025038, guid: e2bc4a80e99d17742a6840648e0ce87b, type: 3}
+  m_PrefabInstance: {fileID: 7820894448287676547}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1099303935 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 25124490260402130, guid: e8ad16fc9e88a8b4eba82144072f1b54, type: 3}
@@ -2221,7 +2222,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1215302385
 Transform:
   m_ObjectHideFlags: 0
@@ -2631,6 +2632,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PreBoss
   manager: {fileID: 1616887848}
+--- !u!114 &1377823978 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8932526932068201673, guid: e2bc4a80e99d17742a6840648e0ce87b, type: 3}
+  m_PrefabInstance: {fileID: 7820894448287676547}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377823973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f008f0a60efcefe48afcf5347c649003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
 --- !u!224 &1405729799 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1432047864393624851, guid: 86080012bd8e25c499c8f318e42f51c4, type: 3}
@@ -3355,11 +3367,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue
   textComponent: {fileID: 917277066}
-  lines: []
+  portraitImage: {fileID: 0}
   textSpeed: 0.5
-  sprite1: {fileID: 1377535794}
-  sprite2: {fileID: 183535266}
-  playerSprite: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
   dialoguePanel: {fileID: 1321017547}
 --- !u!1 &1965704718 stripped
 GameObject:
@@ -3663,7 +3672,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2015522862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4118,6 +4127,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2137335647}
   - component: {fileID: 2137335646}
+  - component: {fileID: 2137335648}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -4139,11 +4149,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BattleSystem
   playerPartyObjects: []
   enemyPartyObjects:
-  - {fileID: 0}
   - {fileID: 1208891342}
+  - {fileID: 547654848}
+  - {fileID: 1265385112}
+  - {fileID: 501595574}
   actionDelay: 1
   speedVariance: 10
   queuePreviewCount: 8
+  waitForSignal: 0
 --- !u!4 &2137335647
 Transform:
   m_ObjectHideFlags: 0
@@ -4159,6 +4172,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1215302385}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2137335648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137335645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8c4fc103b0f54b4f954041d92688b20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleStageManager
+  overworldCam: {fileID: 1095869279}
+  battleCam: {fileID: 1295634652}
+  player: {fileID: 1377823973}
+  playerMovement: {fileID: 1377823978}
+  battleStageCenter: {x: 400, y: 400, z: 400}
+  playerBattleOffset: {x: 0, y: 0, z: -3}
+  battleSystem: {fileID: 2137335646}
+  battleUI: {fileID: 2015522861}
+  battleUIController: {fileID: 0}
+  transitionDelay: 0.3
+  returnDelay: 2.5
 --- !u!1001 &1465263664996272224
 PrefabInstance:
   m_ObjectHideFlags: 0

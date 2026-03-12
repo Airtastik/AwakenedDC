@@ -1,15 +1,13 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Place empty GameObjects in the overworld at positions where the player
-/// should be placed after returning from battle.
+/// Marks a position in the overworld where the player should stand.
+/// Used as a starting spawn point — place one in the scene and the player
+/// will be moved here on Start if it is tagged as the default spawn.
 ///
-/// SETUP:
-/// - Create empty GameObjects in the overworld, name them e.g. "SpawnAfterBattle1"
-/// - Add this component to each one
-/// - Set the Spawn ID to match what you put in BattleEncounterTrigger's Return Spawn ID
-/// - Assign the Player reference (or it will find it by tag on Start)
+/// No longer depends on SceneTransitionManager since the battle now happens
+/// in the same scene via BattleStageManager. The player's overworld position
+/// is saved and restored automatically by BattleStageManager.
 /// </summary>
 public class OverworldSpawnPoint : MonoBehaviour
 {
@@ -19,29 +17,36 @@ public class OverworldSpawnPoint : MonoBehaviour
     [Header("Player")]
     public Transform player;
 
+    [Tooltip("If true, the player is placed here as soon as the scene starts.")]
+    public bool spawnOnStart = false;
+
     void Start()
     {
-        // Find player if not assigned
         if (player == null)
         {
             var p = GameObject.FindGameObjectWithTag("Player");
             if (p != null) player = p.transform;
         }
 
-        // Check if we should spawn here after returning from battle
-        if (SceneTransitionManager.Instance == null) return;
-        if (SceneTransitionManager.Instance.ReturnSpawnID == spawnID)
-        {
-            PlacePlayer();
-        }
+        if (spawnOnStart) PlacePlayer();
     }
 
     public void PlacePlayer()
     {
-        if (player == null) { Debug.LogWarning($"[SpawnPoint:{spawnID}] No player found."); return; }
+        if (player == null)
+        {
+            Debug.LogWarning($"[SpawnPoint:{spawnID}] No player found.");
+            return;
+        }
+
+        // CharacterController must be disabled briefly to teleport without fighting physics
+        var cc = player.GetComponent<CharacterController>();
+        if (cc != null) cc.enabled = false;
         player.position = transform.position;
         player.rotation = transform.rotation;
-        Debug.Log($"[SpawnPoint:{spawnID}] Player placed at return point.");
+        if (cc != null) cc.enabled = true;
+
+        Debug.Log($"[SpawnPoint:{spawnID}] Player placed.");
     }
 
     void OnDrawGizmosSelected()

@@ -15,10 +15,10 @@ MonoBehaviour:
   encounterName: Basic Encounter
   slots:
   - prefab: {fileID: 4535301183017896239, guid: ec342d9387de1c74a8385098465b6507, type: 3}
-    level: 5
+    level: 1
   - prefab: {fileID: 4535301183017896239, guid: ec342d9387de1c74a8385098465b6507, type: 3}
-    level: 5
+    level: 1
   - prefab: {fileID: 4535301183017896239, guid: ec342d9387de1c74a8385098465b6507, type: 3}
-    level: 5
+    level: 1
   - prefab: {fileID: 4535301183017896239, guid: ec342d9387de1c74a8385098465b6507, type: 3}
-    level: 5
+    level: 1
