@@ -30,11 +30,18 @@ public class MainMenuController : MonoBehaviour
         var btnAwaken = root.Q<Button>("btn-awaken");
         var btnControls = root.Q<Button>("btn-controls");
         var btnCredits = root.Q<Button>("btn-credits");
+        var btnEscape = root.Q<Button>("btn-escape");
 
         btnAwaken.clicked += () =>
         {
             Debug.Log("Awaken clicked");
             SceneManager.LoadScene(2);
+        };
+
+        btnEscape.clicked += () =>
+        {
+            Debug.Log("Escape clicked");
+            SceneManager.LoadScene(5);
         };
 
         btnControls.clicked += () =>
