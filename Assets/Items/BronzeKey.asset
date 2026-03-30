@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 949c1146553c009489a96623acf30743, type: 3}
-  m_Name: HealthPotion
+  m_Name: BronzeKey
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: Red Potion
-  icon: {fileID: 21300000, guid: fb1285ff153dddf43ad643cfd3745a92, type: 3}
-  description: A bubbly red potion.
+  itemName: Bronze Key
+  icon: {fileID: 21300000, guid: b0d4c40132e017941acf7a00b6fa9696, type: 3}
+  description: A shiny bronze key.
   quantity: 1
