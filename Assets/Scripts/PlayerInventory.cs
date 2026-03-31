@@ -94,6 +94,8 @@ public class PlayerInventory : MonoBehaviour
         return unique;
     }
 
+    
+
     // ── Legacy overworld UI ───────────────────────────────────────────────────
 
     void UpdateLegacyUI()

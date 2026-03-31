@@ -70,4 +70,12 @@ public class InventoryManager : MonoBehaviour
 
         Time.timeScale = isActive ? 0f : 1f;
     }
+
+    public bool InInventory (ItemData item)
+    {
+        if (items.Find(i => i.itemName == item.itemName)) {
+            return true;
+        }
+        return false;
+    }
 }
