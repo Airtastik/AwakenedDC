@@ -32,8 +32,8 @@ public class ItemSlot : MonoBehaviour
         descriptionText.text = newItem.description;
         quantityText.text = "x" + newItem.quantity.ToString();
         iconImage.sprite = newItem.icon;
-        useButton.onClick.RemoveAllListeners();
-        useButton.onClick.AddListener(OnUseButtonClicked);
+        // useButton.onClick.RemoveAllListeners();
+        // useButton.onClick.AddListener(OnUseButtonClicked);
     }
 
     public void OnUseButtonClicked()
