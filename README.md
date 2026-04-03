@@ -10,6 +10,9 @@ sourced sprite for walls of room prefabs from:
 https://www.sketchuptextureclub.com/textures/architecture/plaster/painted-plaster/fine-plaster-painted-pbr-texture-seamless-22642
 https://www.sketchuptextureclub.com//public/texture_d/216-fine-plaster-painted-pbr-texture-seamless-hr-2025121451533.jpg
 
+sourced sprite for present texture from:
+https://www.publicdomainpictures.net/en/view-image.php?image=305952&picture=poinsettia-gift-texture 
+
 Source for enemy sprite:
 Model: Gemini 3 Fast, Date: 3/11
 Prompt 1: I want you to generate two images based on this image. Each image should be 512x512. For the second image I want it to be a very distorted and sinister version of the enemy depicted in the base image. For the first image I want it to be only halfway distorted and sinister. I want the background to be easily removable. I want the enemies pictured such that their entire body is within the image. it is ok if there is a lot of empty space. Prompt 2: Create side profiles so it looks like they are walking. 
