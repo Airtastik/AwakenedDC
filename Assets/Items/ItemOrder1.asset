@@ -14,5 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: ItemOrder1
   icon: {fileID: 21300000, guid: da7d2068895282846a2853c00cf7dacf, type: 3}
-  description: 
+  description: 'This piece of paper gives two different codes. I wonder if one is
+    a red herring? It reads:
+
+    Bandages, Morphine, Painkillers, Steroids
+
+    Morphine,
+    Bandages, Steroids, Painkillers'
   quantity: 1
