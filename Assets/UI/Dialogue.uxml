@@ -1,0 +1,32 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Dialogue.uss"/>
+    <ui:VisualElement name="dialogue-root" class="dialogue-root hidden">
+
+        <!-- Left character sprite -->
+        <ui:VisualElement name="sprite-left" class="sprite-frame sprite-left">
+            <ui:VisualElement name="sprite-left-img" class="sprite-img"/>
+        </ui:VisualElement>
+
+        <!-- Right character sprite -->
+        <ui:VisualElement name="sprite-right" class="sprite-frame sprite-right">
+            <ui:VisualElement name="sprite-right-img" class="sprite-img"/>
+        </ui:VisualElement>
+
+        <!-- Dialogue box -->
+        <ui:VisualElement name="dialogue-box" class="dialogue-box">
+
+            <!-- Speaker name tab -->
+            <ui:Label name="speaker-name" text="" class="speaker-name"/>
+
+            <!-- Dialogue text -->
+            <ui:Label name="dialogue-text" text="" class="dialogue-text"/>
+
+            <!-- Bottom row: click prompt -->
+            <ui:VisualElement class="dialogue-footer">
+                <ui:Label name="continue-prompt" text="▶  Click to continue" class="continue-prompt"/>
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>
