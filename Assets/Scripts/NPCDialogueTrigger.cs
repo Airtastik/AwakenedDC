@@ -1,40 +1,30 @@
 using UnityEngine;
 
 /// <summary>
-/// Attach to any NPC prefab.
-/// Supports staged dialogue — different lines depending on GameStageManager.CurrentStage.
-/// 
-/// In the Inspector, add entries to Dialogue Stages:
-///   Stage 0 — lines shown at the start of the game
-///   Stage 1 — lines shown after the first floor / event
-///   etc.
-/// The system picks the highest stage block whose number <= CurrentStage.
+/// Attach to any NPC prefab. When the player walks into the trigger collider,
+/// dialogue starts and player movement is locked until it finishes.
 /// </summary>
 public class NPCDialogueTrigger : MonoBehaviour
 {
-    [Header("NPC Info")]
-    public string  npcName    = "???";
-    public Sprite  npcPortrait;
+    public string[] npcLines;
+    public Sprite   npcPortrait;
 
-    [Header("Staged Dialogue — one block per game stage")]
-    public DialogueStage[] dialogueStages;
+    private Dialogue dialogue;
 
-    [Header("Options")]
-    public bool triggerOnce = true;
-
-    private bool hasTriggered = false;
+    void Start()
+    {
+        dialogue = FindFirstObjectByType<Dialogue>();
+    }
 
     void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
-        if (triggerOnce && hasTriggered) return;
-        if (Dialogue.Instance == null)
+        if (dialogue == null)
         {
-            Debug.LogWarning("[NPCDialogueTrigger] No Dialogue instance in scene.");
+            Debug.LogWarning("[NPCDialogueTrigger] No Dialogue component found in scene.");
             return;
         }
 
-        hasTriggered = true;
-        Dialogue.Instance.StartStagedDialogue(dialogueStages, npcPortrait, npcName);
+        dialogue.StartDialogue(npcLines, npcPortrait);
     }
 }
