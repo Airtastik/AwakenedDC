@@ -67,10 +67,14 @@ public class PuzzlePanel : MonoBehaviour
     /// </summary>
     public void Close()
     {
+        foreach (PuzzleSlot slot in slots)
+        {
+            slot.ClearSlot();
+        }
+
         gameObject.SetActive(false);
         Time.timeScale = 1f;
 
-        // Re-lock cursor for first-person controls (adjust if your game differs)
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }

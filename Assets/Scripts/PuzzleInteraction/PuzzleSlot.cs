@@ -101,7 +101,7 @@ public class PuzzleSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         parentPanel.CheckSolution();
     }
 
-    private void ClearSlot()
+    public void ClearSlot()
     {
         placedItem = null;
 
