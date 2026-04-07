@@ -174,9 +174,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33ea691686771d54e8e30f2292612170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTrigger
-  npcLines:
-  - Test3
+  npcName: ???
   npcPortrait: {fileID: 21300000, guid: f7ab9e5d09f29b940b14a3047fcaa5f6, type: 3}
+  dialogueStages: []
+  triggerOnce: 1
 --- !u!135 &124702974
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -744,12 +745,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33ea691686771d54e8e30f2292612170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTrigger
-  npcLines:
-  - 'Catherene: You look like you haven''t slept in three days. Dimitri: ... Catherene:
-    Was that not an observation? That was an observation. Dimitri: Four. '
-  - 'Catherene: What? Dimitri: Four days. Catherene: ...Right. I''m Catherene. Try
-    to keep up.'
+  npcName: ???
   npcPortrait: {fileID: 21300000, guid: c2c4910e134143b4684c05ed8d550841, type: 3}
+  dialogueStages: []
+  triggerOnce: 1
 --- !u!1001 &364966229
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1193,6 +1192,76 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1215302385}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &519147441
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 519147444}
+  - component: {fileID: 519147443}
+  - component: {fileID: 519147442}
+  m_Layer: 0
+  m_Name: DialogueUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &519147442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519147441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38487cd74557a044ab498744f8340763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dialogue
+  textSpeed: 0
+  playerSprite: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+--- !u!114 &519147443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519147441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: 030cd18e3cf75c24a985841b8049095c, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 19acaaa383480344fa1ab2e7a0020fa5, type: 3}
+  m_SortingOrder: 5
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
+--- !u!4 &519147444
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519147441}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 150.12515, y: 150.54985, z: 154.78998}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &521421027 stripped
 GameObject:
@@ -1702,9 +1771,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33ea691686771d54e8e30f2292612170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTrigger
-  npcLines:
-  - Test2
+  npcName: ???
   npcPortrait: {fileID: 21300000, guid: 0b630fbfd946bf54bb3f9832a11bc528, type: 3}
+  dialogueStages: []
+  triggerOnce: 1
 --- !u!1 &746944727 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 25124490260402130, guid: e8ad16fc9e88a8b4eba82144072f1b54, type: 3}
@@ -2882,17 +2952,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33ea691686771d54e8e30f2292612170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTrigger
-  npcLines:
-  - 'Rodney: You lost?'
-  - 'Dimitri: Probably. '
-  - 'Rodney: You know where you''re going? '
-  - 'Dimitri: No. I just saw a weird girl in my dreams. '
-  - 'Rodney:  I saw her too stay close to me. '
-  - 'Dimitri: Why?  '
-  - 'Rodney: Because you''ll disappear and I''ll feel responsible. I don''t want
-    that.  '
-  - 'Dimitri: I understand '
+  npcName: ???
   npcPortrait: {fileID: 21300000, guid: 0b630fbfd946bf54bb3f9832a11bc528, type: 3}
+  dialogueStages: []
+  triggerOnce: 1
 --- !u!1 &1455560200
 GameObject:
   m_ObjectHideFlags: 0
@@ -3012,10 +3075,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33ea691686771d54e8e30f2292612170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTrigger
-  npcLines:
-  - Test1
-  - AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+  npcName: ???
   npcPortrait: {fileID: 21300000, guid: c2c4910e134143b4684c05ed8d550841, type: 3}
+  dialogueStages: []
+  triggerOnce: 1
 --- !u!135 &1593431158
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3125,13 +3188,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33ea691686771d54e8e30f2292612170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTrigger
-  npcLines:
-  - "Sylva: Oh\u2014 oh sorry, I didn't see you there, I wasn't\u2014 are you okay?
-    You look\u2014 sorry, I don't mean to\u2014 are you a patient here? Dimitri:
-    I don't know. Sylva: You don't\u2014 okay. Okay that's. Yeah that's fair actually. "
-  - 'Dimitri: Are you okay? Sylva: (long pause) Nobody''s asked me that in a while.
-    Dimitri: You don''t have to answer. Sylva: ...I think I needed someone to ask.'
+  npcName: SilvaVane
   npcPortrait: {fileID: 21300000, guid: f7ab9e5d09f29b940b14a3047fcaa5f6, type: 3}
+  dialogueStages:
+  - stage: 0
+    lines:
+    - speakerName: 'SIlva '
+      side: 1
+      text: Hello
+    - speakerName: 'Dimitri '
+      side: 0
+      text: 'Yes
+
+'
+  triggerOnce: 0
 --- !u!114 &1662959042 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1254577318728655472, guid: e8ad16fc9e88a8b4eba82144072f1b54, type: 3}
@@ -3506,6 +3576,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1955930439}
   - component: {fileID: 1955930440}
+  - component: {fileID: 1955930441}
   m_Layer: 0
   m_Name: Dialogue
   m_TagString: Untagged
@@ -3541,13 +3612,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38487cd74557a044ab498744f8340763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue
-  textComponent: {fileID: 917277066}
-  lines: []
   textSpeed: 0.05
-  sprite1: {fileID: 1377535794}
-  sprite2: {fileID: 183535266}
   playerSprite: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
-  dialoguePanel: {fileID: 1321017547}
+--- !u!114 &1955930441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955930438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 0}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 0}
+  m_SortingOrder: 0
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
 --- !u!1 &1965704718 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1165685811501949038, guid: 232385e6314d215498a9585fb909637a, type: 3}
@@ -4738,3 +4827,4 @@ SceneRoots:
   - {fileID: 408178932}
   - {fileID: 1215302385}
   - {fileID: 574418922}
+  - {fileID: 519147444}
