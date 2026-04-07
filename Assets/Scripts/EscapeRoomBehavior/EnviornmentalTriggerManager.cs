@@ -26,8 +26,6 @@ public class EnviornmentalTriggerManager : MonoBehaviour
     public void progress(int trigger) {
         for (int i = 0; i < dynamicObjects.Count; i++) {
             if (associatedTrigger[i] == trigger) {
-                Debug.Log($"Trigger is {trigger}");
-                Debug.Log($"Destroying number {associatedTrigger[i]}");
                 Destroy(dynamicObjects[i]);
             }
         }
