@@ -145,6 +145,8 @@ MonoBehaviour:
       side: 0
       text: Who or what are you?
   triggerOnce: 0
+  useProximityFallback: 0
+  proximityRadius: 2
 --- !u!1001 &14054162
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2070,6 +2072,10 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7904553784463062483, guid: 3953d1ab9f1430d4cb9908f9a85a3093, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8383668359630175391, guid: 3953d1ab9f1430d4cb9908f9a85a3093, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -2092,7 +2098,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8383668359630175391, guid: 3953d1ab9f1430d4cb9908f9a85a3093, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.4999804
+      value: -1.05
       objectReference: {fileID: 0}
     - target: {fileID: 8383668359630175391, guid: 3953d1ab9f1430d4cb9908f9a85a3093, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2125,8 +2131,42 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4535301183017896239, guid: 3953d1ab9f1430d4cb9908f9a85a3093, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 290186890}
   m_SourcePrefab: {fileID: 100100000, guid: 3953d1ab9f1430d4cb9908f9a85a3093, type: 3}
+--- !u!1 &290186889 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4535301183017896239, guid: 3953d1ab9f1430d4cb9908f9a85a3093, type: 3}
+  m_PrefabInstance: {fileID: 290186888}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &290186890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290186889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33ea691686771d54e8e30f2292612170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTrigger
+  npcName: SilviaVane
+  npcPortrait: {fileID: 21300000, guid: f7ab9e5d09f29b940b14a3047fcaa5f6, type: 3}
+  dialogueStages:
+  - stage: 0
+    lines:
+    - speakerName: Silvia
+      side: 1
+      text: HI
+    - speakerName: Dimitri
+      side: 1
+      text: HI
+  triggerOnce: 1
+  useProximityFallback: 0
+  proximityRadius: 2
 --- !u!1 &291232069
 GameObject:
   m_ObjectHideFlags: 0
@@ -9862,6 +9902,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3979845500620485281, guid: e16dc65f15d65af48b60250d081f4439, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4535301183017896239, guid: e16dc65f15d65af48b60250d081f4439, type: 3}
       propertyPath: m_Name
       value: DimitriQuestionPrefab
@@ -9872,7 +9916,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7904553784463062483, guid: e16dc65f15d65af48b60250d081f4439, type: 3}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8383668359630175391, guid: e16dc65f15d65af48b60250d081f4439, type: 3}
       propertyPath: m_LocalScale.x
@@ -10631,15 +10675,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3780965366796230427, guid: e2bc4a80e99d17742a6840648e0ce87b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 34.7
+      value: 1.55
       objectReference: {fileID: 0}
     - target: {fileID: 3780965366796230427, guid: e2bc4a80e99d17742a6840648e0ce87b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.9
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 3780965366796230427, guid: e2bc4a80e99d17742a6840648e0ce87b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 14.06
+      value: 20.19
       objectReference: {fileID: 0}
     - target: {fileID: 3780965366796230427, guid: e2bc4a80e99d17742a6840648e0ce87b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -11436,6 +11480,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1102139331}
     - target: {fileID: 2177432399483977416, guid: f03729fdee678fa40a10cc127486f6f6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2177432399483977416, guid: f03729fdee678fa40a10cc127486f6f6, type: 3}
       propertyPath: associatedTrigger
       value: 0
       objectReference: {fileID: 0}
@@ -11750,6 +11798,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 644151313232863894, guid: e502ef7479606354aaea86bf38ccfe04, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 644151313232863894, guid: e502ef7479606354aaea86bf38ccfe04, type: 3}
       propertyPath: dynamicObjects.Array.size
       value: 4
