@@ -171,7 +171,7 @@ MonoBehaviour:
       side: 1
       text: 'What the hell is that supposed to mean? '
   triggerOnce: 1
-  teleportDestination: {fileID: 503184076}
+  teleportDestination: {fileID: 2140826884}
 --- !u!136 &8612538
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5753,37 +5753,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 501988769}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &503184075
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 503184076}
-  m_Layer: 0
-  m_Name: tp1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &503184076
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 503184075}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &503383220
 GameObject:
   m_ObjectHideFlags: 0
@@ -6124,6 +6093,174 @@ RectTransform:
   m_AnchoredPosition: {x: -75, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &600376862
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3979845500620485281, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 4535301183017896239, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_Name
+      value: LunaPrefab (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904553784463062483, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_Height
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904553784463062483, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904553784463062483, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_Direction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904553784463062483, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383668359630175391, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383668359630175391, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383668359630175391, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383668359630175391, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.857
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383668359630175391, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383668359630175391, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 9.993
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383668359630175391, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383668359630175391, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383668359630175391, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383668359630175391, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383668359630175391, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383668359630175391, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383668359630175391, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4535301183017896239, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 600376865}
+    - targetCorrespondingSourceObject: {fileID: 4535301183017896239, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 600376864}
+  m_SourcePrefab: {fileID: 100100000, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+--- !u!1 &600376863 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4535301183017896239, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+  m_PrefabInstance: {fileID: 600376862}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &600376864
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 600376863}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &600376865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 600376863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33ea691686771d54e8e30f2292612170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTrigger
+  npcName: Nova
+  npcPortrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+  dialogueStages:
+  - stage: 0
+    lines:
+    - speakerName: 'Dimitri '
+      portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+      side: 0
+      text: Luna?
+    - speakerName: 'Nova '
+      portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+      side: 0
+      text: Who is Luna? Im Nova. who are you? did mommy
+    - speakerName: 'Dimitri '
+      portrait: {fileID: 0}
+      side: 0
+      text: Is your mommy, Dr Beatrice?
+  - stage: 0
+    lines:
+    - speakerName: 'Dimitri '
+      portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+      side: 0
+      text: Luna?
+    - speakerName: 'Nova '
+      portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+      side: 0
+      text: Who is Luna? Im Nova. who are you? did mommy
+    - speakerName: 'Dimitri '
+      portrait: {fileID: 0}
+      side: 0
+      text: Is your mommy, Dr Beatrice?
+  triggerOnce: 0
+  teleportDestination: {fileID: 0}
 --- !u!1 &619064637
 GameObject:
   m_ObjectHideFlags: 0
@@ -8428,6 +8565,64 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &835787234
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 835787236}
+  - component: {fileID: 835787235}
+  m_Layer: 0
+  m_Name: addv0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &835787235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835787234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fcf87d5e31bc4742bfe98758809aefa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneDialogueTrigger
+  sceneLines:
+  - speakerName: 'Dimitri '
+    portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+    side: 0
+    text: We have unlocked the first door
+  - speakerName: 'Luna '
+    portrait: {fileID: 0}
+    side: 0
+    text: Great come back to me so we can figure out what to do for the next one.
+  triggerRadius: 3
+  triggerMode: 0
+  triggerOnce: 1
+  advanceStageOnFinish: 1
+  teleportDestination: {fileID: 0}
+--- !u!4 &835787236
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835787234}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.042424623, y: -0.2193861, z: 0.009549567, w: 0.9746685}
+  m_LocalPosition: {x: -24.07, y: 3.966515, z: 3.21}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &838524601
 GameObject:
   m_ObjectHideFlags: 0
@@ -8862,6 +9057,81 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 860686758}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &869946879 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4535301183017896239, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+  m_PrefabInstance: {fileID: 1237921677}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &869946886
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 869946879}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &869946887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 869946879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33ea691686771d54e8e30f2292612170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTrigger
+  npcName: 'Luna '
+  npcPortrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+  dialogueStages:
+  - stage: 0
+    lines:
+    - speakerName: 'Dimitri '
+      portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+      side: 0
+      text: '*Wakes up on floor*'
+    - speakerName: Luna
+      portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+      side: 1
+      text: Hello, Dimitri. Its good to see you awake.
+    - speakerName: Dimitri
+      portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+      side: 1
+      text: Luna! its good to see you
+  - stage: 1
+    lines:
+    - speakerName: 'Dimitri '
+      portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+      side: 0
+      text: 'We got through the first door, now how do we get through the second. '
+    - speakerName: Luna
+      portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+      side: 1
+      text: It appears that the potions need to be placed in a particular order.
+        Iif you mess up the order. re-enter this room and go back to try again.
+    - speakerName: Dimitri
+      portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+      side: 1
+      text: 'I see two potions on that shelf. there might be more in the drawers
+        or cabnet. '
+  triggerOnce: 0
+  teleportDestination: {fileID: 0}
 --- !u!1 &870266135
 GameObject:
   m_ObjectHideFlags: 0
@@ -9613,19 +9883,19 @@ MonoBehaviour:
   - speakerName: 'Dimitri '
     portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
     side: 0
-    text: '*I wake up in a hospital bed*'
+    text: '*I go through the door*'
   - speakerName: 'Roman '
     portrait: {fileID: 21300000, guid: 0b630fbfd946bf54bb3f9832a11bc528, type: 3}
     side: 1
-    text: He's waking up.
+    text: There he is!
   - speakerName: 'Silvia '
     portrait: {fileID: 21300000, guid: f7ab9e5d09f29b940b14a3047fcaa5f6, type: 3}
     side: 1
-    text: Dimitri is waking up. I was worried he would not come back to us.
+    text: Dimitri is back. I was worried that we might not see him again.
   - speakerName: 'Catherine '
     portrait: {fileID: 21300000, guid: c2c4910e134143b4684c05ed8d550841, type: 3}
     side: 1
-    text: Finally awake, sleepy head.
+    text: There you are, ahh your late!
   - speakerName: Dimitri
     portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
     side: 0
@@ -9633,11 +9903,11 @@ MonoBehaviour:
   - speakerName: 'Silvia '
     portrait: {fileID: 21300000, guid: f7ab9e5d09f29b940b14a3047fcaa5f6, type: 3}
     side: 1
-    text: 'About 4 hours. You passed out after the battle.  '
+    text: 'About 4 hours. You passed out after the battle, and disapeared. '
   - speakerName: Roman
     portrait: {fileID: 21300000, guid: 0b630fbfd946bf54bb3f9832a11bc528, type: 3}
     side: 1
-    text: 'We carried you here after the fight. '
+    text: 'we tried to figure out where you went. '
   - speakerName: Dimitri
     portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
     side: 0
@@ -9659,6 +9929,10 @@ MonoBehaviour:
     side: 1
     text: 'Is that her name? Whatever, she won''t talk to us, only to you; she''s
       in the next room over there. '
+  - speakerName: 'Dimitri '
+    portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+    side: 0
+    text: '*But she was with me* '
   triggerRadius: 2
   triggerMode: 0
   triggerOnce: 1
@@ -9673,7 +9947,7 @@ Transform:
   m_GameObject: {fileID: 1014920561}
   serializedVersion: 2
   m_LocalRotation: {x: 0.9566935, y: 0.20859304, z: -0.19838269, w: -0.043254454}
-  m_LocalPosition: {x: 6, y: 2, z: 0}
+  m_LocalPosition: {x: -4.85, y: 2, z: 2.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11917,9 +12191,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3979845500620485281, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     - target: {fileID: 4535301183017896239, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
       propertyPath: m_Name
       value: LunaPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904553784463062483, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_Height
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904553784463062483, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904553784463062483, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_Direction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904553784463062483, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8383668359630175391, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
       propertyPath: m_LocalScale.x
@@ -11935,15 +12229,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8383668359630175391, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.12
+      value: -36.059998
       objectReference: {fileID: 0}
     - target: {fileID: 8383668359630175391, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.72
+      value: 2.7
       objectReference: {fileID: 0}
     - target: {fileID: 8383668359630175391, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.809904
+      value: 5.427
       objectReference: {fileID: 0}
     - target: {fileID: 8383668359630175391, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -11976,7 +12270,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4535301183017896239, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 869946887}
+    - targetCorrespondingSourceObject: {fileID: 4535301183017896239, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 869946886}
   m_SourcePrefab: {fileID: 100100000, guid: 65cadbd7b7d280e478d60659dcddc3d3, type: 3}
 --- !u!1 &1245757918
 GameObject:
@@ -17877,85 +18177,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 266945600}
   m_SourcePrefab: {fileID: 100100000, guid: 876c61086a1a11b4f8634c3d28afa79e, type: 3}
---- !u!1001 &1975271137
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3577280404586921409, guid: b9c4c6654a0d87048ad3fed20d1694a5, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 30.46937
-      objectReference: {fileID: 0}
-    - target: {fileID: 3577280404586921409, guid: b9c4c6654a0d87048ad3fed20d1694a5, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.94
-      objectReference: {fileID: 0}
-    - target: {fileID: 3577280404586921409, guid: b9c4c6654a0d87048ad3fed20d1694a5, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 8.54
-      objectReference: {fileID: 0}
-    - target: {fileID: 3577280404586921409, guid: b9c4c6654a0d87048ad3fed20d1694a5, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3577280404586921409, guid: b9c4c6654a0d87048ad3fed20d1694a5, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3577280404586921409, guid: b9c4c6654a0d87048ad3fed20d1694a5, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3577280404586921409, guid: b9c4c6654a0d87048ad3fed20d1694a5, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3577280404586921409, guid: b9c4c6654a0d87048ad3fed20d1694a5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3577280404586921409, guid: b9c4c6654a0d87048ad3fed20d1694a5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3577280404586921409, guid: b9c4c6654a0d87048ad3fed20d1694a5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840078856499985319, guid: b9c4c6654a0d87048ad3fed20d1694a5, type: 3}
-      propertyPath: m_Name
-      value: DoorWay (1)
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 9013620078703775482, guid: b9c4c6654a0d87048ad3fed20d1694a5, type: 3}
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6840078856499985319, guid: b9c4c6654a0d87048ad3fed20d1694a5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1975271139}
-  m_SourcePrefab: {fileID: 100100000, guid: b9c4c6654a0d87048ad3fed20d1694a5, type: 3}
---- !u!1 &1975271138 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6840078856499985319, guid: b9c4c6654a0d87048ad3fed20d1694a5, type: 3}
-  m_PrefabInstance: {fileID: 1975271137}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1975271139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1975271138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2404cc2ff7e5eef47b8c1e1c294def9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DoorToRoomEC
-  teleportTarget: {fileID: 2140826884}
 --- !u!1 &1995258038
 GameObject:
   m_ObjectHideFlags: 0
@@ -19585,7 +19806,7 @@ Transform:
   m_GameObject: {fileID: 2140826883}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -35.72, y: 3.5, z: 3.64}
+  m_LocalPosition: {x: -35.61434, y: 3.5391364, z: 6.8425493}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19956,10 +20177,11 @@ SceneRoots:
   - {fileID: 451300101}
   - {fileID: 535086971}
   - {fileID: 1237921677}
+  - {fileID: 600376862}
   - {fileID: 417987407}
-  - {fileID: 503184076}
   - {fileID: 1014920563}
   - {fileID: 345883694}
+  - {fileID: 835787236}
   - {fileID: 86048196}
   - {fileID: 990987134}
   - {fileID: 1361419512}
@@ -19973,5 +20195,4 @@ SceneRoots:
   - {fileID: 274124706}
   - {fileID: 1561304521}
   - {fileID: 2140826884}
-  - {fileID: 1975271137}
   - {fileID: 41119944}
