@@ -3201,7 +3201,7 @@ MonoBehaviour:
       text: 'Yes
 
 '
-  triggerOnce: 1
+  triggerOnce: 0
 --- !u!114 &1662959042 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1254577318728655472, guid: e8ad16fc9e88a8b4eba82144072f1b54, type: 3}

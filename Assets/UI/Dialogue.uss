@@ -16,17 +16,17 @@
 /* ── Character sprites ─────────────────────────────── */
 .sprite-frame {
     position: absolute;
-    bottom: 22%;
+    bottom: 0%;
     width: 18%;
     height: 52%;
 }
 
-.sprite-left  { left: 2%; }
-.sprite-right { right: 2%; }
+.sprite-left  { left: -20%;}
+.sprite-right { right: 20%; }
 
 .sprite-img {
-    width: 100%;
-    height: 100%;
+    width: 300%;
+    height: 300%;
     -unity-background-scale-mode: scale-to-fit;
 }
 
