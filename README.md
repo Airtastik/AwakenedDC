@@ -44,11 +44,21 @@ Source for health potion sprite:
 https://karsiori.itch.io/pixel-art-potion-pack-animated/download/eyJleHBpcmVzIjoxNzcxNzk0ODI2LCJpZCI6MjM3MzQ0N30%3d.AbKpFdQ%2b0gwSdkchFGt%2f6rlj8rg%3d
 
 Remaining item sprites: 
-Painkillers sprite- Model: Gemeni 3 Fast, Date: 3/5, Prompt: Can you make a painkillers 2d pixel art sprite that's no larger than 40x40 
-Steroids sprite- Model: Gemeni 3 Fast, Date: 3/5, Prompt: Can you make a steroids 2d pixel art sprite thats no larger than 40x40 
-Bandages sprite - Model: Gemeni 3 Fast, Date: 3/5, Prompt: Can you make a bandages 2d pixel art sprite thats no larger than 40x40 
-Morphine sprite - Model: Gemeni 3 Fast, Date: 3/5, Prompt: Can you make a morphine 2d pixel art sprite thats no larger than 40x40 
-Defibrillator sprite - Model: Gemeni 3 Fast, Date: 3/5, Prompt: Can you make a defibrillator 2d pixel art sprite thats no larger than 40x40
+Painkillers sprite- Model: Gemeni 3 Fast, Date: 3/5, Prompt: Can you make a painkillers 2d pixel art sprite that's no larger than 40x40 \
+Steroids sprite- Model: Gemeni 3 Fast, Date: 3/5, Prompt: Can you make a steroids 2d pixel art sprite thats no larger than 40x40 \
+Bandages sprite - Model: Gemeni 3 Fast, Date: 3/5, Prompt: Can you make a bandages 2d pixel art sprite thats no larger than 40x40 \
+Morphine sprite - Model: Gemeni 3 Fast, Date: 3/5, Prompt: Can you make a morphine 2d pixel art sprite thats no larger than 40x40 \
+Defibrillator sprite - Model: Gemeni 3 Fast, Date: 3/5, Prompt: Can you make a defibrillator 2d pixel art sprite thats no larger than 40x40 \
+Gold Key Sprite- Model: Gemini 3 Fast, Date: 3/29, Prompt: Can you make a gold key 2d pixel art sprite that's no larger than 40x40 \
+Silver Key Sprite- Model: Gemini 3 Fast, Date: 3/29, Prompt: Can you make a silver key 2d pixel art sprite that's no larger than 40x40 \
+Iron Key Sprite- Model: Gemini 3 Fast, Date: 3/29, Prompt: Can you make a iron key 2d pixel art sprite that's no larger than 40x40 \
+Bronze Key Sprite- Model: Gemini 3 Fast, Date: 3/29, Prompt: Can you make a bronze key 2d pixel art sprite that's no larger than 40x40 \
+Green Potion Sprite- Model: Gemini 3 Fast, Date: 3/29, Prompt: Can you change the color of this potion to green \
+Yellow Potion Sprite- Model: Gemini 3 Fast, Date: 3/29, Prompt: Can you change the color of this potion to yellow \
+Blue Potion Sprite- Model: Gemini 3 Fast, Date: 3/29, Prompt: Can you change the color of this potion to blue \
+Morse Code Sprite- Model: Gemini 3 Fast, Date: 3/29, Prompt: Can you make a morse code cheat sheet 2d pixel art that's no larger than 40x40 \
+Item Order Sprite- Model: Gemini 3 Fast, Date: 3/29, Prompt: Keep the scroll format but change the text to "item order" \
+Lock Code Sprite- Model: Gemini 3 Fast, Date: 3/29, Prompt: Change the text this time to show "lock code" 
 
 To play the final build, download the FIN.7Z zip file, then extract it, and run the exe file.
 

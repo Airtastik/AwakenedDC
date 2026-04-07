@@ -1,0 +1,4 @@
+AI was used for all scripts in this folder.
+Model: Claude Opus 4.6
+Date: 3/6
+Prompt: I am working on a 3D escape room in unity. I want to have it so there are in game world objects that when the player approaches there pops up a message "press E to inspect". For some of these objects, items will be added to the player's inventory when they do this. For others a screen will pop up. This screen will vary from object to object. But essentially there will be some panel and the option to drag objects from you inventory to slots in this pannel and see if they "unlock" the puzzle. I want scripts to accomplish this. For the first type of interaction I want the scripts to connect to existing items so those items will be added to player inventory. For the second type of script I want them to be attached to the particular panel for the type of puzzle to solve. Both types should be anchored on existing game objects. Here are the inventory and item scripts:
