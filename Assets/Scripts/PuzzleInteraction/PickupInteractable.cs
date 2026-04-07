@@ -48,7 +48,7 @@ public class PickupInteractable : Interactable
             return;
         }
 
-        if (itemNeededBool && !inventoryManager.InInventory(itemToGive))
+        if (itemNeededBool && !inventoryManager.InInventory(itemNeeded))
         {
             Debug.LogWarning("Cannot open the box...");
             return;

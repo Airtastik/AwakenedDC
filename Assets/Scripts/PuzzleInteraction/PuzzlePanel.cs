@@ -124,7 +124,7 @@ public class PuzzlePanel : MonoBehaviour
         // All slots correct!
         isSolved = true;
         Debug.Log("Puzzle solved!");
-        onPuzzleSolved?.Invoke();
+        //onPuzzleSolved?.Invoke();
 
         // Optionally consume the items from inventory
         if (consumeItem)
