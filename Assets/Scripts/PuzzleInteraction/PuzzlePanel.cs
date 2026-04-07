@@ -42,16 +42,6 @@ public class PuzzlePanel : MonoBehaviour
     [Tooltip("Fires when every slot is filled with the correct item.")]
     public UnityEvent onPuzzleSolved;
 
-    public bool consumeItem = true;
-
-    [Header("Trigger")]
-
-    public bool isTrigger = false;
-
-    public int trigger = 0;
-
-    public EnviornmentalTriggerManager manager;
-
     [Header("State")]
     public bool isSolved = false;
 
@@ -64,6 +54,7 @@ public class PuzzlePanel : MonoBehaviour
 
         gameObject.SetActive(true);
         Time.timeScale = 0f;
+
         // Show the cursor so the player can drag items
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -124,20 +115,14 @@ public class PuzzlePanel : MonoBehaviour
         // All slots correct!
         isSolved = true;
         Debug.Log("Puzzle solved!");
-        //onPuzzleSolved?.Invoke();
+        onPuzzleSolved?.Invoke();
 
         // Optionally consume the items from inventory
-        if (consumeItem)
+        foreach (PuzzleSlot slot in slots)
         {
-            foreach (PuzzleSlot slot in slots)
-            {
-                slot.ConsumeItem(inventoryManager);
-            }
+            slot.ConsumeItem(inventoryManager);
         }
-        if (isTrigger)
-        {
-            manager.progress(trigger);
-        }
+
         Close();
     }
 
