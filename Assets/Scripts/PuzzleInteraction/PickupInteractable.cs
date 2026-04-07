@@ -25,6 +25,12 @@ public class PickupInteractable : Interactable
     [Tooltip("Destroy the world object after pickup?")]
     public bool destroyOnPickup = true;
 
+    [Tooltip("True if item is needed to pickup the item")]
+    public bool itemNeededBool = false;
+
+    [Tooltip("Item needed to pickup the item")]
+    public ItemData itemNeeded;
+
     [Tooltip("Reference to the scene's InventoryManager.")]
     public InventoryManager inventoryManager;
 
@@ -41,6 +47,14 @@ public class PickupInteractable : Interactable
             Debug.LogWarning($"PickupInteractable on {gameObject.name}: No InventoryManager assigned.");
             return;
         }
+
+        if (itemNeededBool && !inventoryManager.InInventory(itemNeeded))
+        {
+            Debug.LogWarning("Cannot open the box...");
+            return;
+        }
+
+
 
         // Create a temporary copy with the desired quantity so AddItem
         // can stack correctly without mutating the ScriptableObject asset.
