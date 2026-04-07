@@ -17,13 +17,8 @@ public class TriggerObject : MonoBehaviour
         
     // }
 
-    // Update is called once per frame
-    // void Update() {
-
-    //     // interaction conditonal for if player is interacting with object and then chooses the right key
-    //     if (door1Trigger != null && door1Trigger.GetCollisionData() && inventoryManager != null && inventoryManager.InInventory(key)) 
-    //     {
-    //         manager.progress(associatedTrigger);
-    //     }
-    // }
+    public void GoTrigger(int trigger)
+    {
+        manager.progress(trigger);
+    }
 }

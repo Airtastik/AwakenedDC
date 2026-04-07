@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: ItemOrder2
   icon: {fileID: 21300000, guid: 140272d382d72804a8e7f664e648697d, type: 3}
-  description: 
+  description: 'This piece of paper gives some sort of code, it reads:
+
+    Painkillers,
+    Bandages, Steroids, Morphine'
   quantity: 1

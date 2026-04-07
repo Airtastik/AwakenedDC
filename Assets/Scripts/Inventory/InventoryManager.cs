@@ -73,6 +73,7 @@ public class InventoryManager : MonoBehaviour
 
     public bool InInventory (ItemData item)
     {
+        Debug.Log(item.itemName);
         if (items.Find(i => i.itemName == item.itemName)) {
             return true;
         }
