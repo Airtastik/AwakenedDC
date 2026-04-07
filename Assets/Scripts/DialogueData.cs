@@ -1,7 +1,11 @@
 using UnityEngine;
 
+public enum SpeakerSide { Left, Right }
+
 /// <summary>
-/// A single line of dialogue — who says it, what they say.
+/// A single line of dialogue.
+/// The participant (portrait + side) is assigned directly on each line
+/// so you don't need a separate Participants list.
 /// </summary>
 [System.Serializable]
 public class DialogueLine
@@ -9,14 +13,15 @@ public class DialogueLine
     [Tooltip("Display name shown in the speaker tab.")]
     public string speakerName;
 
-    [Tooltip("'left' or 'right' — which side of the screen this speaker is on.")]
+    [Tooltip("Portrait sprite shown for this speaker. Overrides any previous portrait on this side.")]
+    public Sprite portrait;
+
+    [Tooltip("Which side of the screen this speaker appears on.")]
     public SpeakerSide side = SpeakerSide.Right;
 
     [TextArea(2, 5)]
     public string text;
 }
-
-public enum SpeakerSide { Left, Right }
 
 /// <summary>
 /// One stage of dialogue for an NPC — shown when the game stage matches.
@@ -32,12 +37,13 @@ public class DialogueStage
 }
 
 /// <summary>
-/// A participant in a scene dialogue — a speaker with a portrait and a side.
+/// A participant in a scene dialogue — kept for backward compatibility
+/// but no longer required when using per-line portraits.
 /// </summary>
 [System.Serializable]
 public class SceneParticipant
 {
-    public string   speakerName;
-    public Sprite   portrait;
+    public string     speakerName;
+    public Sprite     portrait;
     public SpeakerSide side = SpeakerSide.Right;
 }
