@@ -1092,8 +1092,60 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1020997732609099998, guid: 8a52822e275d29d4c9585738b5bc249c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 86048199}
+    - targetCorrespondingSourceObject: {fileID: 1020997732609099998, guid: 8a52822e275d29d4c9585738b5bc249c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 86048198}
   m_SourcePrefab: {fileID: 100100000, guid: 8a52822e275d29d4c9585738b5bc249c, type: 3}
+--- !u!1 &86048197 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1020997732609099998, guid: 8a52822e275d29d4c9585738b5bc249c, type: 3}
+  m_PrefabInstance: {fileID: 86048196}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &86048198
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86048197}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.4
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &86048199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86048197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a8792466d9e9f4aa043e932c9dcaac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PickupInteractable
+  interactPromptText: {fileID: 0}
+  promptMessage: Press E to inspect
+  itemToGive: {fileID: 11400000, guid: 56166e6581ab15644aec3787042f5c1d, type: 2}
+  quantityToGive: 1
+  destroyOnPickup: 0
+  itemNeededBool: 0
+  itemNeeded: {fileID: 0}
+  inventoryManager: {fileID: 1871751130}
 --- !u!1 &97361660
 GameObject:
   m_ObjectHideFlags: 0
@@ -4034,10 +4086,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  consumeItem: 0
-  isTrigger: 1
-  trigger: 4
-  manager: {fileID: 1102139331}
   isSolved: 0
 --- !u!114 &357967301
 MonoBehaviour:
@@ -7750,10 +7798,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  consumeItem: 0
-  isTrigger: 1
-  trigger: 7
-  manager: {fileID: 1102139331}
   isSolved: 0
 --- !u!114 &758221149
 MonoBehaviour:
@@ -12979,10 +13023,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  consumeItem: 0
-  isTrigger: 1
-  trigger: 6
-  manager: {fileID: 1102139331}
   isSolved: 0
 --- !u!114 &1328449381
 MonoBehaviour:
@@ -18847,10 +18887,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  consumeItem: 1
-  isTrigger: 1
-  trigger: 3
-  manager: {fileID: 1102139331}
   isSolved: 0
 --- !u!114 &2049517980
 MonoBehaviour:
@@ -19100,10 +19136,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  consumeItem: 1
-  isTrigger: 1
-  trigger: 1
-  manager: {fileID: 1102139331}
   isSolved: 0
 --- !u!114 &2050890374
 MonoBehaviour:
@@ -19587,10 +19619,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  consumeItem: 1
-  isTrigger: 1
-  trigger: 2
-  manager: {fileID: 1102139331}
   isSolved: 0
 --- !u!114 &2121045643
 MonoBehaviour:
