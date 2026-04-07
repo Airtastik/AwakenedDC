@@ -29,11 +29,23 @@ public class SceneDialogueTrigger : MonoBehaviour
     public bool advanceStageOnFinish = false;
 
     private bool hasTriggered = false;
+    private bool playerInRange = false;
 
     void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player")) return;
+        if (other.CompareTag("Player")) playerInRange = true;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player")) playerInRange = false;
+    }
+
+    void Update()
+    {
+        if (!playerInRange) return;
         if (triggerOnce && hasTriggered) return;
+        if (!Input.GetKeyDown(KeyCode.E)) return;
         if (Dialogue.Instance == null)
         {
             Debug.LogWarning("[SceneDialogueTrigger] No Dialogue instance in scene.");

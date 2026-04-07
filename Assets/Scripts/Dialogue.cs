@@ -57,6 +57,15 @@ public class Dialogue : MonoBehaviour
     private Coroutine typeCoroutine;
 
     // ── Unity ─────────────────────────────────────────────────────────────────
+
+    void Update()
+    {
+        if (!dialogueActive) return;
+        if (Input.GetKeyDown(KeyCode.E)) OnClick();
+        if (Input.GetKeyDown(KeyCode.Space)) OnClick();
+         if (Input.GetKeyDown(KeyCode.Mouse0)) OnClick();
+    }
+
     void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
@@ -72,7 +81,7 @@ public class Dialogue : MonoBehaviour
         dialogueTextLabel = root.Q<Label>("dialogue-text");
         continuePrompt    = root.Q<Label>("continue-prompt");
 
-        root.RegisterCallback<ClickEvent>(_ => OnClick());
+        // Advance dialogue with E key, handled in Update
     }
 
     // ═════════════════════════════════════════════════════════════════════════

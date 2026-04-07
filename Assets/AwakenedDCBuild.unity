@@ -3196,6 +3196,11 @@ MonoBehaviour:
     - speakerName: 'SIlva '
       side: 1
       text: Hello
+    - speakerName: 'Dimitri '
+      side: 0
+      text: 'Yes
+
+'
   triggerOnce: 1
 --- !u!114 &1662959042 stripped
 MonoBehaviour:
