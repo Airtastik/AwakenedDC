@@ -206,9 +206,8 @@ public class Dialogue : MonoBehaviour
         DialogueLine line = activeLines[index];
         speakerNameLabel.text = line.speakerName;
 
-        // Scene dialogue: swap portraits when speaker changes
-        if (participants != null)
-            RefreshPortraits(line);
+        // Refresh portrait on every line (per-line portrait or participant lookup)
+        RefreshPortraits(line);
 
         // Dim inactive side
         bool leftSpeaks = line.side == SpeakerSide.Left;
@@ -262,17 +261,24 @@ public class Dialogue : MonoBehaviour
         onFinished?.Invoke();
     }
 
-    // ── Portrait management for scene dialogue ────────────────────────────────
+    // ── Portrait management ───────────────────────────────────────────────────
 
     private void RefreshPortraits(DialogueLine line)
     {
-        if (participants == null) return;
+        // Per-line portrait takes priority
+        if (line.portrait != null)
+        {
+            if (line.side == SpeakerSide.Left)
+                SetSprite(spriteLeftImg, line.portrait);
+            else
+                SetSprite(spriteRightImg, line.portrait);
+            return;
+        }
 
-        // Find the participant matching this speaker
+        // Fall back to participant lookup for backward compatibility
+        if (participants == null) return;
         SceneParticipant p = FindParticipant(line.speakerName);
         if (p == null) return;
-
-        // Put their portrait on the correct side
         if (p.side == SpeakerSide.Left)
             SetSprite(spriteLeftImg, p.portrait);
         else

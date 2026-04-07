@@ -22,12 +22,12 @@ public class NPCDialogueTrigger : MonoBehaviour
     [Header("Options")]
     public bool triggerOnce = true;
 
+    [Header("Teleport After Dialogue (optional)")]
+    [Tooltip("If set, teleports the player here when dialogue ends.")]
+    public Transform teleportDestination;
+
     private bool hasTriggered = false;
     private bool playerInRange = false;
-    [Header("Fallback")]
-    public bool useProximityFallback = false;
-    public float proximityRadius = 2f;
-    private Transform playerTransform;
 
     void Start()
     {
@@ -44,7 +44,6 @@ public class NPCDialogueTrigger : MonoBehaviour
 
         // Check for a player object with expected components
         var player = GameObject.FindWithTag("Player");
-        playerTransform = player != null ? player.transform : null;
         if (player == null)
             Debug.LogWarning("[NPCDialogueTrigger] No GameObject with tag 'Player' found in scene.");
         else
@@ -95,29 +94,6 @@ public class NPCDialogueTrigger : MonoBehaviour
 
     void Update()
     {
-        // Proximity fallback: optional distance-based detection when physics triggers are unreliable
-        if (useProximityFallback)
-        {
-            if (playerTransform == null)
-                playerTransform = GameObject.FindWithTag("Player")?.transform;
-
-            if (playerTransform != null)
-            {
-                float dist = Vector3.Distance(playerTransform.position, transform.position);
-                bool inRangeNow = dist <= proximityRadius;
-                if (inRangeNow && !playerInRange)
-                {
-                    playerInRange = true;
-                    Debug.LogWarning($"[NPCDialogueTrigger:{npcName}] Proximity fallback: player entered range (dist={dist:F2}).");
-                }
-                else if (!inRangeNow && playerInRange)
-                {
-                    playerInRange = false;
-                    Debug.LogWarning($"[NPCDialogueTrigger:{npcName}] Proximity fallback: player exited range (dist={dist:F2}).");
-                }
-            }
-        }
-
         if (!playerInRange)
         {
             if (Input.GetKeyDown(KeyCode.E))
@@ -133,6 +109,23 @@ public class NPCDialogueTrigger : MonoBehaviour
         }
 
         hasTriggered = true;
-        Dialogue.Instance.StartStagedDialogue(dialogueStages, npcPortrait, npcName);
+        Dialogue.Instance.StartStagedDialogue(
+            dialogueStages, npcPortrait, npcName,
+            finished: teleportDestination != null ? (System.Action)TeleportPlayer : null
+        );
+    }
+
+    private void TeleportPlayer()
+    {
+        var player = GameObject.FindWithTag("Player");
+        if (player == null) { Debug.LogWarning("[NPCDialogueTrigger] No Player found to teleport."); return; }
+
+        var cc = player.GetComponent<CharacterController>();
+        if (cc != null) cc.enabled = false;
+        player.transform.position = teleportDestination.position;
+        player.transform.rotation = teleportDestination.rotation;
+        if (cc != null) cc.enabled = true;
+
+        Debug.Log($"[NPCDialogueTrigger] Player teleported to {teleportDestination.name}.");
     }
 }
