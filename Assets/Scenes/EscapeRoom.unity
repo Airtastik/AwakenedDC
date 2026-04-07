@@ -9155,25 +9155,21 @@ MonoBehaviour:
       side: 1
       text: Hello, Dimitri. Its good to see you awake.
     - speakerName: Dimitri
-      portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+      portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
       side: 1
       text: Luna! its good to see you
-  - stage: 1
-    lines:
-    - speakerName: 'Dimitri '
+    - speakerName: Dimitri
       portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
-      side: 0
-      text: 'We got through the first door, now how do we get through the second. '
+      side: 1
+      text: Why are we in some locked room? Where is everyone else?
     - speakerName: Luna
       portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
       side: 1
-      text: It appears that the potions need to be placed in a particular order.
-        Iif you mess up the order. re-enter this room and go back to try again.
-    - speakerName: Dimitri
+      text: ...
+    - speakerName: Luna
       portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
       side: 1
-      text: 'I see two potions on that shelf. there might be more in the drawers
-        or cabnet. '
+      text: Not speaking now are we... Fine I guess I'll figure it out myself!
   triggerOnce: 0
   teleportDestination: {fileID: 0}
 --- !u!1 &870266135
