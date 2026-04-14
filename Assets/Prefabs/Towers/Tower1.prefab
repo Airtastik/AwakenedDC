@@ -125,3 +125,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf72663a6920cfa47a9a8931f210cb13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  Projectile: {fileID: 6879690678910190817, guid: a1d79f19dabcba14a8a07802b898cb48, type: 3}
+  fireDelay: 1

@@ -4,6 +4,10 @@ public class Tower1 : MonoBehaviour
 {
     public GameObject Projectile;
     public double fireDelay;
+    private double recoil = 0;
+    private int level = 1;
+
+    private double FRAME_TICK_CONSTANT = .016;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
@@ -12,19 +16,19 @@ public class Tower1 : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        double recoil = 0;
         if (recoil <= 0) {
-            // GameObject NearestEnemy = FindNearestObject("Enemy");
-            // float angle = GetAngleFromNorth(NearestEnemy);
-            float angle = 0;
-            SpawnInDirectionWithVelocity(Projectile, angle, 1, 1);
-            recoil = fireDelay + .016;
+            GameObject NearestEnemy = FindNearestObject("Enemy");
+            float angle = GetAngleFromNorth(NearestEnemy);
+            SpawnInDirectionWithVelocity(Projectile, angle, 1, 10);
+            SpawnInDirectionWithVelocity(Projectile, angle + 90, 1, 10);
+            SpawnInDirectionWithVelocity(Projectile, angle + 180, 1, 10);
+            SpawnInDirectionWithVelocity(Projectile, angle + 270, 1, 10);
+            recoil = fireDelay + FRAME_TICK_CONSTANT;
         }
-        recoil -= .016;
+        recoil -= FRAME_TICK_CONSTANT;
     }
 
-    GameObject SpawnInDirectionWithVelocity(GameObject prefab, float angleDegrees, float distance, float speed)
-    {
+    GameObject SpawnInDirectionWithVelocity(GameObject prefab, float angleDegrees, float distance, float speed) {
         float rad = angleDegrees * Mathf.Deg2Rad;
         Vector3 direction = new Vector3(Mathf.Sin(rad), 0f, Mathf.Cos(rad));
         Vector3 spawnPosition = transform.position + direction * distance;
