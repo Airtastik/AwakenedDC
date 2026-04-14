@@ -2,14 +2,15 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public double distance;
+    public float distance;
     public int damage; 
     private Vector3 initialPosition;
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void Init(float distance, int damage, float scale)
     {
+        this.distance = distance;
+        this.damage = damage;
+        transform.localScale = new Vector3(scale, scale, scale);
         initialPosition = transform.position;
     }
 

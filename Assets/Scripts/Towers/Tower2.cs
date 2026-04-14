@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Tower1 : TowerParent
+public class Tower2 : TowerParent
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start() {
@@ -12,11 +12,10 @@ public class Tower1 : TowerParent
         if (recoil <= 0) {
             GameObject NearestEnemy = findNearestEnemy();
             if (NearestEnemy != null) {
-                float angle = GetAngleFromNorth(NearestEnemy);
-                SpawnInDirectionWithVelocity(Projectile, angle, 1, 10);
-                SpawnInDirectionWithVelocity(Projectile, angle + 90, 1, 10);
-                SpawnInDirectionWithVelocity(Projectile, angle + 180, 1, 10);
-                SpawnInDirectionWithVelocity(Projectile, angle + 270, 1, 10);
+                SpawnInDirectionWithVelocity(Projectile, 45, 1, 10);
+                SpawnInDirectionWithVelocity(Projectile, 225, 1, 10);
+
+
             }
             recoil = fireDelay + FRAME_TICK_CONSTANT;
         }
