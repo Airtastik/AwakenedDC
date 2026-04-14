@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 7205709019836839547}
   - component: {fileID: 3457247362970407448}
   - component: {fileID: 6301133874948717412}
-  - component: {fileID: -7373420408756565664}
+  - component: {fileID: 4255382585649290991}
   m_Layer: 0
-  m_Name: Tower2
+  m_Name: Tower3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,7 +113,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-7373420408756565664
+--- !u!114 &4255382585649290991
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,17 +122,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 5335527594006705596}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b461225855dd3c44385627d07584ab23, type: 3}
+  m_Script: {fileID: 11500000, guid: 2cd5936a6f9e7d047846ad7caa8e80c6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tower2
+  m_EditorClassIdentifier: Assembly-CSharp::Tower3
   Projectile: {fileID: 6879690678910190817, guid: a1d79f19dabcba14a8a07802b898cb48, type: 3}
-  projectileScale: 1
-  fireDelay: 0.5
+  projectileScale: 0
+  fireDelay: 0
   RANGE:
-  - 8
-  - 12
-  - 15
-  DAMAGE: 03000000050000000a000000
+  - 3
+  - 4
+  - 5
+  DAMAGE: 
   interactLayer:
     serializedVersion: 2
     m_Bits: 4294967295
+  stasisDuration: 2
