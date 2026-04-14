@@ -19,7 +19,8 @@ public class Tower2 : TowerParent
             }
             recoil = fireDelay + FRAME_TICK_CONSTANT;
         }
-        recoil -= FRAME_TICK_CONSTANT;
+        if (recoil > 0)
+            recoil -= FRAME_TICK_CONSTANT;
     }
 
 }
