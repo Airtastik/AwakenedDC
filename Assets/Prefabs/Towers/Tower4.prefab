@@ -128,12 +128,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Tower4
   Projectile: {fileID: 0}
   projectileScale: 0
-  fireDelay: 0
+  fireDelay: 1
   RANGE:
-  - 9
-  - 13
-  - 15
-  DAMAGE: 030000000500000009000000
+  - 5
+  - 8
+  - 11
+  DAMAGE: 1e000000320000005a000000
   interactLayer:
     serializedVersion: 2
     m_Bits: 4294967295
