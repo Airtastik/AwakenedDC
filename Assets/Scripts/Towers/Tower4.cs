@@ -44,9 +44,12 @@ public class Tower4 : TowerParent
         if (recoil > 0)
             recoil -= FRAME_TICK_CONSTANT;
         
-        if (IsWithinXZRange(target)) {
+        if (target != null && IsWithinXZRange(target)) {
             if (recoil <= 0) {
-                Debug.Log("Hit an enemy: " + target.name);
+                EnemyHealth enemyHealth = target.GetComponent<EnemyHealth>();
+                if (enemyHealth != null) {
+                    enemyHealth.TakeDamage(damage);
+                }
                 recoil = fireDelay + FRAME_TICK_CONSTANT;
             }
         }

@@ -25,8 +25,12 @@ public class Projectile : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("Hit an enemy: " + collision.gameObject.name);
+            // Debug.Log("Hit an enemy: " + collision.gameObject.name);
             // need actual enemy scripting data done by now
+            EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
+            if (enemyHealth != null) {
+                enemyHealth.TakeDamage(damage);
+            }
         }
         Destroy(gameObject);
     }
