@@ -13,10 +13,10 @@ public class Tower1 : TowerParent
             GameObject NearestEnemy = findNearestEnemy();
             if (NearestEnemy != null) {
                 float angle = GetAngleFromNorth(NearestEnemy);
-                SpawnInDirectionWithVelocity(Projectile, angle, 1, 10);
-                SpawnInDirectionWithVelocity(Projectile, angle + 90, 1, 10);
-                SpawnInDirectionWithVelocity(Projectile, angle + 180, 1, 10);
-                SpawnInDirectionWithVelocity(Projectile, angle + 270, 1, 10);
+                SpawnInDirectionWithVelocity(Projectile, angle, 1, 30);
+                SpawnInDirectionWithVelocity(Projectile, angle + 90, 1, 30);
+                SpawnInDirectionWithVelocity(Projectile, angle + 180, 1, 30);
+                SpawnInDirectionWithVelocity(Projectile, angle + 270, 1, 30);
             }
             recoil = fireDelay + FRAME_TICK_CONSTANT;
         }
