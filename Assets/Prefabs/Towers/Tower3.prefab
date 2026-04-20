@@ -132,8 +132,8 @@ MonoBehaviour:
   - 3
   - 4
   - 5
-  DAMAGE: 
+  DAMAGE: 0a0000000f00000014000000
   interactLayer:
     serializedVersion: 2
     m_Bits: 4294967295
-  stasisDuration: 2
+  stasisDuration: 1
