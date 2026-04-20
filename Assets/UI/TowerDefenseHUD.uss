@@ -1,0 +1,186 @@
+/* ═══════════════════════════════════════════════════
+   TowerDefenseHUD.uss
+   Matches RPGins dark theme: near-black bg, gold accents
+   ═══════════════════════════════════════════════════ */
+
+/* ── Root ──────────────────────────────────────────── */
+.hud-root {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hidden { display: none; }
+
+/* ── Top bar ───────────────────────────────────────── */
+.top-bar {
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    flex-direction: row;
+    justify-content: center;
+    padding: 6px 12px;
+    background-color: rgba(13, 17, 23, 0.92);
+    border-bottom-width: 1px;
+    border-color: rgb(48, 54, 61);
+}
+
+/* ── Stat pills ────────────────────────────────────── */
+.stat-pill {
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(22, 27, 34);
+    border-width: 1px;
+    border-color: rgb(48, 54, 61);
+    border-radius: 5px;
+    padding: 4px 12px;
+    margin: 0 6px;
+    min-width: 90px;
+}
+
+.health-pill   { border-color: rgb(248, 81, 73); }
+.wave-pill     { border-color: rgb(240, 192, 64); }
+.enemy-pill    { border-color: rgb(224, 92, 92); }
+.currency-pill { border-color: rgb(78, 205, 196); }
+
+.stat-icon {
+    font-size: 14px;
+    margin-right: 6px;
+    -unity-font-style: bold;
+}
+.health-icon   { color: rgb(248, 81, 73); }
+.wave-icon     { color: rgb(240, 192, 64); }
+.enemy-icon    { color: rgb(224, 92, 92); }
+.currency-icon { color: rgb(78, 205, 196); }
+
+.stat-value {
+    font-size: 14px;
+    -unity-font-style: bold;
+    color: rgb(230, 237, 243);
+    margin-right: 4px;
+}
+
+.stat-label {
+    font-size: 8px;
+    color: rgb(139, 148, 158);
+    letter-spacing: 1px;
+    -unity-font-style: bold;
+    align-self: flex-end;
+    margin-bottom: 1px;
+}
+
+/* ── Tower shop ────────────────────────────────────── */
+.tower-shop {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    background-color: rgba(13, 17, 23, 0.92);
+    border-top-width: 1px;
+    border-color: rgb(48, 54, 61);
+}
+
+.shop-label {
+    font-size: 9px;
+    color: rgb(139, 148, 158);
+    letter-spacing: 3px;
+    -unity-font-style: bold;
+    margin-right: 12px;
+    align-self: center;
+}
+
+/* ── Tower buttons ─────────────────────────────────── */
+.tower-btn {
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(22, 27, 34);
+    border-width: 1px;
+    border-color: rgb(48, 54, 61);
+    border-radius: 5px;
+    padding: 6px 8px;
+    margin: 0 5px;
+    min-width: 70px;
+    transition-duration: 0.1s;
+    transition-property: border-color, background-color;
+}
+
+.tower-btn:hover {
+    border-color: rgb(240, 192, 64);
+    background-color: rgb(30, 26, 14);
+}
+
+.tower-btn.selected {
+    border-color: rgb(78, 205, 196);
+    background-color: rgb(14, 30, 30);
+}
+
+.tower-btn.unaffordable {
+    opacity: 0.4;
+}
+
+/* ── Tower placeholder icons ───────────────────────── */
+.tower-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
+    border-width: 1px;
+    margin-bottom: 4px;
+}
+
+/* Each tower gets a distinct colour block as placeholder */
+.t1-icon {
+    background-color: rgb(56, 100, 200);
+    border-color: rgb(88, 140, 255);
+}
+.t2-icon {
+    background-color: rgb(180, 60, 60);
+    border-color: rgb(224, 92, 92);
+}
+.t3-icon {
+    background-color: rgb(60, 140, 180);
+    border-color: rgb(78, 205, 196);
+}
+.t4-icon {
+    background-color: rgb(120, 60, 180);
+    border-color: rgb(170, 88, 255);
+}
+
+.tower-name {
+    font-size: 9px;
+    color: rgb(201, 209, 217);
+    -unity-font-style: bold;
+    letter-spacing: 1px;
+    -unity-text-align: upper-center;
+}
+
+.tower-cost {
+    font-size: 9px;
+    color: rgb(78, 205, 196);
+    -unity-text-align: upper-center;
+    margin-top: 2px;
+}
+
+.tower-hotkey {
+    font-size: 8px;
+    color: rgb(110, 118, 129);
+    -unity-text-align: upper-center;
+}
+
+/* ── Wave message ──────────────────────────────────── */
+.wave-message {
+    position: absolute;
+    left: 25%; right: 25%;
+    top: 10%;
+    font-size: 20px;
+    -unity-font-style: bold;
+    color: rgb(240, 192, 64);
+    letter-spacing: 4px;
+    -unity-text-align: upper-center;
+    background-color: rgba(22, 27, 34, 0.92);
+    border-width: 1px;
+    border-color: rgb(240, 192, 64);
+    border-radius: 6px;
+    padding: 10px 20px;
+}

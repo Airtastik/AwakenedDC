@@ -1,0 +1,81 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/TowerDefenseHUD.uss"/>
+    <ui:VisualElement name="hud-root" class="hud-root">
+
+        <!-- ── Top bar: wave / enemies / health / currency ── -->
+        <ui:VisualElement name="top-bar" class="top-bar">
+
+            <!-- Health -->
+            <ui:VisualElement class="stat-pill health-pill">
+                <ui:Label text="♥" class="stat-icon health-icon"/>
+                <ui:Label name="health-value" text="100" class="stat-value"/>
+                <ui:Label text="HP" class="stat-label"/>
+            </ui:VisualElement>
+
+            <!-- Wave -->
+            <ui:VisualElement class="stat-pill wave-pill">
+                <ui:Label text="⚑" class="stat-icon wave-icon"/>
+                <ui:Label name="wave-value" text="1 / 5" class="stat-value"/>
+                <ui:Label text="WAVE" class="stat-label"/>
+            </ui:VisualElement>
+
+            <!-- Enemies remaining -->
+            <ui:VisualElement class="stat-pill enemy-pill">
+                <ui:Label text="☠" class="stat-icon enemy-icon"/>
+                <ui:Label name="enemy-value" text="0" class="stat-value"/>
+                <ui:Label text="LEFT" class="stat-label"/>
+            </ui:VisualElement>
+
+            <!-- Currency -->
+            <ui:VisualElement class="stat-pill currency-pill">
+                <ui:Label text="◈" class="stat-icon currency-icon"/>
+                <ui:Label name="currency-value" text="500" class="stat-value"/>
+                <ui:Label text="CREDITS" class="stat-label"/>
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+
+        <!-- ── Bottom bar: tower shop ── -->
+        <ui:VisualElement name="tower-shop" class="tower-shop">
+
+            <ui:Label text="TOWERS" class="shop-label"/>
+
+            <!-- Tower 1 — spread shot -->
+            <ui:VisualElement name="tower-btn-1" class="tower-btn" >
+                <ui:VisualElement class="tower-icon t1-icon"/>
+                <ui:Label text="SPREAD" class="tower-name"/>
+                <ui:Label text="100" class="tower-cost"/>
+                <ui:Label text="[1]" class="tower-hotkey"/>
+            </ui:VisualElement>
+
+            <!-- Tower 2 — diagonal shot -->
+            <ui:VisualElement name="tower-btn-2" class="tower-btn">
+                <ui:VisualElement class="tower-icon t2-icon"/>
+                <ui:Label text="CROSS" class="tower-name"/>
+                <ui:Label text="150" class="tower-cost"/>
+                <ui:Label text="[2]" class="tower-hotkey"/>
+            </ui:VisualElement>
+
+            <!-- Tower 3 — stasis -->
+            <ui:VisualElement name="tower-btn-3" class="tower-btn">
+                <ui:VisualElement class="tower-icon t3-icon"/>
+                <ui:Label text="STASIS" class="tower-name"/>
+                <ui:Label text="200" class="tower-cost"/>
+                <ui:Label text="[3]" class="tower-hotkey"/>
+            </ui:VisualElement>
+
+            <!-- Tower 4 — ramming -->
+            <ui:VisualElement name="tower-btn-4" class="tower-btn">
+                <ui:VisualElement class="tower-icon t4-icon"/>
+                <ui:Label text="RAM" class="tower-name"/>
+                <ui:Label text="250" class="tower-cost"/>
+                <ui:Label text="[4]" class="tower-hotkey"/>
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+
+        <!-- ── Wave state message (centre screen) ── -->
+        <ui:Label name="wave-message" text="" class="wave-message hidden"/>
+
+    </ui:VisualElement>
+</ui:UXML>
