@@ -31,6 +31,7 @@ public class MainMenuController : MonoBehaviour
         var btnControls = root.Q<Button>("btn-controls");
         var btnCredits = root.Q<Button>("btn-credits");
         var btnEscape = root.Q<Button>("btn-escape");
+        var btnBTD = root.Q<Button>("btn-btd");
 
         btnAwaken.clicked += () =>
         {
@@ -42,6 +43,12 @@ public class MainMenuController : MonoBehaviour
         {
             Debug.Log("Escape clicked");
             SceneManager.LoadScene(5);
+        };
+
+        btnBTD.clicked += () =>
+        {
+            Debug.Log("Tower Defense clicked");
+            SceneManager.LoadScene(6);
         };
 
         btnControls.clicked += () =>
