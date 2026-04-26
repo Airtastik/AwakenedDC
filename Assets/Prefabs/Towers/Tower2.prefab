@@ -72,10 +72,10 @@ MonoBehaviour:
   projectileScale: 1
   fireDelay: 0.5
   RANGE:
-  - 75
-  - 100
-  - 120
-  DAMAGE: 03000000050000000a000000
+  - 1
+  - 2
+  - 4
+  DAMAGE: 1e0000003200000050000000
   interactLayer:
     serializedVersion: 2
     m_Bits: 4294967295
