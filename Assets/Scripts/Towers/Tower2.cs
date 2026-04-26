@@ -12,8 +12,8 @@ public class Tower2 : TowerParent
         if (recoil <= 0) {
             GameObject NearestEnemy = findNearestEnemy();
             if (NearestEnemy != null) {
-                SpawnInDirectionWithVelocity(Projectile, 45, 1, 10);
-                SpawnInDirectionWithVelocity(Projectile, 225, 1, 10);
+                SpawnInDirectionWithVelocity(Projectile, 45, 1, 8);
+                SpawnInDirectionWithVelocity(Projectile, 225, 1, 8);
 
 
             }

@@ -40,6 +40,10 @@ public class Tower3 : TowerParent
                     heldEnemy = nearestEnemy;
                     stasisTimer = stasisDuration + FRAME_TICK_CONSTANT;
                     recoil = fireDelay + FRAME_TICK_CONSTANT;
+                    EnemyHealth enemyHealth = heldEnemy.GetComponent<EnemyHealth>();
+                    if (enemyHealth != null) {
+                        enemyHealth.TakeDamage(damage);
+                    }
                 }
                 
             } else

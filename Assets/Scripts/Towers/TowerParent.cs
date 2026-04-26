@@ -49,7 +49,7 @@ public class TowerParent : MonoBehaviour
     protected GameObject SpawnInDirectionWithVelocity(GameObject prefab, float angleDegrees, float distance, float speed) {
         float rad = angleDegrees * Mathf.Deg2Rad;
         Vector3 direction = new Vector3(Mathf.Sin(rad), 0f, Mathf.Cos(rad));
-        Vector3 spawnPosition = transform.position + direction * distance * (1 + projectileScale);
+        Vector3 spawnPosition = transform.position + direction * distance;
         GameObject obj = Instantiate(prefab, spawnPosition, Quaternion.LookRotation(direction));
         Projectile proj = obj.GetComponent<Projectile>();
         proj.Init(range, damage, projectileScale);

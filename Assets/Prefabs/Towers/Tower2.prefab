@@ -69,13 +69,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tower2
   Projectile: {fileID: 6879690678910190817, guid: a1d79f19dabcba14a8a07802b898cb48, type: 3}
-  projectileScale: 1
-  fireDelay: 0.5
+  projectileScale: 0.6
+  fireDelay: 0.8
   RANGE:
-  - 1
   - 2
-  - 4
-  DAMAGE: 1e0000003200000050000000
+  - 3
+  - 6
+  DAMAGE: 140000002800000041000000
   interactLayer:
     serializedVersion: 2
     m_Bits: 4294967295

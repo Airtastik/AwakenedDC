@@ -70,7 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Tower3
   Projectile: {fileID: 6879690678910190817, guid: a1d79f19dabcba14a8a07802b898cb48, type: 3}
   projectileScale: 0
-  fireDelay: 0
+  fireDelay: 0.5
   RANGE:
   - 3
   - 4
@@ -79,7 +79,7 @@ MonoBehaviour:
   interactLayer:
     serializedVersion: 2
     m_Bits: 4294967295
-  stasisDuration: 1
+  stasisDuration: 1.5
 --- !u!212 &475671901039418998
 SpriteRenderer:
   serializedVersion: 2
