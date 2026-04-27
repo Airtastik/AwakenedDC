@@ -44,13 +44,33 @@ public class TowerParent : MonoBehaviour
         
     }
 
+    // ── Public accessors for HUD ─────────────────────────────────────────────
+    public int   Level      => level;
+    public int   MaxLevel   => MAX_LEVEL;
+    public float Range      => range;
+    public int   Damage     => damage;
+    public bool  IsMaxLevel => level >= MAX_LEVEL;
+    public int   UpgradeCost => upgradeCost;
+
+    public int SellValue
+    {
+        get
+        {
+            if (TowerDefenseHUD.Instance == null) return 50;
+            int t = GetComponent<Tower1>() != null ? 0 :
+                    GetComponent<Tower2>() != null ? 1 :
+                    GetComponent<Tower3>() != null ? 2 :
+                    GetComponent<Tower4>() != null ? 3 : -1;
+            return t >= 0 ? Mathf.RoundToInt(TowerDefenseHUD.Instance.GetCost(t) * 0.5f) : 50;
+        }
+    }
+
     // assume no alternative upgrade paths right now
     // returns true if there is enough balance. Pass it in by reference from the UI
     // so that it is modified within the values stored intrinsically to this object
     public bool upgrade(ref int balance) {
         if (balance >= upgradeCost && level < MAX_LEVEL) {
             balance -= upgradeCost;
-
             level++;
             range = RANGE[level];
             damage = DAMAGE[level];
@@ -58,9 +78,22 @@ public class TowerParent : MonoBehaviour
                 upgradeCost = UPGRADE_COST[level];
             return true;
         }
-
         return false;
-        
+    }
+
+    // Called by HUD upgrade button — uses internal currency via TowerDefenseHUD
+    public bool TryUpgrade()
+    {
+        if (IsMaxLevel) return false;
+        int cost = upgradeCost;
+        if (TowerDefenseHUD.Instance == null || !TowerDefenseHUD.Instance.CanAfford(cost)) return false;
+        TowerDefenseHUD.Instance.SpendCurrency(cost);
+        level++;
+        range = RANGE[level];
+        damage = DAMAGE[level];
+        if (level < MAX_LEVEL)
+            upgradeCost = UPGRADE_COST[level];
+        return true;
     }
 
     // just use this for the display value

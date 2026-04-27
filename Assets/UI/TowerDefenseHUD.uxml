@@ -2,79 +2,82 @@
     <Style src="project://database/Assets/UI/TowerDefenseHUD.uss"/>
     <ui:VisualElement name="hud-root" class="hud-root">
 
-        <!-- ── Top bar: wave / enemies / health / currency ── -->
+        <!-- ── Top bar ── -->
         <ui:VisualElement name="top-bar" class="top-bar">
-
-            <!-- Health -->
             <ui:VisualElement class="stat-pill health-pill">
                 <ui:Label text="♥" class="stat-icon health-icon"/>
                 <ui:Label name="health-value" text="100" class="stat-value"/>
                 <ui:Label text="HP" class="stat-label"/>
             </ui:VisualElement>
-
-            <!-- Wave -->
             <ui:VisualElement class="stat-pill wave-pill">
                 <ui:Label text="⚑" class="stat-icon wave-icon"/>
                 <ui:Label name="wave-value" text="1 / 5" class="stat-value"/>
                 <ui:Label text="WAVE" class="stat-label"/>
             </ui:VisualElement>
-
-            <!-- Enemies remaining -->
             <ui:VisualElement class="stat-pill enemy-pill">
                 <ui:Label text="☠" class="stat-icon enemy-icon"/>
                 <ui:Label name="enemy-value" text="0" class="stat-value"/>
                 <ui:Label text="LEFT" class="stat-label"/>
             </ui:VisualElement>
-
-            <!-- Currency -->
             <ui:VisualElement class="stat-pill currency-pill">
                 <ui:Label text="◈" class="stat-icon currency-icon"/>
                 <ui:Label name="currency-value" text="500" class="stat-value"/>
                 <ui:Label text="CREDITS" class="stat-label"/>
             </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- ── Bottom bar: shop + upgrade panel side by side ── -->
+        <ui:VisualElement name="bottom-bar" class="bottom-bar">
+
+            <!-- Tower shop (always visible) -->
+            <ui:VisualElement name="tower-shop" class="tower-shop">
+                <ui:Label text="TOWERS" class="shop-label"/>
+                <ui:VisualElement name="tower-btn-1" class="tower-btn">
+                    <ui:VisualElement class="tower-icon t1-icon"/>
+                    <ui:Label text="SPREAD" class="tower-name"/>
+                    <ui:Label text="100" class="tower-cost"/>
+                    <ui:Label text="[1]" class="tower-hotkey"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="tower-btn-2" class="tower-btn">
+                    <ui:VisualElement class="tower-icon t2-icon"/>
+                    <ui:Label text="CROSS" class="tower-name"/>
+                    <ui:Label text="150" class="tower-cost"/>
+                    <ui:Label text="[2]" class="tower-hotkey"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="tower-btn-3" class="tower-btn">
+                    <ui:VisualElement class="tower-icon t3-icon"/>
+                    <ui:Label text="STASIS" class="tower-name"/>
+                    <ui:Label text="200" class="tower-cost"/>
+                    <ui:Label text="[3]" class="tower-hotkey"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="tower-btn-4" class="tower-btn">
+                    <ui:VisualElement class="tower-icon t4-icon"/>
+                    <ui:Label text="RAM" class="tower-name"/>
+                    <ui:Label text="250" class="tower-cost"/>
+                    <ui:Label text="[4]" class="tower-hotkey"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- Upgrade panel (shown when a placed tower is selected) -->
+            <ui:VisualElement name="upgrade-panel" class="upgrade-panel hidden">
+                <ui:VisualElement class="upgrade-header">
+                    <ui:Label name="upgrade-tower-name" text="SPREAD" class="upgrade-title"/>
+                    <ui:Label name="upgrade-level"      text="LVL 1"  class="upgrade-level-badge"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="upgrade-stats">
+                    <ui:Label name="upgrade-range"  text="RNG  5"  class="upgrade-stat"/>
+                    <ui:Label name="upgrade-damage" text="DMG  10" class="upgrade-stat"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="upgrade-actions">
+                    <ui:Button name="upgrade-btn" text="UPGRADE  ◈ 150" class="upgrade-btn"/>
+                    <ui:Button name="sell-btn"    text="SELL  ◈ 50"     class="sell-btn"/>
+                    <ui:Button name="deselect-btn" text="✕"             class="deselect-btn"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
 
         </ui:VisualElement>
 
-        <!-- ── Bottom bar: tower shop ── -->
-        <ui:VisualElement name="tower-shop" class="tower-shop">
-
-            <ui:Label text="TOWERS" class="shop-label"/>
-
-            <!-- Tower 1 — spread shot -->
-            <ui:VisualElement name="tower-btn-1" class="tower-btn" >
-                <ui:VisualElement class="tower-icon t1-icon"/>
-                <ui:Label text="SPREAD" class="tower-name"/>
-                <ui:Label text="100" class="tower-cost"/>
-                <ui:Label text="[1]" class="tower-hotkey"/>
-            </ui:VisualElement>
-
-            <!-- Tower 2 — diagonal shot -->
-            <ui:VisualElement name="tower-btn-2" class="tower-btn">
-                <ui:VisualElement class="tower-icon t2-icon"/>
-                <ui:Label text="CROSS" class="tower-name"/>
-                <ui:Label text="150" class="tower-cost"/>
-                <ui:Label text="[2]" class="tower-hotkey"/>
-            </ui:VisualElement>
-
-            <!-- Tower 3 — stasis -->
-            <ui:VisualElement name="tower-btn-3" class="tower-btn">
-                <ui:VisualElement class="tower-icon t3-icon"/>
-                <ui:Label text="STASIS" class="tower-name"/>
-                <ui:Label text="200" class="tower-cost"/>
-                <ui:Label text="[3]" class="tower-hotkey"/>
-            </ui:VisualElement>
-
-            <!-- Tower 4 — ramming -->
-            <ui:VisualElement name="tower-btn-4" class="tower-btn">
-                <ui:VisualElement class="tower-icon t4-icon"/>
-                <ui:Label text="RAM" class="tower-name"/>
-                <ui:Label text="250" class="tower-cost"/>
-                <ui:Label text="[4]" class="tower-hotkey"/>
-            </ui:VisualElement>
-
-        </ui:VisualElement>
-
-        <!-- ── Wave state message (centre screen) ── -->
+        <!-- ── Wave message ── -->
         <ui:Label name="wave-message" text="" class="wave-message hidden"/>
 
     </ui:VisualElement>
