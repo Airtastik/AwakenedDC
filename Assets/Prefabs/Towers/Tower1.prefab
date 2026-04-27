@@ -75,7 +75,8 @@ MonoBehaviour:
   - 2
   - 4
   - 6
-  DAMAGE: 14000000280000003c000000
+  DAMAGE: 14000000280000004b000000
+  UPGRADE_COST: 4b00000064000000
   interactLayer:
     serializedVersion: 2
     m_Bits: 4294967295

@@ -11,11 +11,15 @@ public class TowerParent : MonoBehaviour
     protected int level = 0;
     protected float range;
     protected int damage;
+    protected int upgradeCost;
     protected float FRAME_TICK_CONSTANT = .016f;
 
     // tower specfic stuff
     public float[] RANGE;
     public int[] DAMAGE;
+    public int[] UPGRADE_COST;
+
+    protected int MAX_LEVEL = 3;
 
     public LayerMask interactLayer;
 
@@ -34,16 +38,34 @@ public class TowerParent : MonoBehaviour
         }
         range = RANGE[level];
         damage = DAMAGE[level];
+        upgradeCost = UPGRADE_COST[level];
 
         //Projectile.transform.localScale = new Vector3(projectileScale, projectileScale, projectileScale);
         
     }
 
     // assume no alternative upgrade paths right now
-    protected void upgrade() {
-        level++;
-        range = RANGE[level];
-        damage = DAMAGE[level];
+    // returns true if there is enough balance. Pass it in by reference from the UI
+    // so that it is modified within the values stored intrinsically to this object
+    public bool upgrade(ref int balance) {
+        if (balance >= upgradeCost && level < MAX_LEVEL) {
+            balance -= upgradeCost;
+
+            level++;
+            range = RANGE[level];
+            damage = DAMAGE[level];
+            if (level < MAX_LEVEL)
+                upgradeCost = UPGRADE_COST[level];
+            return true;
+        }
+
+        return false;
+        
+    }
+
+    // just use this for the display value
+    public int getUpgradeCost() {
+        return upgradeCost;
     }
 
     protected GameObject SpawnInDirectionWithVelocity(GameObject prefab, float angleDegrees, float distance, float speed) {
