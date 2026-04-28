@@ -21,7 +21,18 @@ public class Wave
 public class WaveSpawner : MonoBehaviour
 {
     public List<Wave> waves;
-    public Transform spawnPoint;
+    public List<Transform> spawnPoints;
+    public int spawnNumber;
+
+    [Header("Enemy Paths")]
+    public GameObject path1;
+    public GameObject path2;
+    public GameObject path3;
+    public GameObject path4;
+
+    [Header("Level Object")]
+    public GameObject level;
+    public float duration = 1.5f;
 
     private int currentWaveIndex = 0;
     private int enemiesAlive     = 0;
@@ -31,8 +42,8 @@ public class WaveSpawner : MonoBehaviour
 
     void Start()
     {
-        if (spawnPoint == null && Waypoints.points != null && Waypoints.points.Length > 0)
-            spawnPoint = Waypoints.points[0];
+        if (spawnPoints == null && Waypoints.points != null && Waypoints.points.Length > 0)
+            spawnPoints[0] = Waypoints.points[0];
 
         StartCoroutine(RunWaves());
     }
@@ -60,12 +71,37 @@ public class WaveSpawner : MonoBehaviour
             }
 
             currentWaveIndex++;
+            spawnNumber++;
+            SwitchPath(spawnNumber);
+            StartCoroutine(RotateBy90());
         }
 
         TowerDefenseHUD.Instance?.ShowWaveMessage("ALL WAVES COMPLETE!", 5f);
         Debug.Log("All waves complete!");
     }
 
+    IEnumerator RotateBy90()
+    {
+        Quaternion startRot = level.transform.rotation;
+        Quaternion targetRot = startRot * Quaternion.Euler(0, -90, 0);
+
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float t = elapsed / duration;
+
+            // Smooth easing (optional but recommended)
+            t = Mathf.SmoothStep(0, 1, t);
+
+            level.transform.rotation = Quaternion.Slerp(startRot, targetRot, t);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        level.transform.rotation = targetRot;
+    }
     IEnumerator SpawnWave(Wave wave)
     {
         foreach (EnemyGroup group in wave.groups)
@@ -80,7 +116,7 @@ public class WaveSpawner : MonoBehaviour
 
     void SpawnEnemy(GameObject prefab)
     {
-        GameObject enemy = Instantiate(prefab, spawnPoint.position, prefab.transform.rotation);
+        GameObject enemy = Instantiate(prefab, spawnPoints[spawnNumber].position, prefab.transform.rotation);
         enemiesAlive++;
 
         EnemyHealth health = enemy.GetComponent<EnemyHealth>();
@@ -89,6 +125,23 @@ public class WaveSpawner : MonoBehaviour
             health.OnDeath += HandleEnemyDeath;
             // Give currency on kill
             health.OnDeath += () => TowerDefenseHUD.Instance?.AddCurrency(25);
+        }
+    }
+
+    void SwitchPath(int pathNumber)
+    {
+        if (pathNumber == 1)
+        {
+            path1.SetActive(false);
+            path2.SetActive(true);
+        } else if (pathNumber == 2)
+        {
+            path2.SetActive(false);
+            path3.SetActive(true);
+        } else if (pathNumber == 3)
+        {
+            path3.SetActive(false);
+            path4.SetActive(true);
         }
     }
 
