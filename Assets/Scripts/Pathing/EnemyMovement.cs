@@ -26,7 +26,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (waypointIndex >= Waypoints.points.Length - 1)
         {
-            TowerDefenseHUD.Instance?.TakeDamage(0);
+            TowerDefenseHUD.Instance?.TakeDamage(10);
             TowerDefenseHUD.Instance?.SpendCurrency(25);
             Destroy(gameObject);
             return;
