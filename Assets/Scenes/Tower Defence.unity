@@ -5320,7 +5320,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5335527594006705596, guid: 1e7902abf38857946a78a389ebef5f46, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1948954521}
   m_SourcePrefab: {fileID: 100100000, guid: 1e7902abf38857946a78a389ebef5f46, type: 3}
 --- !u!1 &275491626
 GameObject:
@@ -21576,7 +21579,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5335527594006705596, guid: ef49e587dcc299345b7a9e5dc318c949, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1460690500}
   m_SourcePrefab: {fileID: 100100000, guid: ef49e587dcc299345b7a9e5dc318c949, type: 3}
 --- !u!1 &997398217
 GameObject:
@@ -31229,6 +31235,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5335527594006705596, guid: ef49e587dcc299345b7a9e5dc318c949, type: 3}
   m_PrefabInstance: {fileID: 993411509}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1460690500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1460690494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27c4336a62626b849b73c6222a6e76c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TowerClickHandler
 --- !u!1 &1471864134
 GameObject:
   m_ObjectHideFlags: 0
@@ -32834,6 +32852,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5335527594006705596, guid: 30cae2d326e32e647ad4439802f6e428, type: 3}
   m_PrefabInstance: {fileID: 2111735358}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1588784824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588784818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27c4336a62626b849b73c6222a6e76c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TowerClickHandler
 --- !u!1 &1589087941
 GameObject:
   m_ObjectHideFlags: 0
@@ -34605,7 +34635,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5335527594006705596, guid: 80b22bc0f71cdf5489732b2a8988e80f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2122318399}
   m_SourcePrefab: {fileID: 100100000, guid: 80b22bc0f71cdf5489732b2a8988e80f, type: 3}
 --- !u!1 &1684549639
 GameObject:
@@ -39350,6 +39383,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5335527594006705596, guid: 1e7902abf38857946a78a389ebef5f46, type: 3}
   m_PrefabInstance: {fileID: 273804527}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1948954521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948954515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27c4336a62626b849b73c6222a6e76c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TowerClickHandler
 --- !u!1 &1951856562
 GameObject:
   m_ObjectHideFlags: 0
@@ -42533,7 +42578,10 @@ PrefabInstance:
     - {fileID: 2989575931097338868, guid: 30cae2d326e32e647ad4439802f6e428, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5335527594006705596, guid: 30cae2d326e32e647ad4439802f6e428, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1588784824}
   m_SourcePrefab: {fileID: 100100000, guid: 30cae2d326e32e647ad4439802f6e428, type: 3}
 --- !u!1 &2118356641
 GameObject:
@@ -42780,6 +42828,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5335527594006705596, guid: 80b22bc0f71cdf5489732b2a8988e80f, type: 3}
   m_PrefabInstance: {fileID: 1684052499}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2122318399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122318393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27c4336a62626b849b73c6222a6e76c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TowerClickHandler
 --- !u!1 &2126677710
 GameObject:
   m_ObjectHideFlags: 0

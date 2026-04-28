@@ -34,25 +34,25 @@
                 <ui:Label text="TOWERS" class="shop-label"/>
                 <ui:VisualElement name="tower-btn-1" class="tower-btn">
                     <ui:VisualElement class="tower-icon t1-icon"/>
-                    <ui:Label text="SPREAD" class="tower-name"/>
+                    <ui:Label text="CATHERINE" class="tower-name"/>
                     <ui:Label text="100" class="tower-cost"/>
                     <ui:Label text="[1]" class="tower-hotkey"/>
                 </ui:VisualElement>
                 <ui:VisualElement name="tower-btn-2" class="tower-btn">
                     <ui:VisualElement class="tower-icon t2-icon"/>
-                    <ui:Label text="CROSS" class="tower-name"/>
+                    <ui:Label text="ROMAN" class="tower-name"/>
                     <ui:Label text="150" class="tower-cost"/>
                     <ui:Label text="[2]" class="tower-hotkey"/>
                 </ui:VisualElement>
                 <ui:VisualElement name="tower-btn-3" class="tower-btn">
                     <ui:VisualElement class="tower-icon t3-icon"/>
-                    <ui:Label text="STASIS" class="tower-name"/>
+                    <ui:Label text="SILVIA" class="tower-name"/>
                     <ui:Label text="200" class="tower-cost"/>
                     <ui:Label text="[3]" class="tower-hotkey"/>
                 </ui:VisualElement>
                 <ui:VisualElement name="tower-btn-4" class="tower-btn">
                     <ui:VisualElement class="tower-icon t4-icon"/>
-                    <ui:Label text="RAM" class="tower-name"/>
+                    <ui:Label text="DIMITRI" class="tower-name"/>
                     <ui:Label text="250" class="tower-cost"/>
                     <ui:Label text="[4]" class="tower-hotkey"/>
                 </ui:VisualElement>
@@ -61,7 +61,7 @@
             <!-- Upgrade panel (shown when a placed tower is selected) -->
             <ui:VisualElement name="upgrade-panel" class="upgrade-panel hidden">
                 <ui:VisualElement class="upgrade-header">
-                    <ui:Label name="upgrade-tower-name" text="SPREAD" class="upgrade-title"/>
+                    <ui:Label name="upgrade-tower-name" text="CATHERINE" class="upgrade-title"/>
                     <ui:Label name="upgrade-level"      text="LVL 1"  class="upgrade-level-badge"/>
                 </ui:VisualElement>
                 <ui:VisualElement class="upgrade-stats">

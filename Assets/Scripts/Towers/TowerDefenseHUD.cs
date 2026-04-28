@@ -28,7 +28,7 @@ public class TowerDefenseHUD : MonoBehaviour
     private TowerParent    selectedTower;            // a placed tower the player clicked
 
     // ── Tower names / costs ───────────────────────────────────────────────────
-    private readonly string[] towerNames = { "SPREAD", "CROSS", "STASIS", "RAM" };
+    private readonly string[] towerNames = { "CATHERINE", "ROMAN", "SILVIA", "DIMITRI" };
     private readonly int[]    towerCosts = { 100, 150, 200, 250 };
 
     // ── UI refs ───────────────────────────────────────────────────────────────
