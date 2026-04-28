@@ -16534,6 +16534,76 @@ MonoBehaviour:
   normalColour: {r: 1, g: 1, b: 1, a: 0}
   hoverFreeColour: {r: 0.2, g: 1, b: 0.2, a: 0.6}
   hoverOccupied: {r: 1, g: 0.2, b: 0.2, a: 0.6}
+--- !u!1 &739271892
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 739271895}
+  - component: {fileID: 739271894}
+  - component: {fileID: 739271893}
+  m_Layer: 0
+  m_Name: DialogueUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &739271893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739271892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38487cd74557a044ab498744f8340763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dialogue
+  textSpeed: 0.03
+  playerSprite: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+--- !u!114 &739271894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739271892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: 030cd18e3cf75c24a985841b8049095c, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 19acaaa383480344fa1ab2e7a0020fa5, type: 3}
+  m_SortingOrder: 5
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
+--- !u!4 &739271895
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739271892}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.3858, y: 0.58, z: 0.46001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &740571432
 GameObject:
   m_ObjectHideFlags: 0
@@ -17750,6 +17820,109 @@ MonoBehaviour:
   normalColour: {r: 1, g: 1, b: 1, a: 0}
   hoverFreeColour: {r: 0.2, g: 1, b: 0.2, a: 0.6}
   hoverOccupied: {r: 1, g: 0.2, b: 0.2, a: 0.6}
+--- !u!1 &793933283
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 793933285}
+  - component: {fileID: 793933284}
+  m_Layer: 0
+  m_Name: CS1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &793933284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793933283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fcf87d5e31bc4742bfe98758809aefa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneDialogueTrigger
+  sceneLines:
+  - speakerName: Dimitiri
+    portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+    side: 0
+    text: 'Dimitri: Are we finally out of here?'
+  - speakerName: Dimitri Alter
+    portrait: {fileID: 21300000, guid: 10924731a072d374b97cb942e7cd5250, type: 3}
+    side: 1
+    text: You're not finished.
+  - speakerName: Dimitri
+    portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+    side: 0
+    text: What is that supposed to mean???
+  - speakerName: 'Dimitri Alter '
+    portrait: {fileID: 21300000, guid: 10924731a072d374b97cb942e7cd5250, type: 3}
+    side: 1
+    text: You haven't changed one bit since the experiment began.
+  - speakerName: Dimitri
+    portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+    side: 0
+    text: What does that matter to you?
+  - speakerName: Roman
+    portrait: {fileID: 21300000, guid: 0b630fbfd946bf54bb3f9832a11bc528, type: 3}
+    side: 1
+    text: ' Look over there!'
+  - speakerName: Luna
+    portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+    side: 1
+    text: "We are not finished yet. The \u201CHospital\u201D has one more trick up
+      its sleeve."
+  - speakerName: SIlvia
+    portrait: {fileID: 21300000, guid: f7ab9e5d09f29b940b14a3047fcaa5f6, type: 3}
+    side: 1
+    text: ' A bunch of enemies have appeared!'
+  - speakerName: Catherene
+    portrait: {fileID: 21300000, guid: c2c4910e134143b4684c05ed8d550841, type: 3}
+    side: 1
+    text: ' Dang it! We are so close to getting out of this hellhole!'
+  - speakerName: Luna
+    portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+    side: 1
+    text: ................
+  - speakerName: Luna
+    portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+    side: 1
+    text: Luna, what's on your mind? Do you think you know a way out of here?
+  - speakerName: Luna
+    portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+    side: 1
+    text: ' I think I can create a path out. I just need some time.'
+  - speakerName: Dimitri
+    portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+    side: 0
+    text: We can get you that time. Everyone protect Luna!
+  triggerRadius: 4
+  triggerMode: 0
+  triggerOnce: 1
+  advanceStageOnFinish: 0
+  teleportDestination: {fileID: 0}
+--- !u!4 &793933285
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793933283}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.3858, y: 0.58, z: 0.46001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &794032687
 GameObject:
   m_ObjectHideFlags: 0
@@ -35331,6 +35504,161 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6898230561878902688, guid: 8a52822e275d29d4c9585738b5bc249c, type: 3}
   m_PrefabInstance: {fileID: 1770274539}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1611287007
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1611287009}
+  - component: {fileID: 1611287008}
+  m_Layer: 0
+  m_Name: CS2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1611287008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611287007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fcf87d5e31bc4742bfe98758809aefa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneDialogueTrigger
+  sceneLines:
+  - speakerName: Luna
+    portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+    side: 1
+    text: The exit is complete. Everyone this way
+  - speakerName: Luna
+    portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+    side: 1
+    text: You know this is the end for me, Dimitri.
+  - speakerName: Luna
+    portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+    side: 1
+    text: Say hello to Nova for me, ok, Dimitri.
+  - speakerName: Dimitri
+    portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+    side: 0
+    text: ' This isn''t necessarily goodbye.'
+  - speakerName: Luna
+    portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+    side: 1
+    text: What do you mean?
+  - speakerName: Dimitri
+    portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+    side: 0
+    text: Even though this version only exists in this alternate world, in the real
+      world, you are still a part of Nova.
+  - speakerName: Luna
+    portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+    side: 1
+    text: Hmmm, I didn't think about it that way. I guess I am. Thank you, Dimitri.
+      Now get out of here.
+  - speakerName: Dimitri
+    portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+    side: 0
+    text: Rodger
+  - speakerName: ENV
+    portrait: {fileID: 0}
+    side: 0
+    text: ...................................................We all wake uo
+  - speakerName: Dr Beatrice
+    portrait: {fileID: 0}
+    side: 1
+    text: "Welcome back\u2026"
+  - speakerName: Dimitri
+    portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+    side: 0
+    text: 'Finally!! We are finally out of this.
+
+'
+  - speakerName: Dr Beatrice
+    portrait: {fileID: 0}
+    side: 1
+    text: ' Before you leave, Dimitri, I want to see you.'
+  - speakerName: Dimitri
+    portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+    side: 0
+    text: Ok. It was nice meeting you all. I hope to see you again sometime.
+  - speakerName: Roman
+    portrait: {fileID: 21300000, guid: 0b630fbfd946bf54bb3f9832a11bc528, type: 3}
+    side: 1
+    text: See ya
+  - speakerName: Slvia
+    portrait: {fileID: 21300000, guid: f7ab9e5d09f29b940b14a3047fcaa5f6, type: 3}
+    side: 1
+    text: Goodbye, Dimitri.
+  - speakerName: Catherine
+    portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+    side: 0
+    text: Good luck in the future, you crazy bastard.
+  - speakerName: Dr Beatrice
+    portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+    side: 0
+    text: Dimitri, thank you for rescuing my daughter.
+  - speakerName: 'Dimitri '
+    portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+    side: 0
+    text: My pleasure, I really needed the cash.
+  - speakerName: Dr Beatrice
+    portrait: {fileID: 0}
+    side: 1
+    text: Now that you're out, what are your plans for your future?
+  - speakerName: Dimitri
+    portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+    side: 0
+    text: 'While I''m not sure right now, I know I don''t want just to sit around
+      anymore. Goodbye, Dr Beatrice, and goodbye, Nova. Say hello to Luna for me. '
+  - speakerName: Nova
+    portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+    side: 1
+    text: Thank you, Mr Dimitri. I will. Take care!
+  - speakerName: Dimitri Alter
+    portrait: {fileID: 21300000, guid: 10924731a072d374b97cb942e7cd5250, type: 3}
+    side: 1
+    text: Cheers to you, maybe we have a future after all.
+  - speakerName: Dimitri
+    portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+    side: 0
+    text: Yeah Its up to me to pave my path forward.
+  - speakerName: Game
+    portrait: {fileID: 0}
+    side: 0
+    text: The end
+  - speakerName: Tristan, Adam, Adam, Cole, & Devin
+    portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+    side: 0
+    text: Thanks for playing
+  triggerRadius: 4
+  triggerMode: 0
+  triggerOnce: 1
+  advanceStageOnFinish: 0
+  teleportDestination: {fileID: 0}
+--- !u!4 &1611287009
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611287007}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.3858, y: 0.58, z: 0.46001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1628883203
 GameObject:
   m_ObjectHideFlags: 0
@@ -40814,28 +41142,28 @@ MonoBehaviour:
       count: 3
       spawnInterval: 0.5
     timeBeforeNextWave: 0
-  - waveName: Second
+  - waveName: First
     groups:
     - enemyPrefab: {fileID: 1261283486497656059, guid: 74c5a10ca6e5f674ba3f925b153a1f8e, type: 3}
-      count: 5
+      count: 3
       spawnInterval: 0.5
     timeBeforeNextWave: 0
-  - waveName: Third
+  - waveName: First
     groups:
     - enemyPrefab: {fileID: 1261283486497656059, guid: 74c5a10ca6e5f674ba3f925b153a1f8e, type: 3}
-      count: 7
+      count: 3
       spawnInterval: 0.5
     timeBeforeNextWave: 0
-  - waveName: Fourth
+  - waveName: First
     groups:
     - enemyPrefab: {fileID: 1261283486497656059, guid: 74c5a10ca6e5f674ba3f925b153a1f8e, type: 3}
-      count: 10
+      count: 3
       spawnInterval: 0.5
     timeBeforeNextWave: 0
-  - waveName: Fifth
+  - waveName: First
     groups:
     - enemyPrefab: {fileID: 1261283486497656059, guid: 74c5a10ca6e5f674ba3f925b153a1f8e, type: 3}
-      count: 15
+      count: 3
       spawnInterval: 0.5
     timeBeforeNextWave: 0
   spawnPoints:
@@ -40858,6 +41186,8 @@ MonoBehaviour:
   - {fileID: 1891091897}
   duration: 1.5
   arcStrength: 5
+  introCutscene: {fileID: 793933284}
+  outroCutscene: {fileID: 1611287008}
 --- !u!4 &1896696343
 Transform:
   m_ObjectHideFlags: 0
@@ -46667,3 +46997,6 @@ SceneRoots:
   - {fileID: 1394669833}
   - {fileID: 1852469420}
   - {fileID: 414688671}
+  - {fileID: 739271895}
+  - {fileID: 793933285}
+  - {fileID: 1611287009}

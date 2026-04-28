@@ -36,9 +36,27 @@ public class TowerParent : MonoBehaviour
             Debug.LogError("DAMAGE array is not set on " + gameObject.name);
             return;
         }
-        range = RANGE[level];
-        damage = DAMAGE[level];
-        upgradeCost = UPGRADE_COST[level];
+
+        if (UPGRADE_COST == null || UPGRADE_COST.Length == 0)
+        {
+            Debug.LogError("UPGRADE_COST array is not set on " + gameObject.name);
+            return;
+        }
+
+        int validLevels = Mathf.Min(RANGE.Length, DAMAGE.Length, UPGRADE_COST.Length);
+        if (validLevels <= 0)
+        {
+            Debug.LogError("Tower upgrade arrays are not configured correctly for " + gameObject.name);
+            return;
+        }
+
+        if (MAX_LEVEL > validLevels - 1)
+        {
+            MAX_LEVEL = validLevels - 1;
+            Debug.LogWarning($"Tower '{gameObject.name}' MAX_LEVEL reduced to {MAX_LEVEL} because its configured arrays only have {validLevels} levels.");
+        }
+
+        ApplyLevelStats();
 
         //Projectile.transform.localScale = new Vector3(projectileScale, projectileScale, projectileScale);
         
@@ -65,6 +83,13 @@ public class TowerParent : MonoBehaviour
         }
     }
 
+    private void ApplyLevelStats()
+    {
+        range = RANGE[level];
+        damage = DAMAGE[level];
+        upgradeCost = level < MAX_LEVEL ? UPGRADE_COST[level] : 0;
+    }
+
     // assume no alternative upgrade paths right now
     // returns true if there is enough balance. Pass it in by reference from the UI
     // so that it is modified within the values stored intrinsically to this object
@@ -72,10 +97,7 @@ public class TowerParent : MonoBehaviour
         if (balance >= upgradeCost && level < MAX_LEVEL) {
             balance -= upgradeCost;
             level++;
-            range = RANGE[level];
-            damage = DAMAGE[level];
-            if (level < MAX_LEVEL)
-                upgradeCost = UPGRADE_COST[level];
+            ApplyLevelStats();
             return true;
         }
         return false;
@@ -89,10 +111,7 @@ public class TowerParent : MonoBehaviour
         if (TowerDefenseHUD.Instance == null || !TowerDefenseHUD.Instance.CanAfford(cost)) return false;
         TowerDefenseHUD.Instance.SpendCurrency(cost);
         level++;
-        range = RANGE[level];
-        damage = DAMAGE[level];
-        if (level < MAX_LEVEL)
-            upgradeCost = UPGRADE_COST[level];
+        ApplyLevelStats();
         return true;
     }
 

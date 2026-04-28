@@ -1,32 +1,23 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/Dialogue.uss"/>
+    <ui:Template name="MainMenu" src="project://database/Assets/UI/MainMenu.uxml?fileID=9197481963319205126&amp;guid=a421ba5a609c1264ca0c769eff72d041&amp;type=3#MainMenu"/>
+    <Style src="project://database/Assets/UI/Dialogue.uss?fileID=7433441132597879392&amp;guid=ced9510054af24c4a9182e59f8315ad6&amp;type=3#Dialogue"/>
     <ui:VisualElement name="dialogue-root" class="dialogue-root hidden">
-
-        <!-- Left character sprite -->
         <ui:VisualElement name="sprite-left" class="sprite-frame sprite-left">
             <ui:VisualElement name="sprite-left-img" class="sprite-img"/>
         </ui:VisualElement>
-
-        <!-- Right character sprite -->
         <ui:VisualElement name="sprite-right" class="sprite-frame sprite-right">
             <ui:VisualElement name="sprite-right-img" class="sprite-img"/>
         </ui:VisualElement>
-
-        <!-- Dialogue box -->
         <ui:VisualElement name="dialogue-box" class="dialogue-box">
-
-            <!-- Speaker name tab -->
             <ui:Label name="speaker-name" text="" class="speaker-name"/>
-
-            <!-- Dialogue text -->
             <ui:Label name="dialogue-text" text="" class="dialogue-text"/>
-
-            <!-- Bottom row: click prompt -->
             <ui:VisualElement class="dialogue-footer">
                 <ui:Label name="continue-prompt" text="▶  Click to continue" class="continue-prompt"/>
             </ui:VisualElement>
-
         </ui:VisualElement>
-
     </ui:VisualElement>
+    <ui:Instance template="MainMenu">
+        <AttributeOverrides element-name="btn-escape" text="Start Escape Room"/>
+        <AttributeOverrides element-name="btn-btd" text="Start Tower Defense"/>
+    </ui:Instance>
 </ui:UXML>

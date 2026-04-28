@@ -195,6 +195,8 @@ public class Dialogue : MonoBehaviour
         dialogueRoot.RemoveFromClassList("hidden");
         PlayerMovement.Instance?.LockForDialogue();
 
+        TowerDefenseHUD.Instance?.SetHUDVisible(false);
+
         ShowLine();
     }
 
@@ -259,6 +261,8 @@ public class Dialogue : MonoBehaviour
 
         PlayerMovement.Instance?.UnlockFromDialogue();
         onFinished?.Invoke();
+
+        TowerDefenseHUD.Instance?.SetHUDVisible(true);
     }
 
     // ── Portrait management ───────────────────────────────────────────────────

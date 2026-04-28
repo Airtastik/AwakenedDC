@@ -1,18 +1,9 @@
 using UnityEngine;
+using System; // Required for Actions
 
 /// <summary>
-/// Triggers a scripted cutscene dialogue when the player gets close enough.
-/// No separate Participants list needed — assign the portrait and side on each line.
-///
-/// Setup:
-///   1. Add this script to an empty GameObject at the cutscene location.
-///   2. Fill in Scene Lines in order. For each line:
-///        - Speaker Name  : displayed in the name tab
-///        - Portrait      : sprite shown on that side for this line
-///        - Side          : Left or Right
-///        - Text          : what they say
-///   3. Set Trigger Radius to control how close the player must be.
-///   4. Choose trigger mode: Auto (plays immediately) or Press E.
+/// Triggers a scripted cutscene dialogue when the player gets close enough, 
+/// or programmatically via PlaySequence().
 /// </summary>
 public class SceneDialogueTrigger : MonoBehaviour
 {
@@ -23,8 +14,9 @@ public class SceneDialogueTrigger : MonoBehaviour
     [Tooltip("How close the player must be (world units) to trigger the cutscene.")]
     public float triggerRadius = 4f;
 
-    public enum TriggerMode { Auto, PressE }
-    [Tooltip("Auto: plays as soon as player is in range.\nPressE: player must press E while in range.")]
+    // ADDED: Scripted mode for programmatic triggering (like WaveSpawner)
+    public enum TriggerMode { Auto, PressE, Scripted } 
+    [Tooltip("Auto: plays as soon as player is in range.\nPressE: player must press E while in range.\nScripted: Only triggers via code.")]
     public TriggerMode triggerMode = TriggerMode.Auto;
 
     [Header("Options")]
@@ -38,6 +30,7 @@ public class SceneDialogueTrigger : MonoBehaviour
     // ── Runtime ───────────────────────────────────────────────────────────────
     private bool      hasTriggered   = false;
     private Transform playerTransform;
+    private Action    onDialogueComplete; // Stores the callback
 
     void Start()
     {
@@ -51,6 +44,7 @@ public class SceneDialogueTrigger : MonoBehaviour
     void Update()
     {
         if (triggerOnce && hasTriggered) return;
+        if (triggerMode == TriggerMode.Scripted) return; // Skip proximity checks for Scripted events
         if (playerTransform == null) return;
         if (Dialogue.Instance == null) return;
 
@@ -62,7 +56,23 @@ public class SceneDialogueTrigger : MonoBehaviour
 
         if (!shouldFire) return;
 
+        PlaySequence();
+    }
+
+    /// <summary>
+    /// Programmatically starts the sequence. 
+    /// Pass an optional callback to execute logic when dialogue finishes.
+    /// </summary>
+    public void PlaySequence(Action onComplete = null)
+    {
+        if (triggerOnce && hasTriggered) 
+        {
+            onComplete?.Invoke();
+            return;
+        }
+
         hasTriggered = true;
+        onDialogueComplete = onComplete;
         Dialogue.Instance.StartSceneDialogue(sceneLines, null, OnFinished);
     }
 
@@ -74,14 +84,18 @@ public class SceneDialogueTrigger : MonoBehaviour
         if (teleportDestination != null)
         {
             var player = GameObject.FindWithTag("Player");
-            if (player == null) return;
-
-            var cc = player.GetComponent<CharacterController>();
-            if (cc != null) cc.enabled = false;
-            player.transform.position = teleportDestination.position;
-            player.transform.rotation = teleportDestination.rotation;
-            if (cc != null) cc.enabled = true;
+            if (player != null)
+            {
+                var cc = player.GetComponent<CharacterController>();
+                if (cc != null) cc.enabled = false;
+                player.transform.position = teleportDestination.position;
+                player.transform.rotation = teleportDestination.rotation;
+                if (cc != null) cc.enabled = true;
+            }
         }
+
+        // Fire the callback to let the WaveSpawner know we're done
+        onDialogueComplete?.Invoke(); 
     }
 
     // Draw the trigger radius in the Scene view

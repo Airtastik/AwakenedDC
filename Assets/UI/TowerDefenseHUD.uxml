@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/TowerDefenseHUD.uss?fileID=7433441132597879392&amp;guid=ab1fdaca954abe74cbc247af8b3a5cd1&amp;type=3"/>
+    <Style src="project://database/Assets/UI/TowerDefenseHUD.uss?fileID=7433441132597879392&amp;guid=ab1fdaca954abe74cbc247af8b3a5cd1&amp;type=3#TowerDefenseHUD"/>
     <ui:VisualElement name="hud-root" class="hud-root">
         <ui:VisualElement name="top-bar" class="top-bar">
             <ui:VisualElement class="stat-pill health-pill">
@@ -27,25 +27,25 @@
             <ui:VisualElement name="tower-shop" class="tower-shop">
                 <ui:Label text="TOWERS" class="shop-label"/>
                 <ui:VisualElement name="tower-btn-1" class="tower-btn">
-                    <ui:VisualElement class="tower-icon t1-icon"/>
+                    <ui:VisualElement class="tower-icon t1-icon" style="background-color: rgb(220, 20, 60); border-left-color: rgb(205, 92, 92); border-right-color: rgb(205, 92, 92); border-top-color: rgb(205, 92, 92); border-bottom-color: rgb(205, 92, 92);"/>
                     <ui:Label text="CATHERINE" class="tower-name"/>
                     <ui:Label text="100" class="tower-cost"/>
                     <ui:Label text="[1]" class="tower-hotkey"/>
                 </ui:VisualElement>
                 <ui:VisualElement name="tower-btn-2" class="tower-btn">
-                    <ui:VisualElement class="tower-icon t2-icon"/>
+                    <ui:VisualElement class="tower-icon t2-icon" style="background-color: rgb(60, 112, 180); border-left-color: rgb(154, 187, 245); border-right-color: rgb(154, 187, 245); border-top-color: rgb(154, 187, 245); border-bottom-color: rgb(154, 187, 245);"/>
                     <ui:Label text="ROMAN" class="tower-name"/>
                     <ui:Label text="150" class="tower-cost"/>
                     <ui:Label text="[2]" class="tower-hotkey"/>
                 </ui:VisualElement>
                 <ui:VisualElement name="tower-btn-3" class="tower-btn">
-                    <ui:VisualElement class="tower-icon t3-icon"/>
+                    <ui:VisualElement class="tower-icon t3-icon" style="background-color: rgb(46, 226, 69); border-left-color: rgb(167, 238, 165); border-right-color: rgb(167, 238, 165); border-top-color: rgb(167, 238, 165); border-bottom-color: rgb(167, 238, 165);"/>
                     <ui:Label text="SILVIA" class="tower-name"/>
                     <ui:Label text="200" class="tower-cost"/>
                     <ui:Label text="[3]" class="tower-hotkey"/>
                 </ui:VisualElement>
                 <ui:VisualElement name="tower-btn-4" class="tower-btn">
-                    <ui:VisualElement class="tower-icon t4-icon"/>
+                    <ui:VisualElement class="tower-icon t4-icon" style="background-color: rgb(190, 186, 28);"/>
                     <ui:Label text="DIMITRI" class="tower-name"/>
                     <ui:Label text="250" class="tower-cost"/>
                     <ui:Label text="[4]" class="tower-hotkey"/>

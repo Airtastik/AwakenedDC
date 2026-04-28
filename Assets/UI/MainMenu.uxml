@@ -4,8 +4,8 @@
         <ui:Label text="AWAKENED" class="title-main"/>
         <ui:VisualElement class="divider"/>
         <ui:Button name="btn-awaken" text="Start RPG" class="menu-btn" style="text-overflow: clip;"/>
-        <ui:Button name="btn-escape" text="Start Escape Room (Beta)" class="menu-btn" style="text-overflow: clip;"/>
-        <ui:Button name="btn-btd" text="Start Tower Defense (Beta)" class="menu-btn" style="text-overflow: clip;"/>
+        <ui:Button name="btn-escape" text="Start Escape Room " class="menu-btn" style="text-overflow: clip;"/>
+        <ui:Button name="btn-btd" text="Start Tower Defense " class="menu-btn" style="text-overflow: clip;"/>
         <ui:Button name="btn-controls" text="Controls" class="menu-btn"/>
         <ui:Button name="btn-credits" text="Credits" class="menu-btn"/>
     </ui:VisualElement>

@@ -38,8 +38,11 @@ public class WaveSpawner : MonoBehaviour
     public float duration = 2f;
     public float arcStrength = 5f;
 
-    private bool running = false;
+    [Header("Story Sequences (Optional)")]
+    public SceneDialogueTrigger introCutscene;
+    public SceneDialogueTrigger outroCutscene;
 
+    private bool running = false;
     private int currentWaveIndex = 0;
     private int enemiesAlive     = 0;
 
@@ -54,8 +57,19 @@ public class WaveSpawner : MonoBehaviour
 
     public void Clicked()
     {
-        StartCoroutine(RunWave());
+        // Prevent clicking again if a wave or cutscene is already running
+        if (running) return; 
         running = true;
+
+        // Play intro on the very first wave
+        if (currentWaveIndex == 0 && introCutscene != null)
+        {
+            introCutscene.PlaySequence(() => StartCoroutine(RunWave()));
+        }
+        else
+        {
+            StartCoroutine(RunWave());
+        }
     }
 
     public bool getRunning()
@@ -97,14 +111,30 @@ public class WaveSpawner : MonoBehaviour
             
             currentWaveIndex++;
         }
+
+        // Check if all waves are completely finished
         if (currentWaveIndex == waves.Count && enemiesAlive == 0)
         {
             TowerDefenseHUD.Instance?.ShowWaveMessage("ALL WAVES COMPLETE!", 5f);
             Debug.Log("All waves complete!");
-            yield return new WaitForSeconds(10f);
+
+            // If an outro cutscene exists, yield until it is completely finished
+            if (outroCutscene != null)
+            {
+                bool outroFinished = false;
+                outroCutscene.PlaySequence(() => outroFinished = true);
+                
+                // Pause this coroutine until the callback sets our flag to true
+                yield return new WaitUntil(() => outroFinished);
+            }
+            else
+            {
+                // Fallback to original timer if no cutscene is assigned
+                yield return new WaitForSeconds(10f);
+            }
+            
             SceneManager.LoadScene("MainMenu");
         }
-        
     }
 
     IEnumerator MoveCamera(float multiplier, int index)
@@ -113,10 +143,7 @@ public class WaveSpawner : MonoBehaviour
         Quaternion startRot = camera.transform.rotation;
 
         Vector3 endPos = targetPosition[index].position;
-
         float rotation = 90.383f * multiplier;
-
-        // 90° rotation (Y axis)
         Quaternion targetRot = Quaternion.Euler(40.031f, -90f + rotation, -0.036f);
 
         float elapsed = 0f;
@@ -124,14 +151,9 @@ public class WaveSpawner : MonoBehaviour
         while (elapsed < duration)
         {
             float t = elapsed / duration;
-
-            // Optional smoothing
             t = Mathf.SmoothStep(0, 1, t);
 
-            // Straight line movement
             camera.transform.position = Vector3.Lerp(startPos, endPos, t);
-
-            // Smooth rotation
             camera.transform.rotation = Quaternion.Slerp(startRot, targetRot, t);
 
             elapsed += Time.deltaTime;
@@ -140,8 +162,6 @@ public class WaveSpawner : MonoBehaviour
 
         camera.transform.position = endPos;
         camera.transform.rotation = targetRot;
-        Debug.Log(startRot.eulerAngles);
-        Debug.Log(targetRot.eulerAngles);
     }
 
     IEnumerator SpawnWave(Wave wave)
@@ -165,30 +185,16 @@ public class WaveSpawner : MonoBehaviour
         if (health != null)
         {
             health.OnDeath += HandleEnemyDeath;
-            // Give currency on kill
             health.OnDeath += () => TowerDefenseHUD.Instance?.AddCurrency(25);
         }
     }
 
     void SwitchPath(int pathNumber)
     {
-        if (pathNumber == 1)
-        {
-            path1.SetActive(false);
-            path2.SetActive(true);
-        } else if (pathNumber == 2)
-        {
-            path2.SetActive(false);
-            path3.SetActive(true);
-        } else if (pathNumber == 3)
-        {
-            path3.SetActive(false);
-            path4.SetActive(true);
-        } else if (pathNumber == 4)
-        {
-            path4.SetActive(false);
-            path5.SetActive(true);
-        }
+        if (pathNumber == 1) { path1.SetActive(false); path2.SetActive(true); }
+        else if (pathNumber == 2) { path2.SetActive(false); path3.SetActive(true); }
+        else if (pathNumber == 3) { path3.SetActive(false); path4.SetActive(true); }
+        else if (pathNumber == 4) { path4.SetActive(false); path5.SetActive(true); }
     }
 
     void HandleEnemyDeath() => enemiesAlive--;

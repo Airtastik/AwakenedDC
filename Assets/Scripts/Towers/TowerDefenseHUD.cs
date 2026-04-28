@@ -34,6 +34,7 @@ public class TowerDefenseHUD : MonoBehaviour
     private readonly int[]    towerCosts = { 100, 150, 200, 250 };
 
     // ── UI refs ───────────────────────────────────────────────────────────────
+    private VisualElement root; // <-- ADDED: Class-level reference for HUD visibility
     private Label         healthLabel, waveLabel, enemyLabel, currencyLabel, waveMessage;
     private VisualElement[] shopBtns     = new VisualElement[4];
     private VisualElement upgradePanel;
@@ -45,7 +46,8 @@ public class TowerDefenseHUD : MonoBehaviour
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
 
-        var root = GetComponent<UIDocument>().rootVisualElement;
+        // Modified: Save to class-level variable instead of local var
+        root = GetComponent<UIDocument>().rootVisualElement;
 
         // Top bar
         healthLabel   = root.Q<Label>("health-value");
@@ -104,6 +106,13 @@ public class TowerDefenseHUD : MonoBehaviour
     // ═════════════════════════════════════════════════════════════════════════
     // PUBLIC API
     // ═════════════════════════════════════════════════════════════════════════
+
+    // ADDED: Toggles the entire HUD on/off for cutscenes
+    public void SetHUDVisible(bool isVisible)
+    {
+        if (root == null) return;
+        root.style.display = isVisible ? DisplayStyle.Flex : DisplayStyle.None;
+    }
 
     public void SetHealth(int v)   { health = Mathf.Max(0, v); healthLabel.text = health.ToString(); }
     public int GetHealth() { return health; }
@@ -178,7 +187,11 @@ public class TowerDefenseHUD : MonoBehaviour
     private void OnUpgradeClicked()
     {
         if (selectedTower == null) return;
-        if (selectedTower.IsMaxLevel) return;
+        if (selectedTower.IsMaxLevel)
+        {
+            ShowWaveMessage("MAX LEVEL", 1.5f);
+            return;
+        }
 
         int cost = selectedTower.UpgradeCost;
         if (!CanAfford(cost))
