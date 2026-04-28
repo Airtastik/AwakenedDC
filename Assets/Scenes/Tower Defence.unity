@@ -17891,9 +17891,9 @@ MonoBehaviour:
     portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
     side: 1
     text: ................
-  - speakerName: Luna
-    portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
-    side: 1
+  - speakerName: Dimitri
+    portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+    side: 0
     text: Luna, what's on your mind? Do you think you know a way out of here?
   - speakerName: Luna
     portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
@@ -35547,7 +35547,7 @@ MonoBehaviour:
     side: 1
     text: Say hello to Nova for me, ok, Dimitri.
   - speakerName: Dimitri
-    portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+    portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
     side: 0
     text: ' This isn''t necessarily goodbye.'
   - speakerName: Luna
@@ -35571,9 +35571,9 @@ MonoBehaviour:
   - speakerName: ENV
     portrait: {fileID: 0}
     side: 0
-    text: ...................................................We all wake uo
+    text: ...................................................We all wake up
   - speakerName: Dr Beatrice
-    portrait: {fileID: 0}
+    portrait: {fileID: 21300000, guid: f07fa2c0af222444bbeb239e986e7096, type: 3}
     side: 1
     text: "Welcome back\u2026"
   - speakerName: Dimitri
@@ -35583,7 +35583,7 @@ MonoBehaviour:
 
 '
   - speakerName: Dr Beatrice
-    portrait: {fileID: 0}
+    portrait: {fileID: 21300000, guid: f07fa2c0af222444bbeb239e986e7096, type: 3}
     side: 1
     text: ' Before you leave, Dimitri, I want to see you.'
   - speakerName: Dimitri
@@ -35599,11 +35599,11 @@ MonoBehaviour:
     side: 1
     text: Goodbye, Dimitri.
   - speakerName: Catherine
-    portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
-    side: 0
+    portrait: {fileID: 21300000, guid: c2c4910e134143b4684c05ed8d550841, type: 3}
+    side: 1
     text: Good luck in the future, you crazy bastard.
   - speakerName: Dr Beatrice
-    portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+    portrait: {fileID: 21300000, guid: f07fa2c0af222444bbeb239e986e7096, type: 3}
     side: 0
     text: Dimitri, thank you for rescuing my daughter.
   - speakerName: 'Dimitri '
@@ -35611,7 +35611,7 @@ MonoBehaviour:
     side: 0
     text: My pleasure, I really needed the cash.
   - speakerName: Dr Beatrice
-    portrait: {fileID: 0}
+    portrait: {fileID: 21300000, guid: f07fa2c0af222444bbeb239e986e7096, type: 3}
     side: 1
     text: Now that you're out, what are your plans for your future?
   - speakerName: Dimitri
@@ -35620,7 +35620,7 @@ MonoBehaviour:
     text: 'While I''m not sure right now, I know I don''t want just to sit around
       anymore. Goodbye, Dr Beatrice, and goodbye, Nova. Say hello to Luna for me. '
   - speakerName: Nova
-    portrait: {fileID: 21300000, guid: 053fc742baa0af94daca4893be7aca6d, type: 3}
+    portrait: {fileID: 21300000, guid: bd53e4aa98bdf434db8c30bb120e92a4, type: 3}
     side: 1
     text: Thank you, Mr Dimitri. I will. Take care!
   - speakerName: Dimitri Alter
@@ -35636,7 +35636,7 @@ MonoBehaviour:
     side: 0
     text: The end
   - speakerName: Tristan, Adam, Adam, Cole, & Devin
-    portrait: {fileID: 21300000, guid: 30f65458f3f60904b9d160f5d1c01360, type: 3}
+    portrait: {fileID: 0}
     side: 0
     text: Thanks for playing
   triggerRadius: 4
