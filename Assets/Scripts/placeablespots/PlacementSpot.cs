@@ -55,7 +55,11 @@ public class PlacementSpot : MonoBehaviour
                   ? TowerDefenseHUD.Instance.SelectedShopIndex : -1;
 
         if (idx < 0) return;
-        if (!TowerDefenseHUD.Instance.CanAfford(TowerDefenseHUD.Instance.GetCost(idx))) return;
+        if (!TowerDefenseHUD.Instance.CanAfford(TowerDefenseHUD.Instance.GetCost(idx)))
+        {
+            Debug.Log("Cannot Afford");
+            return;
+        } 
 
         PlaceTower(idx);
     }
@@ -90,12 +94,14 @@ public class PlacementSpot : MonoBehaviour
             3 => hud.tower4Prefab,
             _ => null
         };
-
+        
+        Debug.Log(prefab);
         if (prefab == null) return;
 
         // Spawn tower slightly above the tile so it sits on top
-        Vector3 spawnPos = transform.position + Vector3.up * (transform.localScale.y * 0.5f);
+        Vector3 spawnPos = transform.position + Vector3.up * (transform.localScale.y * 1f);
         GameObject obj   = Instantiate(prefab, spawnPos, Quaternion.identity);
+        obj.transform.parent = GameObject.Find("Level").transform;
 
         TowerParent tower = obj.GetComponent<TowerParent>();
         if (tower == null) { Destroy(obj); return; }

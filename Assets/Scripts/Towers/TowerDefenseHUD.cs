@@ -9,6 +9,8 @@ public class TowerDefenseHUD : MonoBehaviour
 
     [Header("References")]
     public WaveSpawner waveSpawner;
+    public EnemyHealth enemyHealth;
+    public EnemyMovement enemyMovement;
 
     [Header("Tower Prefabs (matched to buttons 1-4)")]
     public GameObject tower1Prefab;
@@ -36,7 +38,7 @@ public class TowerDefenseHUD : MonoBehaviour
     private VisualElement[] shopBtns     = new VisualElement[4];
     private VisualElement upgradePanel;
     private Label         upgradeTowerName, upgradeLevel, upgradeRange, upgradeDamage;
-    private Button        upgradeBtn, sellBtn, deselectBtn;
+    private Button        upgradeBtn, sellBtn, deselectBtn, startBtn;
 
     void Awake()
     {
@@ -59,6 +61,9 @@ public class TowerDefenseHUD : MonoBehaviour
             shopBtns[i] = root.Q($"tower-btn-{i + 1}");
             shopBtns[i]?.RegisterCallback<ClickEvent>(_ => SelectShopTower(idx));
         }
+
+        startBtn = root.Q<Button>("btn-start-wave");
+        startBtn?.RegisterCallback<ClickEvent>(_ => StartWave());
 
         // Upgrade panel
         upgradePanel    = root.Q("upgrade-panel");
@@ -87,6 +92,10 @@ public class TowerDefenseHUD : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3)) SelectShopTower(2);
         if (Input.GetKeyDown(KeyCode.Alpha4)) SelectShopTower(3);
         if (Input.GetKeyDown(KeyCode.Escape)) DeselectAll();
+        if (!isRunning())
+        {
+            startBtn.RemoveFromClassList("running");
+        }
 
         if (waveSpawner != null)
             enemyLabel.text = waveSpawner.EnemiesAlive.ToString();
@@ -97,6 +106,7 @@ public class TowerDefenseHUD : MonoBehaviour
     // ═════════════════════════════════════════════════════════════════════════
 
     public void SetHealth(int v)   { health = Mathf.Max(0, v); healthLabel.text = health.ToString(); }
+    public int GetHealth() { return health; }
     public void TakeDamage(int a)  => SetHealth(health - a);
     public void SetCurrency(int v) { currency = Mathf.Max(0, v); currencyLabel.text = currency.ToString(); RefreshAffordability(); }
     public void AddCurrency(int a) => SetCurrency(currency + a);
@@ -104,6 +114,7 @@ public class TowerDefenseHUD : MonoBehaviour
     public void SetWave(int current) => waveLabel.text = $"{current} / {totalWaves}";
     public int  GetCost(int index)   => (index >= 0 && index < towerCosts.Length) ? towerCosts[index] : 0;
     public bool CanAfford(int cost)  => currency >= cost;
+    public bool isRunning() => waveSpawner.getRunning();
 
     public int SelectedShopIndex => selectedShopIndex;
 
@@ -136,6 +147,7 @@ public class TowerDefenseHUD : MonoBehaviour
     {
         // Clicking the same button again deselects
         selectedShopIndex = (selectedShopIndex == index) ? -1 : index;
+        Debug.Log("Selected Tower: " + selectedShopIndex);
         DeselectPlacedTower();
         RefreshShopSelection();
     }
@@ -144,6 +156,16 @@ public class TowerDefenseHUD : MonoBehaviour
     {
         selectedTower = null;
         upgradePanel.AddToClassList("hidden");
+    }
+
+    private void StartWave()
+    {
+        if (isRunning())
+        {
+            return;
+        }
+        waveSpawner.Clicked();
+        startBtn.AddToClassList("running");
     }
 
     private void DeselectAll()

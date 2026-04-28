@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6608549323981733464}
   - component: {fileID: 3836842114504557057}
   - component: {fileID: -3679024253913652722}
+  - component: {fileID: 5103665890447633680}
   m_Layer: 0
   m_Name: TDEnemy
   m_TagString: Enemy
@@ -190,3 +191,15 @@ MonoBehaviour:
   bobHeight: 0.04
   bobSpeed: 1.2
   highlightColour: {r: 1, g: 1, b: 0.6, a: 1}
+--- !u!114 &5103665890447633680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261283486497656059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b74c93d71d2cd7479866446c39d3858, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CylindricalBillboard

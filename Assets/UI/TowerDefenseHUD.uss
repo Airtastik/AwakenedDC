@@ -1,22 +1,22 @@
-/* ═══════════════════════════════════════════════════
-   TowerDefenseHUD.uss
-   Matches RPGins dark theme: near-black bg, gold accents
-   ═══════════════════════════════════════════════════ */
-
-/* ── Root ──────────────────────────────────────────── */
 .hud-root {
     position: absolute;
-    left: 0; right: 0; top: 0; bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.hidden { display: none; }
+.hidden {
+    display: none;
+}
 
-/* ── Top bar ───────────────────────────────────────── */
 .top-bar {
     position: absolute;
-    left: 0; right: 0; top: 0;
+    left: 0;
+    right: 0;
+    top: 0;
     flex-direction: row;
     justify-content: center;
     padding: 6px 12px;
@@ -25,7 +25,6 @@
     border-color: rgb(48, 54, 61);
 }
 
-/* ── Stat pills ────────────────────────────────────── */
 .stat-pill {
     flex-direction: row;
     align-items: center;
@@ -38,26 +37,75 @@
     min-width: 90px;
 }
 
-.health-pill   { border-color: rgb(248, 81, 73); }
-.wave-pill     { border-color: rgb(240, 192, 64); }
-.enemy-pill    { border-color: rgb(224, 92, 92); }
-.currency-pill { border-color: rgb(78, 205, 196); }
+.health-pill {
+    border-color: rgb(248, 81, 73);
+}
+
+.wave-pill {
+    border-color: rgb(240, 192, 64);
+}
+
+.enemy-pill {
+    border-color: rgb(224, 92, 92);
+}
+
+.currency-pill {
+    border-color: rgb(78, 205, 196);
+}
 
 .stat-icon {
     font-size: 14px;
     margin-right: 6px;
     -unity-font-style: bold;
 }
-.health-icon   { color: rgb(248, 81, 73); }
-.wave-icon     { color: rgb(240, 192, 64); }
-.enemy-icon    { color: rgb(224, 92, 92); }
-.currency-icon { color: rgb(78, 205, 196); }
+
+.health-icon {
+    color: rgb(248, 81, 73);
+}
+
+.wave-icon {
+    color: rgb(240, 192, 64);
+}
+
+.enemy-icon {
+    color: rgb(224, 92, 92);
+}
+
+.currency-icon {
+    color: rgb(78, 205, 196);
+}
 
 .stat-value {
     font-size: 14px;
     -unity-font-style: bold;
     color: rgb(230, 237, 243);
     margin-right: 4px;
+}
+
+.start-button {
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(22, 27, 34);
+    border-width: 1px;
+    border-color: rgb(248, 81, 73);
+    border-radius: 5px;
+    padding: 4px 12px;
+    margin: 0 6px;
+    min-width: 90px;
+}
+
+.start-button:hover {
+    border-color: rgb(240, 192, 64);
+    background-color: rgb(30, 26, 14);
+}
+
+.start-button.selected {
+    border-color: rgb(78, 205, 196);
+    background-color: rgb(14, 30, 30);
+}
+
+.start-button.running {
+    opacity: 0.4;
 }
 
 .stat-label {
@@ -69,10 +117,11 @@
     margin-bottom: 1px;
 }
 
-/* ── Tower shop ────────────────────────────────────── */
 .tower-shop {
     position: absolute;
-    left: 0; right: 0; bottom: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -91,7 +140,6 @@
     align-self: center;
 }
 
-/* ── Tower buttons ─────────────────────────────────── */
 .tower-btn {
     flex-direction: column;
     align-items: center;
@@ -120,7 +168,6 @@
     opacity: 0.4;
 }
 
-/* ── Tower placeholder icons ───────────────────────── */
 .tower-icon {
     width: 36px;
     height: 36px;
@@ -129,19 +176,21 @@
     margin-bottom: 4px;
 }
 
-/* Each tower gets a distinct colour block as placeholder */
 .t1-icon {
     background-color: rgb(56, 100, 200);
     border-color: rgb(88, 140, 255);
 }
+
 .t2-icon {
     background-color: rgb(180, 60, 60);
     border-color: rgb(224, 92, 92);
 }
+
 .t3-icon {
     background-color: rgb(60, 140, 180);
     border-color: rgb(78, 205, 196);
 }
+
 .t4-icon {
     background-color: rgb(120, 60, 180);
     border-color: rgb(170, 88, 255);
@@ -168,10 +217,10 @@
     -unity-text-align: upper-center;
 }
 
-/* ── Wave message ──────────────────────────────────── */
 .wave-message {
     position: absolute;
-    left: 25%; right: 25%;
+    left: 25%;
+    right: 25%;
     top: 10%;
     font-size: 20px;
     -unity-font-style: bold;
@@ -185,10 +234,11 @@
     padding: 10px 20px;
 }
 
-/* ── Bottom bar wrapper ─────────────────────────────── */
 .bottom-bar {
     position: absolute;
-    left: 0; right: 0; bottom: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     flex-direction: row;
     align-items: stretch;
     background-color: rgba(13, 17, 23, 0.92);
@@ -196,18 +246,17 @@
     border-color: rgb(48, 54, 61);
 }
 
-/* ── Tower shop (now inside bottom-bar) ─────────────── */
-/* Override position — now flows in the row */
 .tower-shop {
     position: relative;
-    left: auto; right: auto; bottom: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
     border-top-width: 0;
     border-right-width: 1px;
     border-color: rgb(48, 54, 61);
     flex-shrink: 0;
 }
 
-/* ── Upgrade panel ──────────────────────────────────── */
 .upgrade-panel {
     flex-direction: column;
     justify-content: center;
@@ -216,7 +265,9 @@
     min-width: 260px;
 }
 
-.upgrade-panel.hidden { display: none; }
+.upgrade-panel.hidden {
+    display: none;
+}
 
 .upgrade-header {
     flex-direction: row;
@@ -272,8 +323,13 @@
     -unity-font-style: bold;
 }
 
-.upgrade-btn:hover { background-color: rgb(60, 50, 14); }
-.upgrade-btn:disabled { opacity: 0.4; }
+.upgrade-btn:hover {
+    background-color: rgb(60, 50, 14);
+}
+
+.upgrade-btn:disabled {
+    opacity: 0.4;
+}
 
 .sell-btn {
     height: 28px;
@@ -288,7 +344,9 @@
     -unity-font-style: bold;
 }
 
-.sell-btn:hover { background-color: rgb(60, 16, 16); }
+.sell-btn:hover {
+    background-color: rgb(60, 16, 16);
+}
 
 .deselect-btn {
     height: 28px;
@@ -301,9 +359,11 @@
     font-size: 12px;
 }
 
-.deselect-btn:hover { border-color: rgb(139, 148, 158); color: rgb(201, 209, 217); }
+.deselect-btn:hover {
+    border-color: rgb(139, 148, 158);
+    color: rgb(201, 209, 217);
+}
 
-/* Max level — hide upgrade button */
 .upgrade-btn.max-level {
     border-color: rgb(78, 205, 196);
     background-color: rgb(10, 26, 26);

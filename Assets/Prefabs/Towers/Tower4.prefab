@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -6678508879307536591}
   - component: {fileID: 7755633640893203811}
   - component: {fileID: 7234755364098143047}
+  - component: {fileID: -4698055070545173387}
   m_Layer: 0
   m_Name: Tower4
   m_TagString: Untagged
@@ -167,3 +168,21 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &-4698055070545173387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5335527594006705596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c30c1d2f66f3614ea9db38419cf2ab6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCBillboard
+  frontSprite: {fileID: 21300000, guid: 10924731a072d374b97cb942e7cd5250, type: 3}
+  backSprite: {fileID: 21300000, guid: 10924731a072d374b97cb942e7cd5250, type: 3}
+  idleBob: 1
+  bobHeight: 0.04
+  bobSpeed: 1.2
+  highlightColour: {r: 1, g: 1, b: 0.6, a: 1}
